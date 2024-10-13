@@ -72,7 +72,7 @@ async def refunc(client, message):
     s=await message.reply_text(f"**5**")
     file_path = f"downloads/{new_filename}"
     s=await message.reply_text(f"**51**")
-    file = message.message.reply_to_message
+    file = media
     s=await message.reply_text(f"**6**")
 
     s=await message.reply_text(f"**52**")
@@ -85,7 +85,7 @@ async def refunc(client, message):
     except Exception as e:
         return await ms.edit(e)
 
-    _bool_metadata = await db.get_metadata(update.message.chat.id)
+    _bool_metadata = await db.get_metadata(chat_id)
 
     if (_bool_metadata):
         metadata_path = f"Metadata/{new_filename}"
