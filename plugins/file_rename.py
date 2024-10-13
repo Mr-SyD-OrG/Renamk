@@ -156,58 +156,22 @@ async def refunc(client, message):
         try:
             app = await start_clone_bot(client(user_bot['session']))
 
-            if type == "document":
+            
 
-                filw = await app.send_document(
-                    Config.LOG_CHANNEL,
-                    document=metadata_path if _bool_metadata else file_path,
-                    thumb=ph_path,
-                    caption=caption,
-                    progress=progress_for_pyrogram,
-                    progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+            filw = await app.send_document(
+                Config.LOG_CHANNEL,
+                document=metadata_path if _bool_metadata else file_path,
+                thumb=ph_path,
+                caption=caption,
+                progress=progress_for_pyrogram,
+                progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
 
-                from_chat = filw.chat.id
-                mg_id = filw.id
-                time.sleep(2)
-                await client.copy_message(update.from_user.id, from_chat, mg_id)
-                await ms.delete()
-                await client.delete_messages(from_chat, mg_id)
-
-            elif type == "video":
-                filw = await app.send_video(
-                    Config.LOG_CHANNEL,
-                    video=metadata_path if _bool_metadata else file_path,
-                    caption=caption,
-                    thumb=ph_path,
-                    width=width,
-                    height=height,
-                    duration=duration,
-                    progress=progress_for_pyrogram,
-                    progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
-
-                from_chat = filw.chat.id
-                mg_id = filw.id
-                time.sleep(2)
-                await client.copy_message(message.from_user.id, from_chat, mg_id)
-                await ms.delete()
-                await client.delete_messages(from_chat, mg_id)
-            elif type == "audio":
-                filw = await app.send_audio(
-                    Config.LOG_CHANNEL,
-                    audio=metadata_path if _bool_metadata else file_path,
-                    caption=caption,
-                    thumb=ph_path,
-                    duration=duration,
-                    progress=progress_for_pyrogram,
-                    progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
-
-                from_chat = filw.chat.id
-                mg_id = filw.id
-                time.sleep(2)
-                await client.copy_message(message.from_user.id, from_chat, mg_id)
-                await ms.delete()
-                await client.delete_messages(from_chat, mg_id)
-
+            from_chat = filw.chat.id
+            mg_id = filw.id
+            time.sleep(2)
+            await client.copy_message(message.from_user.id, from_chat, mg_id)
+            await ms.delete()
+            await client.delete_messages(from_chat, mg_id)
         except Exception as e:
             os.remove(file_path)
             if ph_path:
@@ -221,34 +185,13 @@ async def refunc(client, message):
     else:
 
         try:
-            if type == "document":
-                await client.send_document(
-                    chat_id,
-                    document=metadata_path if _bool_metadata else file_path,
-                    thumb=ph_path,
-                    caption=caption,
-                    progress=progress_for_pyrogram,
-                    progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
-            elif type == "video":
-                await client.send_video(
-                    chat_id,
-                    video=metadata_path if _bool_metadata else file_path,
-                    caption=caption,
-                    thumb=ph_path,
-                    width=width,
-                    height=height,
-                    duration=duration,
-                    progress=progress_for_pyrogram,
-                    progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
-            elif type == "audio":
-                await client.send_audio(
-                    chat_id,
-                    audio=metadata_path if _bool_metadata else file_path,
-                    caption=caption,
-                    thumb=ph_path,
-                    duration=duration,
-                    progress=progress_for_pyrogram,
-                    progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+           await client.send_document(
+                chat_id,
+                document=metadata_path if _bool_metadata else file_path,
+                thumb=ph_path,
+                caption=caption,
+                progress=progress_for_pyrogram,
+                progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
         except Exception as e:
             os.remove(file_path)
             if ph_path:
