@@ -40,7 +40,7 @@ async def refunc(client, message):
     filesize = humanize.naturalsize(file.file_size)
     new_name = filename
     s=await message.reply_text(f"**1**")
-    media = getattr(file, file.media.value)
+    media = file
     s=await message.reply_text(f"**2**")
     if not "." in new_name:
         if "." in media.file_name:
@@ -54,11 +54,11 @@ async def refunc(client, message):
     prefix = await db.get_prefix(message.message.chat.id)
     suffix = await db.get_suffix(message.message.chat.id)
     new_filename_ = new_name.split(":-")[1]
-
+    s=await message.reply_text(f"**4**")
     try:
         # adding prefix and suffix
         new_filename = add_prefix_suffix(new_filename_, prefix, suffix)
-
+    
     except Exception as e:
         return await client.send_message(
             chat_id=message.chat.id,
@@ -66,8 +66,10 @@ async def refunc(client, message):
                  f"🎋 For support, forward this message to my creator <a href='https://t.me/Syd_Xyz'>ᴍʀ ѕчδ 🌍</a>\nError: {e}",
             parse_mode="html"
         )
+    s=await message.reply_text(f"**5**")
     file_path = f"downloads/{new_filename}"
     file = message.message.reply_to_message
+    s=await message.reply_text(f"**6**")
 
     ms = await client.send_message(
         chat_id=message.chat.id,
