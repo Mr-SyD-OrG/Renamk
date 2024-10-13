@@ -56,7 +56,7 @@ async def refunc(client, message):
     s=await message.reply_text(f"**31**")
     suffix = await db.get_suffix(chat_id)
     s=await message.reply_text(f"**32**")
-    new_filename_ = new_name.split(":-")[1]
+    new_filename_ = new_name
     s=await message.reply_text(f"**4**")
     try:
         # adding prefix and suffix
