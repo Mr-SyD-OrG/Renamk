@@ -36,17 +36,3 @@ async def start(client, message):
         await message.reply_photo(random.choice(Config.PICS), caption=Txt.START_TXT.format(user.mention), reply_markup=button)
     else:
         await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
-
-
-@Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
-async def rename_start(client, message):
-    file = getattr(message, message.media.value)
-    filename = file.file_name
-    filesize = humanize.naturalsize(file.file_size)
-    
-    if file.file_size > 2000 * 1024 * 1024:
-        if not await db.is_user_bot_exist(Config.ADMIN[0]):
-            return await message.reply_text("**⚠️ Sᴏʀʀy Bʀᴏ, Yᴏᴜ ᴀʀᴇ ɴᴏᴛ ᴀ ᴩʀᴇᴍɪᴜᴍ ᴜꜱᴇʀ 🥺..... ᴩʟᴇᴀꜱᴇ ʙᴇᴄᴀᴍᴇ..... ⚡**")
-
-    except:
-        pass
