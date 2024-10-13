@@ -30,8 +30,11 @@ async def rename(bot, update):
 # Define the main message handler for private messages with replies
 
 
-@Client.on_message(filters.private & filters.reply)
+@Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def refunc(client, message):
+    file = getattr(message, message.media.value)
+    filename = ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
+    filesize = humanize.naturalsize(file.file_size)
     reply_message = message.reply_to_message
     if isinstance(reply_message.reply_markup, ForceReply):
         new_name = message.text
