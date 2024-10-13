@@ -1,4 +1,5 @@
 import random
+import humanize
 from helper.ffmpeg import fix_thumb, take_screen_shot
 from pyrogram import Client, filters
 from pyrogram.errors import ChatAdminRequired
