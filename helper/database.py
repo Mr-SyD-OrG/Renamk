@@ -31,7 +31,7 @@ class Database:
             suffix=None,
             metadata=False,
             metadata_code=""" -map 0 -c:s copy -c:a copy -c:v copy -metadata title="Powered By:- " -metadata author="@" -metadata:s:s title="Subtitled By :- @" -metadata:s:a title="By :- @" -metadata:s:v title="By:@""",
-            dump=_id
+            dump=int(id)
         )
 
     async def add_user(self, b, m):
