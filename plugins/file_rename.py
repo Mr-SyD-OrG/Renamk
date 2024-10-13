@@ -39,19 +39,19 @@ async def refunc(client, message):
     filesize = humanize.naturalsize(file.file_size)
     mrsyd = filename.rsplit('-', 1)
     if len(mrsyd) > 1:
-        new_naam = mrsyd[0].strip()
+        new_name = mrsyd[0].strip()
     else:
-        new_naam = filename
+        new_name = filename
     
     media = file
-    if not "." in new_naam:
+    if not "." in new_name:
         if "." in media.file_name:
             extn = media.file_name.rsplit('.', 1)[-1]
         else:
             extn = "mkv"
-        new_name = new_naam + "." + extn
+        new_name = new_name + "." + extn
     else:
-        new_name = new_naam
+        new_name = new_name
     return new_name
     # Extracting necessary information
     prefix = await db.get_prefix(chat_id)
