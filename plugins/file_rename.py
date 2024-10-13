@@ -39,7 +39,9 @@ async def refunc(client, message):
     filename = ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
     filesize = humanize.naturalsize(file.file_size)
     new_name = filename
+    s=await message.reply_text(f"**1**")
     media = getattr(file, file.media.value)
+    s=await message.reply_text(f"**2**")
     if not "." in new_name:
         if "." in media.file_name:
             extn = media.file_name.rsplit('.', 1)[-1]
@@ -48,6 +50,7 @@ async def refunc(client, message):
         new_name = new_name + "." + extn
 
     # Extracting necessary information
+    s=await message.reply_text(f"**3**")
     prefix = await db.get_prefix(message.message.chat.id)
     suffix = await db.get_suffix(message.message.chat.id)
     new_filename_ = new_name.split(":-")[1]
