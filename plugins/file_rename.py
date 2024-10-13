@@ -176,8 +176,9 @@ async def refunc(client, message):
     else:
 
         try:
+           syd_id = await db.get_dump(chat_id)
            await client.send_document(
-                chat_id,
+                syd_id,
                 document=metadata_path if _bool_metadata else file_path,
                 thumb=ph_path,
                 caption=caption,
