@@ -32,6 +32,7 @@ async def rename(bot, update):
 
 @Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def refunc(client, message):
+    await message.reply_text(f"**😢 You Don'tplan**")
     file = getattr(message, message.media.value)
     filename = ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
     filesize = humanize.naturalsize(file.file_size)
