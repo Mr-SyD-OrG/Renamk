@@ -49,7 +49,6 @@ async def refunc(client, message):
 
     # Extracting necessary information
     s=await message.reply_text(f"**😢 n**")
-    await s.delete()
     prefix = await db.get_prefix(message.message.chat.id)
     suffix = await db.get_suffix(message.message.chat.id)
     new_filename_ = new_name.split(":-")[1]
