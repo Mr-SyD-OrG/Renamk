@@ -35,10 +35,7 @@ async def refunc(client, message):
     file = getattr(message, message.media.value)
     filename = ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
     filesize = humanize.naturalsize(file.file_size)
-    reply_message = message.reply_to_message
     new_name = filename
-    msg = await client.get_messages(message.chat.id, reply_message.id)
-    file = msg.reply_to_message
     media = getattr(file, file.media.value)
     if not "." in new_name:
         if "." in media.file_name:
@@ -46,41 +43,10 @@ async def refunc(client, message):
         else:
             extn = "mkv"
         new_name = new_name + "." + extn
-    await reply_message.delete()
-
-        # Use a list to store the inline keyboard buttons
-    button = [
-        [InlineKeyboardButton(
-            "📁 Dᴏᴄᴜᴍᴇɴᴛ", callback_data="upload_document")]
-    ]
-    if file.media in [MessageMediaType.VIDEO, MessageMediaType.DOCUMENT]:
-        button.append([InlineKeyboardButton(
-            "🎥 Vɪᴅᴇᴏ", callback_data="upload_video")])
-    elif file.media == MessageMediaType.AUDIO:
-        button.append([InlineKeyboardButton(
-            "🎵 Aᴜᴅɪᴏ", callback_data="upload_audio")])
-
-        # Use a single call to reply with both text and inline keyboard
-    await message.reply(
-        text=f"**Sᴇʟᴇᴄᴛ Tʜᴇ Oᴜᴛᴩᴜᴛ Fɪʟᴇ Tyᴩᴇ**\n**• Fɪʟᴇ Nᴀᴍᴇ :-**  `{new_name}`",
-        reply_to_message_id=file.id,
-        reply_markup=InlineKeyboardMarkup(button)
-    )
-
-# Define the callback for the 'upload' buttons
-
-
-@Client.on_callback_query(filters.regex("upload"))
-async def doc(bot, update):
-
-    # Creating Directory for Metadata
-    if not os.path.isdir("Metadata"):
-        os.mkdir("Metadata")
 
     # Extracting necessary information
-    prefix = await db.get_prefix(update.message.chat.id)
-    suffix = await db.get_suffix(update.message.chat.id)
-    new_name = update.message.text
+    prefix = await db.get_prefix(message.message.chat.id)
+    suffix = await db.get_suffix(message.message.chat.id)
     new_filename_ = new_name.split(":-")[1]
 
     try:
@@ -88,12 +54,12 @@ async def doc(bot, update):
         new_filename = add_prefix_suffix(new_filename_, prefix, suffix)
 
     except Exception as e:
-        return await update.message.edit(f"⚠️ Sᴏᴍᴇᴛʜɪɴ Wᴇɴᴛ Wʀᴏɴɢ CᴀN'ᴛ ʙʟᴇ Tᴏ Sᴇᴛ <b>Pʀᴇꜰɪx</b> oʀ <b>Sᴜꜰꜰɪx</b> ☹️ \n\n🎋Nᴇᴇᴅ Sᴜᴩᴩᴏʀᴛ, Fᴏʀᴡᴀʀᴅ Tʜɪꜱ Mᴇꜱꜱᴀɢᴇ Tᴏ Mʏ Cʀᴇᴀᴛᴏʀ <a href=https://t.me/Syd_Xyz>ᴍʀ ѕчδ 🌍</a>\nεɾɾσɾ: {e}")
+        return await message.message.edit(f"⚠️ Sᴏᴍᴇᴛʜɪɴ Wᴇɴᴛ Wʀᴏɴɢ CᴀN'ᴛ ʙʟᴇ Tᴏ Sᴇᴛ <b>Pʀᴇꜰɪx</b> oʀ <b>Sᴜꜰꜰɪx</b> ☹️ \n\n🎋Nᴇᴇᴅ Sᴜᴩᴩᴏʀᴛ, Fᴏʀᴡᴀʀᴅ Tʜɪꜱ Mᴇꜱꜱᴀɢᴇ Tᴏ Mʏ Cʀᴇᴀᴛᴏʀ <a href=https://t.me/Syd_Xyz>ᴍʀ ѕчδ 🌍</a>\nεɾɾσɾ: {e}")
 
     file_path = f"downloads/{new_filename}"
     file = update.message.reply_to_message
 
-    ms = await update.message.edit(" __**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**🥺__\n\n**Dᴏᴡɴʟᴏᴀᴅɪɴɢ....⏳**")
+    ms = await message.message.edit(" __**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**🥺__\n\n**Dᴏᴡɴʟᴏᴀᴅɪɴɢ....⏳**")
     try:
         path = await bot.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("\n⚠️ __**Please wait...**__\n\n❄️ **Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
     except Exception as e:
