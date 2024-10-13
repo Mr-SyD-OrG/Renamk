@@ -33,16 +33,12 @@ async def rename(bot, update):
 
 @Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def refunc(client, message):
-    s=await message.reply_text(f"**😢 You Don'tplan**")
-    await s.delete()
     chat_id = message.chat.id
     file = getattr(message, message.media.value)
-    filename = ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
+    filename = ' '.join(filter(lambda x: not x.startswith('PSA') and not x.startswith('PAHE') and not x.startswith('GalaxyRG') and not x.startswith('-Bigil') and not x.startswith('-TR') and not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
     filesize = humanize.naturalsize(file.file_size)
     new_name = filename
-    s=await message.reply_text(f"**1**")
     media = file
-    s=await message.reply_text(f"**2**")
     if not "." in new_name:
         if "." in media.file_name:
             extn = media.file_name.rsplit('.', 1)[-1]
@@ -51,13 +47,9 @@ async def refunc(client, message):
         new_name = new_name + "." + extn
 
     # Extracting necessary information
-    s=await message.reply_text(f"**3**")
     prefix = await db.get_prefix(chat_id)
-    s=await message.reply_text(f"**31**")
     suffix = await db.get_suffix(chat_id)
-    s=await message.reply_text(f"**32**")
     new_filename_ = new_name
-    s=await message.reply_text(f"**4**")
     try:
         # adding prefix and suffix
         new_filename = add_prefix_suffix(new_filename_, prefix, suffix)
@@ -72,7 +64,6 @@ async def refunc(client, message):
     file_path = f"downloads/{new_filename}"
     file = media
 
-    s=await message.reply_text(f"**52**")
     ms = await client.send_message(
         chat_id=message.chat.id,
         text="__**Please wait...**🥺__\n\n**Downloading...⏳**"
@@ -85,7 +76,6 @@ async def refunc(client, message):
     _bool_metadata = await db.get_metadata(chat_id)
 
 
-    s=await message.reply_text(f"**100**")
     if (_bool_metadata):
         metadata_path = f"Metadata/{new_filename}"
         metadata = await db.get_metadata_code(update.message.chat.id)
@@ -116,7 +106,6 @@ async def refunc(client, message):
         await ms.edit("__**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**😇__\n\n**Uᴩʟᴏᴀᴅɪɴɢ....🗯️**")
 
     duration = 0
-    s=await message.reply_text(f"**101**")
     try:
         parser = createParser(file_path)
         metadata = extractMetadata(parser)
@@ -130,7 +119,6 @@ async def refunc(client, message):
     media = file
     c_caption = await db.get_caption(chat_id)
     c_thumb = await db.get_thumbnail(chat_id)
-    s=await message.reply_text(f"**1002**")
 
     if c_caption:
         try:
@@ -141,7 +129,6 @@ async def refunc(client, message):
     else:
         caption = f"**{new_filename}**"
 
-    s=await message.reply_text(f"**100r**")
     if (media.thumbs or c_thumb):
         if c_thumb:
             ph_path = await client.download_media(c_thumb)
@@ -154,11 +141,8 @@ async def refunc(client, message):
                 ph_path = None
                 print(e)
      
-    s=await message.reply_text(f"**1005**")
-    s=await message.reply_text(f"**10055**")
     user_bot = await db.get_user_bot(Config.ADMIN[0])
 
-    s=await message.reply_text(f"**1006**")
     if media.file_size > 2000 * 1024 * 1024:
         try:
             app = await start_clone_bot(client(user_bot['session']))
