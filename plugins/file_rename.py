@@ -37,8 +37,7 @@ async def refunc(client, message):
     filesize = humanize.naturalsize(file.file_size)
     reply_message = message.reply_to_message
     if isinstance(reply_message.reply_markup, ForceReply):
-        new_name = message.text
-        await message.delete()
+        new_name = filename
         msg = await client.get_messages(message.chat.id, reply_message.id)
         file = msg.reply_to_message
         media = getattr(file, file.media.value)
