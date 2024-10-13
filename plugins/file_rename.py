@@ -124,7 +124,7 @@ async def refunc(client, message):
     except:
         pass
     ph_path = None
-    media = getattr(file, file.media.value)
+    media = file
     c_caption = await db.get_caption(chat_id)
     c_thumb = await db.get_thumbnail(chat_id)
 
@@ -149,7 +149,7 @@ async def refunc(client, message):
                 ph_path = None
                 print(e)
 
-    type = update.data.split("_")[1]
+    type = message.data.split("_")[1]
     user_bot = await db.get_user_bot(Config.ADMIN[0])
 
     if media.file_size > 2000 * 1024 * 1024:
