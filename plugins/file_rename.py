@@ -153,7 +153,8 @@ async def refunc(client, message):
             except Exception as e:
                 ph_path = None
                 print(e)
-
+     
+    s=await message.reply_text(f"**1005**")
     type = message.data.split("_")[1]
     user_bot = await db.get_user_bot(Config.ADMIN[0])
 
