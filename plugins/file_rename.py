@@ -69,11 +69,8 @@ async def refunc(client, message):
                  f"🎋 For support, forward this message to my creator <a href='https://t.me/Syd_Xyz'>ᴍʀ ѕчδ 🌍</a>\nError: {e}",
             parse_mode="html"
         )
-    s=await message.reply_text(f"**5**")
     file_path = f"downloads/{new_filename}"
-    s=await message.reply_text(f"**51**")
     file = media
-    s=await message.reply_text(f"**6**")
 
     s=await message.reply_text(f"**52**")
     ms = await client.send_message(
@@ -81,7 +78,7 @@ async def refunc(client, message):
         text="__**Please wait...**🥺__\n\n**Downloading...⏳**"
     )
     try:
-        path = await bot.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("\n⚠️ __**Please wait...**__\n\n❄️ **Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+        path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("\n⚠️ __**Please wait...**__\n\n❄️ **Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
     except Exception as e:
         return await ms.edit(e)
 
