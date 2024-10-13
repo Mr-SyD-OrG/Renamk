@@ -188,7 +188,7 @@ async def refunc(client, message):
                 from_chat = filw.chat.id
                 mg_id = filw.id
                 time.sleep(2)
-                await client.copy_message(update.from_user.id, from_chat, mg_id)
+                await client.copy_message(message.from_user.id, from_chat, mg_id)
                 await ms.delete()
                 await client.delete_messages(from_chat, mg_id)
             elif type == "audio":
@@ -204,7 +204,7 @@ async def refunc(client, message):
                 from_chat = filw.chat.id
                 mg_id = filw.id
                 time.sleep(2)
-                await client.copy_message(update.from_user.id, from_chat, mg_id)
+                await client.copy_message(message.from_user.id, from_chat, mg_id)
                 await ms.delete()
                 await client.delete_messages(from_chat, mg_id)
 
@@ -223,7 +223,7 @@ async def refunc(client, message):
         try:
             if type == "document":
                 await client.send_document(
-                    update.message.chat.id,
+                    chat_id,
                     document=metadata_path if _bool_metadata else file_path,
                     thumb=ph_path,
                     caption=caption,
@@ -231,7 +231,7 @@ async def refunc(client, message):
                     progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
             elif type == "video":
                 await client.send_video(
-                    update.message.chat.id,
+                    chat_id,
                     video=metadata_path if _bool_metadata else file_path,
                     caption=caption,
                     thumb=ph_path,
@@ -241,8 +241,8 @@ async def refunc(client, message):
                     progress=progress_for_pyrogram,
                     progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
             elif type == "audio":
-                await bot.send_audio(
-                    update.message.chat.id,
+                await client.send_audio(
+                    chat_id,
                     audio=metadata_path if _bool_metadata else file_path,
                     caption=caption,
                     thumb=ph_path,
