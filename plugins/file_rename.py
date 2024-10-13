@@ -39,7 +39,7 @@ async def refunc(client, message):
     filesize = humanize.naturalsize(file.file_size)
     mrsyd = filename.rsplit('-', 1)
     if len(mrsyd) > 1:
-        new_name = parts[0].strip()
+        new_name = mrsyd[0].strip()
     else:
         new_name = filename
     
