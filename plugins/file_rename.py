@@ -37,7 +37,12 @@ async def refunc(client, message):
     file = getattr(message, message.media.value)
     filename = ' '.join(filter(lambda x: not x.startswith('-PrimeFix') and not x.startswith('-HDA') and not x.startswith('-PSA') and not x.startswith('-PAHE') and not x.startswith('-GalaxyRG') and not x.startswith('-Bigil') and not x.startswith('-TR') and not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
     filesize = humanize.naturalsize(file.file_size)
-    new_name = filename
+    new_nae = filename.rsplit('-', 1)
+    if len(parts) > 1:
+        new_name = parts[0].strip()
+    else:
+        new_name = filename
+    
     media = file
     if not "." in new_name:
         if "." in media.file_name:
