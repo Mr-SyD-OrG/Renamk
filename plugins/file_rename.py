@@ -125,8 +125,8 @@ async def refunc(client, message):
         pass
     ph_path = None
     media = getattr(file, file.media.value)
-    c_caption = await db.get_caption(update.message.chat.id)
-    c_thumb = await db.get_thumbnail(update.message.chat.id)
+    c_caption = await db.get_caption(chat_id)
+    c_thumb = await db.get_thumbnail(chat_id)
 
     if c_caption:
         try:
@@ -139,7 +139,7 @@ async def refunc(client, message):
 
     if (media.thumbs or c_thumb):
         if c_thumb:
-            ph_path = await bot.download_media(c_thumb)
+            ph_path = await client.download_media(c_thumb)
             width, height, ph_path = await fix_thumb(ph_path)
         else:
             try:
@@ -169,9 +169,9 @@ async def refunc(client, message):
                 from_chat = filw.chat.id
                 mg_id = filw.id
                 time.sleep(2)
-                await bot.copy_message(update.from_user.id, from_chat, mg_id)
+                await client.copy_message(update.from_user.id, from_chat, mg_id)
                 await ms.delete()
-                await bot.delete_messages(from_chat, mg_id)
+                await client.delete_messages(from_chat, mg_id)
 
             elif type == "video":
                 filw = await app.send_video(
@@ -188,9 +188,9 @@ async def refunc(client, message):
                 from_chat = filw.chat.id
                 mg_id = filw.id
                 time.sleep(2)
-                await bot.copy_message(update.from_user.id, from_chat, mg_id)
+                await client.copy_message(update.from_user.id, from_chat, mg_id)
                 await ms.delete()
-                await bot.delete_messages(from_chat, mg_id)
+                await client.delete_messages(from_chat, mg_id)
             elif type == "audio":
                 filw = await app.send_audio(
                     Config.LOG_CHANNEL,
@@ -204,9 +204,9 @@ async def refunc(client, message):
                 from_chat = filw.chat.id
                 mg_id = filw.id
                 time.sleep(2)
-                await bot.copy_message(update.from_user.id, from_chat, mg_id)
+                await client.copy_message(update.from_user.id, from_chat, mg_id)
                 await ms.delete()
-                await bot.delete_messages(from_chat, mg_id)
+                await client.delete_messages(from_chat, mg_id)
 
         except Exception as e:
             os.remove(file_path)
@@ -222,7 +222,7 @@ async def refunc(client, message):
 
         try:
             if type == "document":
-                await bot.send_document(
+                await client.send_document(
                     update.message.chat.id,
                     document=metadata_path if _bool_metadata else file_path,
                     thumb=ph_path,
@@ -230,7 +230,7 @@ async def refunc(client, message):
                     progress=progress_for_pyrogram,
                     progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
             elif type == "video":
-                await bot.send_video(
+                await client.send_video(
                     update.message.chat.id,
                     video=metadata_path if _bool_metadata else file_path,
                     caption=caption,
