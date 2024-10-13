@@ -155,7 +155,6 @@ async def refunc(client, message):
                 print(e)
      
     s=await message.reply_text(f"**1005**")
-    type = message.data.split("_")[1]
     s=await message.reply_text(f"**10055**")
     user_bot = await db.get_user_bot(Config.ADMIN[0])
 
