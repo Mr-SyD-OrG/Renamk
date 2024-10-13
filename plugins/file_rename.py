@@ -36,37 +36,36 @@ async def refunc(client, message):
     filename = ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
     filesize = humanize.naturalsize(file.file_size)
     reply_message = message.reply_to_message
-    if isinstance(reply_message.reply_markup, ForceReply):
-        new_name = filename
-        msg = await client.get_messages(message.chat.id, reply_message.id)
-        file = msg.reply_to_message
-        media = getattr(file, file.media.value)
-        if not "." in new_name:
-            if "." in media.file_name:
-                extn = media.file_name.rsplit('.', 1)[-1]
-            else:
-                extn = "mkv"
-            new_name = new_name + "." + extn
-        await reply_message.delete()
+    new_name = filename
+    msg = await client.get_messages(message.chat.id, reply_message.id)
+    file = msg.reply_to_message
+    media = getattr(file, file.media.value)
+    if not "." in new_name:
+        if "." in media.file_name:
+            extn = media.file_name.rsplit('.', 1)[-1]
+        else:
+            extn = "mkv"
+        new_name = new_name + "." + extn
+    await reply_message.delete()
 
         # Use a list to store the inline keyboard buttons
-        button = [
-            [InlineKeyboardButton(
-                "📁 Dᴏᴄᴜᴍᴇɴᴛ", callback_data="upload_document")]
-        ]
-        if file.media in [MessageMediaType.VIDEO, MessageMediaType.DOCUMENT]:
-            button.append([InlineKeyboardButton(
-                "🎥 Vɪᴅᴇᴏ", callback_data="upload_video")])
-        elif file.media == MessageMediaType.AUDIO:
-            button.append([InlineKeyboardButton(
-                "🎵 Aᴜᴅɪᴏ", callback_data="upload_audio")])
+    button = [
+        [InlineKeyboardButton(
+            "📁 Dᴏᴄᴜᴍᴇɴᴛ", callback_data="upload_document")]
+    ]
+    if file.media in [MessageMediaType.VIDEO, MessageMediaType.DOCUMENT]:
+        button.append([InlineKeyboardButton(
+            "🎥 Vɪᴅᴇᴏ", callback_data="upload_video")])
+    elif file.media == MessageMediaType.AUDIO:
+        button.append([InlineKeyboardButton(
+            "🎵 Aᴜᴅɪᴏ", callback_data="upload_audio")])
 
         # Use a single call to reply with both text and inline keyboard
-        await message.reply(
-            text=f"**Sᴇʟᴇᴄᴛ Tʜᴇ Oᴜᴛᴩᴜᴛ Fɪʟᴇ Tyᴩᴇ**\n**• Fɪʟᴇ Nᴀᴍᴇ :-**  `{new_name}`",
-            reply_to_message_id=file.id,
-            reply_markup=InlineKeyboardMarkup(button)
-        )
+    await message.reply(
+        text=f"**Sᴇʟᴇᴄᴛ Tʜᴇ Oᴜᴛᴩᴜᴛ Fɪʟᴇ Tyᴩᴇ**\n**• Fɪʟᴇ Nᴀᴍᴇ :-**  `{new_name}`",
+        reply_to_message_id=file.id,
+        reply_markup=InlineKeyboardMarkup(button)
+    )
 
 # Define the callback for the 'upload' buttons
 
