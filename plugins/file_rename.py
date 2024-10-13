@@ -35,6 +35,7 @@ async def rename(bot, update):
 async def refunc(client, message):
     s=await message.reply_text(f"**😢 You Don'tplan**")
     await s.delete()
+    chat_id = message.chat.id
     file = getattr(message, message.media.value)
     filename = ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
     filesize = humanize.naturalsize(file.file_size)
@@ -51,8 +52,10 @@ async def refunc(client, message):
 
     # Extracting necessary information
     s=await message.reply_text(f"**3**")
-    prefix = await db.get_prefix(message.chat.id)
-    suffix = await db.get_suffix(message.chat.id)
+    prefix = await db.get_prefix(chat_id)
+    s=await message.reply_text(f"**31**")
+    suffix = await db.get_suffix(chat_id)
+    s=await message.reply_text(f"**32**")
     new_filename_ = new_name.split(":-")[1]
     s=await message.reply_text(f"**4**")
     try:
