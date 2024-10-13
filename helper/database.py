@@ -85,8 +85,8 @@ class Database:
         user = await self.col.find_one({'_id': int(id)})
         return user.get('caption', None)
 
-    async def set_dump(self, id, dump):
-        await self.col.update_one({'_id': int(id)}, {'$set': {'dump': dump}})
+    async def set_dump(self, id, dump: int):
+        await self.col.update_one({'_id': int(id)}, {'$set': {'dump': int(dump)}})
 
     async def get_dump(self, id):
         user = await self.col.find_one({'_id': int(id)})
