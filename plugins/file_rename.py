@@ -71,9 +71,11 @@ async def refunc(client, message):
         )
     s=await message.reply_text(f"**5**")
     file_path = f"downloads/{new_filename}"
+    s=await message.reply_text(f"**51**")
     file = message.message.reply_to_message
     s=await message.reply_text(f"**6**")
 
+    s=await message.reply_text(f"**52**")
     ms = await client.send_message(
         chat_id=message.chat.id,
         text="__**Please wait...**🥺__\n\n**Downloading...⏳**"
