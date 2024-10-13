@@ -84,6 +84,8 @@ async def refunc(client, message):
 
     _bool_metadata = await db.get_metadata(chat_id)
 
+
+    s=await message.reply_text(f"**100**")
     if (_bool_metadata):
         metadata_path = f"Metadata/{new_filename}"
         metadata = await db.get_metadata_code(update.message.chat.id)
@@ -114,6 +116,7 @@ async def refunc(client, message):
         await ms.edit("__**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**😇__\n\n**Uᴩʟᴏᴀᴅɪɴɢ....🗯️**")
 
     duration = 0
+    s=await message.reply_text(f"**101**")
     try:
         parser = createParser(file_path)
         metadata = extractMetadata(parser)
@@ -127,6 +130,7 @@ async def refunc(client, message):
     media = file
     c_caption = await db.get_caption(chat_id)
     c_thumb = await db.get_thumbnail(chat_id)
+    s=await message.reply_text(f"**1002**")
 
     if c_caption:
         try:
@@ -137,6 +141,7 @@ async def refunc(client, message):
     else:
         caption = f"**{new_filename}**"
 
+    s=await message.reply_text(f"**100r**")
     if (media.thumbs or c_thumb):
         if c_thumb:
             ph_path = await client.download_media(c_thumb)
@@ -152,6 +157,7 @@ async def refunc(client, message):
     type = message.data.split("_")[1]
     user_bot = await db.get_user_bot(Config.ADMIN[0])
 
+    s=await message.reply_text(f"**1006**")
     if media.file_size > 2000 * 1024 * 1024:
         try:
             app = await start_clone_bot(client(user_bot['session']))
