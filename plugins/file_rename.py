@@ -47,10 +47,8 @@ async def refunc(client, message):
     if not "." in new_name:
         if "." in media.file_name:
             extn = media.file_name.rsplit('.', 1)[-1]
-            if extn.lower() == "mkv":
-                new_name = new_name  # Keep the name unchanged if it's already "mkv"
-            else:
-                extn = "mkv"
+            if extn.lower() != "mkv":  # If the extension is not "mkv"
+                extn = "mkv"  # Keep the name unchanged if it's already "mkv
         else:
             extn = "mkv"
         new_name = f"{new_name}.{extn}"  # Add the extension to the new_name
