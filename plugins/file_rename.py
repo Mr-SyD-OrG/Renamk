@@ -50,9 +50,7 @@ async def refunc(client, message):
         else:
             extn = "mkv"
         new_name = new_name + "." + extn
-    else:
-        new_name = new_name
-    return new_name
+        
     # Extracting necessary information
     prefix = await db.get_prefix(chat_id)
     suffix = await db.get_suffix(chat_id)
