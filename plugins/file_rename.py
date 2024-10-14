@@ -49,7 +49,7 @@ async def refunc(client, message):
             extn = media.file_name.rsplit('.', 1)[-1]
         else:
             extn = "mkv"
-        new_name = new_name + "." + extn
+        new_name = f"{new_name}.{extn}"  # Add the extension to the new_name
         
     # Extracting necessary information
     prefix = await db.get_prefix(chat_id)
