@@ -50,7 +50,7 @@ async def refunc(client, message):
             if extn.lower() == "mkv":
                 new_name = new_name  # Keep the name unchanged if it's already "mkv"
             else:
-                new_name = f"{new_name}.mkv"
+                extn = "mkv"
         else:
             extn = "mkv"
         new_name = f"{new_name}.{extn}"  # Add the extension to the new_name
