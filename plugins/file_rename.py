@@ -154,7 +154,11 @@ async def refunc(client, message):
                 print(e)
      
     user_bot = await db.get_user_bot(Config.ADMIN[0])
-
+    insydze = os.path.getsize(file_path)
+    outsydze = os.path.getsize(metadata_path if _bool_metadata else file_path)
+    if insydze != outsydze:
+        await ms.edit(f"⚠️ Error(Te: {syd}")
+        return
     if media.file_size > 2000 * 1024 * 1024:
         try:
             app = await start_clone_bot(client(user_bot['session']))
