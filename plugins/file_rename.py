@@ -158,6 +158,7 @@ async def refunc(client, message):
     outsydze = os.path.getsize(metadata_path if _bool_metadata else file_path)
     if insydze != outsydze:
         await ms.edit(f"⚠️ Error(Te: {syd}")
+        os.remove(file_path)
         return
     if media.file_size > 2000 * 1024 * 1024:
         try:
