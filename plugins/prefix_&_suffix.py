@@ -73,7 +73,7 @@ async def add_dump(client, message):
 
     if len(message.command) == 1:
         return await message.reply_text("**__Give The Prefix__\n\nExᴀᴍᴩʟᴇ:- `/set_prefix @Roofiverse`**")
-    prefix = message.text.split(" ", 1)[1]
+    dump = message.text.split(" ", 1)[1]
     SyD = await message.reply_text("Please Wait ...", reply_to_message_id=message.id)
     await db.set_dump(message.from_user.id, dump)
     await SyD.edit("__**✅ ᴘʀᴇꜰɪx ꜱᴀᴠᴇᴅ**__")
@@ -83,8 +83,8 @@ async def add_dump(client, message):
 async def delete_dump(client, message):
 
     SyD = await message.reply_text("Please Wait ...", reply_to_message_id=message.id)
-    prefix = await db.get_dump(message.from_user.id)
-    if not prefix:
+    dump = await db.get_dump(message.from_user.id)
+    if not dump:
         return await SyD.edit("__**😔 ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴀɴʏ ᴘʀᴇꜰɪx**__")
     await db.set_dump(message.from_user.id, message.from_user.id)
     await SyD.edit("__**❌️ ᴘʀᴇꜰɪx ᴅᴇʟᴇᴛᴇᴅ**__")
@@ -94,8 +94,8 @@ async def delete_dump(client, message):
 async def see_dump(client, message):
 
     SyD = await message.reply_text("Please Wait ...", reply_to_message_id=message.id)
-    prefix = await db.get_dump(message.from_user.id)
-    if prefix:
+    dump = await db.get_dump(message.from_user.id)
+    if dump:
         await SyD.edit(f"**ʏᴏᴜʀ ᴘʀᴇꜰɪx:-**\n\n`{dump}`")
     else:
         await SyD.edit("__**😔 ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴀɴʏ ᴘʀᴇꜰɪx**__")
