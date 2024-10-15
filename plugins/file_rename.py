@@ -35,6 +35,7 @@ async def rename(bot, update):
 async def refunc(client, message):
     chat_id = message.chat.id
     file = getattr(message, message.media.value)
+    syd = file.file_name
     filename = ' '.join(filter(lambda x: not x.startswith('-PrimeFix') and not x.startswith('-HDA') and not x.startswith('-PSA') and not x.startswith('-PAHE') and not x.startswith('-GalaxyRG') and not x.startswith('-Bigil') and not x.startswith('-TR') and not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
     filesize = humanize.naturalsize(file.file_size)
     mrsyd = filename.rsplit('-', 1)
@@ -77,10 +78,10 @@ async def refunc(client, message):
 
     ms = await client.send_message(
         chat_id=message.chat.id,
-        text="__**Please wait...**🥺__\n\n**Downloading...⏳**"
+        text=f"__**{syd}**__\n\n**Downloading...⏳**"
     )
     try:
-        path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("\n⚠️ __**Please wait...**__\n\n❄️ **Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+        path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("\n⚠️ __**{syd}**__\n\n❄️ **Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
     except Exception as e:
         return await ms.edit(e)
 
