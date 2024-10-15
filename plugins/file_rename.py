@@ -154,12 +154,6 @@ async def refunc(client, message):
                 print(e)
      
     user_bot = await db.get_user_bot(Config.ADMIN[0])
-    insydze = os.path.getsize(file_path)
-    outsydze = os.path.getsize(metadata_path if _bool_metadata else file_path)
-    if insydze != outsydze:
-        await ms.edit(f"⚠️ Error(Te: {syd}")
-        os.remove(file_path)
-        return
     if media.file_size > 2000 * 1024 * 1024:
         try:
             app = await start_clone_bot(client(user_bot['session']))
@@ -201,6 +195,12 @@ async def refunc(client, message):
                 caption=caption,
                 progress=progress_for_pyrogram,
                 progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+           insydze = os.path.getsize(file_path)
+           outsydze = os.path.getsize(metadata_path if _bool_metadata else file_path)
+           if insydze != outsydze:
+               await ms.edit(f"⚠️ Error(Te: {syd}")
+               os.remove(file_path)
+               return
         except Exception as e:
             os.remove(file_path)
             if ph_path:
