@@ -188,14 +188,14 @@ async def refunc(client, message):
 
         try:
            syd_id = await db.get_dump(chat_id)
-           sud = await client.send_document(
+           sydmr = await client.send_document(
                 syd_id,
                 document=metadata_path if _bool_metadata else file_path,
                 thumb=ph_path,
                 caption=caption,
                 progress=progress_for_pyrogram,
                 progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
-           suda = getattr(sud, sud.media.value)
+           suda = getattr(sydmr, sydmr.media.value)
            uploaded_size = suda.file_size
            if uploaded_size == media.file_size:
                await client.copy_message(message.from_user.id, sud.chat.id, sud.id)
