@@ -198,12 +198,11 @@ async def refunc(client, message):
            uploaded_file_size = await client.get_file(sud.document.file_id)  # Get the uploaded file's size
            uploaded_size = uploaded_file_size.file_size
            if uploaded_size == media.file_size:
-               insydze = media.file_size
-               outsydze = sud.file_size
-               if insydze != outsydze:
-                   await ms.edit(f"⚠️ Error(Te: {syd}")
-                   os.remove(file_path)
-                   return
+               await ms.edit(f"✅ File uploaded successfully!")
+           else:
+               # The sizes do not match, handle the error
+               await ms.edit("⚠️ **Uploaded file size does not match the original file size.**")
+               os.remove(file_path)
         except Exception as e:
             os.remove(file_path)
             if ph_path:
