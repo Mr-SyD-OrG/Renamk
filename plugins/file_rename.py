@@ -188,27 +188,14 @@ async def refunc(client, message):
 
         try:
            syd_id = await db.get_dump(chat_id)
-           sydmr = await client.send_document(
+           await client.send_document(
                 syd_id,
                 document=metadata_path if _bool_metadata else file_path,
                 thumb=ph_path,
                 caption=caption,
                 progress=progress_for_pyrogram,
                 progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
-           suda = getattr(sydmr, sydmr.media.value)
-           uploaded_size = suda.file_size
-           if uploaded_size == media.file_size:
-               await client.copy_message(message.from_user.id, sud.chat.id, sud.id)
-               await ms.delete()
-           else:
-               # The sizes do not match, handle the error
-               await ms.edit("⚠️ **Uploaded file size does not match the original file size.**")
-               if os.path.exists(file_path):
-                   os.remove(file_path)
-               if ph_path and os.path.exists(ph_path):
-                   os.remove(ph_path)
-               if metadata_path and os.path.exists(metadata_path):
-                   os.remove(metadata_path)
+           
         except Exception as e:
             os.remove(file_path)
             if ph_path:
