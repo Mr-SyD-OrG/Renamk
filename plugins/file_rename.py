@@ -195,7 +195,7 @@ async def refunc(client, message):
                 caption=caption,
                 progress=progress_for_pyrogram,
                 progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
-           insydze = os.path.getsize(file_path)
+           insydze = humanbytes(media.file_size)
            outsydze = os.path.getsize(metadata_path if _bool_metadata else file_path)
            if insydze != outsydze:
                await ms.edit(f"⚠️ Error(Te: {syd}")
