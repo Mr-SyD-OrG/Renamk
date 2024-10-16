@@ -198,10 +198,17 @@ async def refunc(client, message):
            suda = getattr(sud, sud.media.value)
            uploaded_size = suda.file_size
            if uploaded_size == media.file_size:
-               await ms.edit(f"✅ File uploaded successfully!")
+               await client.copy_message(message.from_user.id, sud.chat.id, sud.id)
+               await ms.delete()
            else:
                # The sizes do not match, handle the error
                await ms.edit("⚠️ **Uploaded file size does not match the original file size.**")
+               if os.path.exists(file_path):
+                   os.remove(file_path)
+               if ph_path and os.path.exists(ph_path):
+                   os.remove(ph_path)
+               if metadata_path and os.path.exists(metadata_path):
+                   os.remove(metadata_path)
         except Exception as e:
             os.remove(file_path)
             if ph_path:
