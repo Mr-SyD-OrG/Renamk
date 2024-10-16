@@ -195,14 +195,13 @@ async def refunc(client, message):
                 caption=caption,
                 progress=progress_for_pyrogram,
                 progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
-           uploaded_file_size = await client.get_file(sud.document.file_id)  # Get the uploaded file's size
-           uploaded_size = uploaded_file_size.file_size
+           suda = getattr(sud, sud.media.value)
+           uploaded_size = suda.file_size
            if uploaded_size == media.file_size:
                await ms.edit(f"✅ File uploaded successfully!")
            else:
                # The sizes do not match, handle the error
                await ms.edit("⚠️ **Uploaded file size does not match the original file size.**")
-               os.remove(file_path)
         except Exception as e:
             os.remove(file_path)
             if ph_path:
