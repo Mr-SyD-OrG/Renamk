@@ -102,21 +102,21 @@ async def refunc(client, message):
                      cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
                  )
 
-              stdout, stderr = await process.communicate()
-              er = stderr.decode()
+             stdout, stderr = await process.communicate()
+             er = stderr.decode()
 
               
-              if er:
-                    try:
-                        os.remove(path)
-                        os.remove(metadata_path)
-                    except:
-                        pass
-                    return await ms.edit(str(er) + "\n\n**Error**")
+             if er:
+                   try:
+                       os.remove(path)
+                       os.remove(metadata_path)
+                   except:
+                       pass
+                   return await ms.edit(str(er) + "\n\n**Error**")
 
-            await ms.edit("**Metadata added to the file successfully ✅**\n\n⚠️ __**Please wait...**__\n\n**Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....**")
+           await ms.edit("**Metadata added to the file successfully ✅**\n\n⚠️ __**Please wait...**__\n\n**Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....**")
         else:
-            await ms.edit("__**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**😇__\n\n**Uᴩʟᴏᴀᴅɪɴɢ....🗯️**")
+           await ms.edit("__**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**😇__\n\n**Uᴩʟᴏᴀᴅɪɴɢ....🗯️**")
     duration = 0
     try:
         parser = createParser(file_path)
