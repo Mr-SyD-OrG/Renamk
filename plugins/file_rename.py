@@ -105,20 +105,18 @@ async def refunc(client, message):
               stdout, stderr = await process.communicate()
               er = stderr.decode()
 
-             try:
-                 if er:
-                     try:
-                         os.remove(path)
-                         os.remove(metadata_path)
-                     except:
-                         pass
-                     return await ms.edit(str(er) + "\n\n**Error**")
-             except BaseException:
-                 pass
-         await ms.edit("**Metadata added to the file successfully ✅**\n\n⚠️ __**Please wait...**__\n\n**Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....**")
-     else:
-         await ms.edit("__**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**😇__\n\n**Uᴩʟᴏᴀᴅɪɴɢ....🗯️**")
+              
+              if er:
+                    try:
+                        os.remove(path)
+                        os.remove(metadata_path)
+                    except:
+                        pass
+                    return await ms.edit(str(er) + "\n\n**Error**")
 
+            await ms.edit("**Metadata added to the file successfully ✅**\n\n⚠️ __**Please wait...**__\n\n**Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....**")
+        else:
+            await ms.edit("__**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**😇__\n\n**Uᴩʟᴏᴀᴅɪɴɢ....🗯️**")
     duration = 0
     try:
         parser = createParser(file_path)
