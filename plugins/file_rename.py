@@ -20,6 +20,8 @@ from info import AUTH_CHANNEL
 
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
+sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
+
 
 @Client.on_callback_query(filters.regex('rename'))
 async def rename(bot, update):
@@ -75,47 +77,47 @@ async def refunc(client, message):
         )
     file_path = f"downloads/{new_filename}"
     file = media
+    async with sydtg:
+        ms = await client.send_message(
+             chat_id=message.chat.id,
+             text=f"__**{syd}**__\n\n**Downloading...⏳**"
+        )
+        try:
+            path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("\n⚠️ __**{syd}**__\n\n❄️ **Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+        except Exception as e:
+            return await ms.edit(e)
 
-    ms = await client.send_message(
-        chat_id=message.chat.id,
-        text=f"__**{syd}**__\n\n**Downloading...⏳**"
-    )
-    try:
-        path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("\n⚠️ __**{syd}**__\n\n❄️ **Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
-    except Exception as e:
-        return await ms.edit(e)
-
-    _bool_metadata = await db.get_metadata(chat_id)
+        _bool_metadata = await db.get_metadata(chat_id)
 
 
-    if (_bool_metadata):
-        metadata_path = f"Metadata/{new_filename}"
-        metadata = await db.get_metadata_code(update.message.chat.id)
-        if metadata:
+        if (_bool_metadata):
+             metadata_path = f"Metadata/{new_filename}"
+             metadata = await db.get_metadata_code(update.message.chat.id)
+             if metadata:
 
-            await ms.edit("I Fᴏᴜɴᴅ Yᴏᴜʀ Mᴇᴛᴀᴅᴀᴛᴀ\n\n__**Pʟᴇᴀsᴇ Wᴀɪᴛ...**__\n**Aᴅᴅɪɴɢ Mᴇᴛᴀᴅᴀᴛᴀ Tᴏ Fɪʟᴇ....**")
-            cmd = f"""ffmpeg -i "{path}" {metadata} "{metadata_path}" """
+                 await ms.edit("I Fᴏᴜɴᴅ Yᴏᴜʀ Mᴇᴛᴀᴅᴀᴛᴀ\n\n__**Pʟᴇᴀsᴇ Wᴀɪᴛ...**__\n**Aᴅᴅɪɴɢ Mᴇᴛᴀᴅᴀᴛᴀ Tᴏ Fɪʟᴇ....**")
+                 cmd = f"""ffmpeg -i "{path}" {metadata} "{metadata_path}" """
 
-            process = await asyncio.create_subprocess_shell(
-                cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-            )
+                 process = await asyncio.create_subprocess_shell(
+                     cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+                 )
 
-            stdout, stderr = await process.communicate()
-            er = stderr.decode()
+              stdout, stderr = await process.communicate()
+              er = stderr.decode()
 
-            try:
-                if er:
-                    try:
-                        os.remove(path)
-                        os.remove(metadata_path)
-                    except:
-                        pass
-                    return await ms.edit(str(er) + "\n\n**Error**")
-            except BaseException:
-                pass
-        await ms.edit("**Metadata added to the file successfully ✅**\n\n⚠️ __**Please wait...**__\n\n**Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....**")
-    else:
-        await ms.edit("__**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**😇__\n\n**Uᴩʟᴏᴀᴅɪɴɢ....🗯️**")
+             try:
+                 if er:
+                     try:
+                         os.remove(path)
+                         os.remove(metadata_path)
+                     except:
+                         pass
+                     return await ms.edit(str(er) + "\n\n**Error**")
+             except BaseException:
+                 pass
+         await ms.edit("**Metadata added to the file successfully ✅**\n\n⚠️ __**Please wait...**__\n\n**Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....**")
+     else:
+         await ms.edit("__**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**😇__\n\n**Uᴩʟᴏᴀᴅɪɴɢ....🗯️**")
 
     duration = 0
     try:
