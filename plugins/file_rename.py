@@ -115,7 +115,7 @@ async def refunc(client, message):
                      return await ms.edit(str(er) + "\n\n**Error**")
 
              await ms.edit("**Metadata added to the file successfully ✅**\n\n⚠️ __**Please wait...**__\n\n**Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....**")
-         else:
+        else:
              await ms.edit("__**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**😇__\n\n**Uᴩʟᴏᴀᴅɪɴɢ....🗯️**")
     duration = 0
     try:
