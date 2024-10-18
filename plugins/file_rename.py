@@ -20,7 +20,7 @@ from info import AUTH_CHANNEL
 
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
-sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
+sydtg = asyncio.Semaphore(3)   #improve Accuracy @Syd_Xyz
 
 
 @Client.on_callback_query(filters.regex('rename'))
