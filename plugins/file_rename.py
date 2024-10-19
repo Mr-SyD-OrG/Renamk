@@ -32,12 +32,13 @@ async def rename(bot, update):
 
 # Define the main message handler for private messages with replies
 
-CHANNEL_ID = await db.get_syd(chat_id)
-@Client.on_message(
-    (filters.private | filters.chat(CHANNEL_ID)) 
-    & (filters.document | filters.audio | filters.video)
-)
+
+
+@Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
     chat_id = message.chat.id
+    CHANNEL_ID = await db.get_syd(chat_id)
+    if message.chat.id != CHANNEL_ID:
+        return
     file = getattr(message, message.media.value)
     syd = file.file_name
     filename = ' '.join(filter(lambda x: not x.startswith('-PrimeFix') and not x.startswith('-HDA') and not x.startswith('-PSA') and not x.startswith('-PAHE') and not x.startswith('-GalaxyRG') and not x.startswith('-Bigil') and not x.startswith('-TR') and not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
