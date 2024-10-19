@@ -35,6 +35,7 @@ async def rename(bot, update):
 
 
 @Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
+async def refunc(client, message):
     chat_id = message.chat.id
     CHANNEL_ID = await db.get_syd(chat_id)
     if message.chat.id != CHANNEL_ID:
