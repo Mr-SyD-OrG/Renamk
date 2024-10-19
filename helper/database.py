@@ -93,10 +93,10 @@ class Database:
         user = await self.col.find_one({'_id': int(id)})
         return user.get('dump', int(id))
 
-    async def set_frm(self, id, frm: int):
+    async def set_syd(self, id, frm: int):
         await self.col.update_one({'_id': int(id)}, {'$set': {'frm': int(frm)}})
 
-    async def get_frm(self, id):
+    async def get_syd(self, id):
         user = await self.col.find_one({'_id': int(id)})
         return user.get('frm', int(id))
         
