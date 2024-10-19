@@ -31,7 +31,8 @@ class Database:
             suffix=None,
             metadata=False,
             metadata_code=""" -map 0 -c:s copy -c:a copy -c:v copy -metadata title="Powered By:- " -metadata author="@" -metadata:s:s title="Subtitled By :- @" -metadata:s:a title="By :- @" -metadata:s:v title="By:@""",
-            dump=int(id)
+            dump=int(id),
+            frm=int(id)
         )
 
     async def add_user(self, b, m):
@@ -91,6 +92,13 @@ class Database:
     async def get_dump(self, id):
         user = await self.col.find_one({'_id': int(id)})
         return user.get('dump', int(id))
+
+    async def set_frm(self, id, frm: int):
+        await self.col.update_one({'_id': int(id)}, {'$set': {'frm': int(frm)}})
+
+    async def get_frm(self, id):
+        user = await self.col.find_one({'_id': int(id)})
+        return user.get('frm', int(id))
         
     async def set_prefix(self, id, prefix):
         await self.col.update_one({'_id': int(id)}, {'$set': {'prefix': prefix}})
