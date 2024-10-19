@@ -1,5 +1,6 @@
 import random
 import logging
+import sys
 from pyrogram import Client, filters, enums
 from pyrogram.enums import ParseMode
 from pyrogram.errors import FloodWait, ChatAdminRequired
@@ -36,3 +37,10 @@ async def start(client, message):
         await message.reply_photo(random.choice(Config.PICS), caption=Txt.START_TXT.format(user.mention), reply_markup=button)
     else:
         await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
+
+@Client.on_message(filters.command("restart") & filters.user(ADMINS))
+async def stop_button(bot, message):
+    msg = await bot.send_message(text="<b><i>ʙᴏᴛ ɪꜱ ʀᴇꜱᴛᴀʀᴛɪɴɢ</i></b>", chat_id=message.chat.id)       
+    await asyncio.sleep(3)
+    await msg.edit("<b><i><u>ʙᴏᴛ ɪꜱ ʀᴇꜱᴛᴀʀᴛᴇᴅ</u> ✅</i></b>")
+    os.execl(sys.executable, sys.executable, *sys.argv)
