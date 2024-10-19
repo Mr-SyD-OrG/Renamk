@@ -83,7 +83,7 @@ async def add_dump(client, message):
 async def delete_dump(client, message):
 
     SyD = await message.reply_text("Please Wait ...", reply_to_message_id=message.id)
-    dump = await db.get_syd(message.from_user.id)
+    dump = await db.get_dump(message.from_user.id)
     if not dump:
         return await SyD.edit("__**😔 ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴀɴʏ ᴘʀᴇꜰɪx**__")
     await db.set_dump(message.from_user.id, message.from_user.id)
@@ -94,7 +94,7 @@ async def delete_dump(client, message):
 async def see_csuffix(client, message):
 
     SnowDev = await message.reply_text("Please Wait ...", reply_to_message_id=message.id)
-    suffix = await db.get_frm(message.from_user.id)
+    suffix = await db.get_syd(message.from_user.id)
     if suffix:
         await SnowDev.edit(f"**ʏᴏᴜʀ ꜱᴜꜰꜰɪx:-**\n\n`{suffix}`")
     else:
@@ -107,7 +107,7 @@ async def add_dump(client, message):
         return await message.reply_text("**__Give The Prefix__\n\nExᴀᴍᴩʟᴇ:- `/set_prefix @Roofiverse`**")
     frm = message.text.split(" ", 1)[1]
     SyD = await message.reply_text("Please Wait ...", reply_to_message_id=message.id)
-    await db.set_frm(message.from_user.id, frm)
+    await db.set_syd(message.from_user.id, frm)
     await SyD.edit("__**✅ ꜱᴀᴠᴇᴅ**__")
 
 
@@ -118,7 +118,7 @@ async def delete_dump(client, message):
     dump = await db.get_dump(message.from_user.id)
     if not dump:
         return await SyD.edit("__**😔 ʏᴏᴜ ᴅᴏɴ'ᴛ ʜᴀᴠᴇ ᴀɴʏ ᴘʀᴇꜰɪx**__")
-    await db.set_frm(message.from_user.id, message.from_user.id)
+    await db.set_syd(message.from_user.id, message.from_user.id)
     await SyD.edit("__**❌️ ᴘʀᴇꜰɪx ᴅᴇʟᴇᴛᴇᴅ**__")
 
 @Client.on_message(filters.private & filters.command('see_dump'))
