@@ -32,9 +32,11 @@ async def rename(bot, update):
 
 # Define the main message handler for private messages with replies
 
-
-@Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
-async def refunc(client, message):
+CHANNEL_ID = await db.get_syd(chat_id)
+@Client.on_message(
+    (filters.private | filters.chat(CHANNEL_ID)) 
+    & (filters.document | filters.audio | filters.video)
+)
     chat_id = message.chat.id
     file = getattr(message, message.media.value)
     syd = file.file_name
