@@ -20,7 +20,7 @@ from info import AUTH_CHANNEL
 
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
-sydtg = asyncio.Semaphore(4)   #improve Accuracy @Syd_Xyz
+sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
 
 
 @Client.on_callback_query(filters.regex('rename'))
@@ -43,21 +43,10 @@ async def refunc(client, message):
     filesize = humanize.naturalsize(file.file_size)
     sydd = ['psa', 'bigil', 'primefix', 'bone', 'Incursi0', 'StreliziA', 'ikaRos', 'lssjbroly', 'soan', 'pahe', 'galaxytv', 'galaxyrg']
     mrsyd = filename.rsplit('-', 1)  # Split filename from the right at the last hyphen
-    if len(mrsyd) > 1:
-    # Check if any of the specified terms are in the second part
-        if any(term in mrsyd[1].strip().lower() for term in sydd):
-            new_name = mrsyd[0].strip()  # Remove the second part and use only the first part
-        else:
-            new_name = filename  # Keep the original filename if no terms to remove in the second part
-    else:
-        new_name = filename  #SyD_Xyz
-    
-    media = file
-    if ".mkv" in new_name.lower():  # If "mkv" is already part of the name
-        new_name = new_name  # Keep the name unchanged
-    else:
-        extn = "mkv"
-        new_name = f"{new_name}.{extn}"
+    new_name = mrsyd[0].strip() if len(mrsyd) > 1 and any(term in mrsyd[1].strip().lower() for term in sydd) else filename
+
+    if not new_name.lower().endswith(".mkv"):
+        new_name += ".mkv"
     #if not "." in new_name:
        # if "." in media.file_name:
            # extn = media.file_name.rsplit('.', 1)[-1]
@@ -69,6 +58,7 @@ async def refunc(client, message):
     # Extracting necessary information
     prefix = await db.get_prefix(chat_id)
     suffix = await db.get_suffix(chat_id)
+    file = media
     new_filename_ = new_name
     try:
         # adding prefix and suffix
