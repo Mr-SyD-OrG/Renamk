@@ -67,7 +67,7 @@ async def refunc(client, message):
     # Extracting necessary information
     prefix = await db.get_prefix(chat_id)
     suffix = await db.get_suffix(chat_id)
-    file = media
+    media = file
     new_filename_ = new_name
     try:
         # adding prefix and suffix
