@@ -78,22 +78,19 @@ async def refunc(client, message):
              chat_id=message.chat.id,
              text=f"__**{syd}**__\n\n**Downloading...⏳**"
         )
-        downsyd = 0
-        maxsyd = 2
-        while downsyd < maxsyd:
+        max_retries = 2
+        for attempt in range(max_retries):
             try:
-                path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("\n⚠️ __**{syd}**__\n\n❄️ **Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
-                if not os.path.exists(path):
-                    raise FileNotFoundError(f"Download failed, file not found at {path}")
-                downloaded_size = os.path.getsize(path)
-                if downloaded_size == file.file_size:
-                    break  # Exit SyD_XyZ
+                path = await client.download_media(message=media, file_name=file_path, 
+                                                    progress=progress_for_pyrogram, 
+                                                    progress_args=(f"\n⚠️ __**{syd}**__\n\n❄️ **Download Started...**", ms, time.time()))
+                if os.path.exists(path) and os.path.getsize(path) == file.file_size:
+                    break  # Exit the loop if the file is downloaded successfully
                 else:
-                    downsyd += 1
-                    await ms.edit(f"⚠️{syd} \nSize mismatch detected. Attempting to re-download... ({downsyd}/{maxsyd})")
+                    await ms.edit(f"⚠️ {syd} \nSize mismatch detected. Attempting to re-download... ({attempt + 1}/{max_retries})")
                     os.remove(path)
             except Exception as e:
-                return await ms.edit(e)
+                return await ms.edit(f"⚠️ Error downloading file: {e}")
         else:
             return await ms.edit("⚠️{syd} Failed to download the file after multiple attempts.")
 
