@@ -165,9 +165,6 @@ async def refunc(client, message):
     if media.file_size > 2000 * 1024 * 1024:
         try:
             app = await start_clone_bot(client(user_bot['session']))
-
-            
-
             filw = await app.send_document(
                 Config.LOG_CHANNEL,
                 document=metadata_path if _bool_metadata else file_path,
