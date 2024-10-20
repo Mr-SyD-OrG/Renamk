@@ -41,7 +41,7 @@ async def refunc(client, message):
     syd = file.file_name
     filename = ' '.join(filter(lambda x: not x.startswith('-PrimeFix') and not x.startswith('-HDA') and not x.startswith('-PSA') and not x.startswith('-PAHE') and not x.startswith('-GalaxyRG') and not x.startswith('-Bigil') and not x.startswith('-TR') and not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
     filesize = humanize.naturalsize(file.file_size)
-    sydd = ['psa', 'bigil', 'primefix', 'bone', 'lssjbroly', 'soan', 'pahe', 'galaxytv', 'galaxyrg']
+    sydd = ['psa', 'bigil', 'primefix', 'bone', 'Incursi0', 'StreliziA', 'ikaRos', 'lssjbroly', 'soan', 'pahe', 'galaxytv', 'galaxyrg']
     mrsyd = filename.rsplit('-', 1)  # Split filename from the right at the last hyphen
     if len(mrsyd) > 1:
     # Check if any of the specified terms are in the second part
