@@ -20,7 +20,7 @@ from info import AUTH_CHANNEL
 
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
-sydtg = asyncio.Semaphore(3)   #improve Accuracy @Syd_Xyz
+sydtg = asyncio.Semaphore(4)   #improve Accuracy @Syd_Xyz
 
 
 @Client.on_callback_query(filters.regex('rename'))
@@ -88,16 +88,24 @@ async def refunc(client, message):
              chat_id=message.chat.id,
              text=f"__**{syd}**__\n\n**Downloading...⏳**"
         )
-        try:
-            path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("\n⚠️ __**{syd}**__\n\n❄️ **Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
-            if not os.path.exists(path):
-                raise FileNotFoundError(f"Download failed, file not found at {path}")
-            downloaded_size = os.path.getsize(path)
-            if downloaded_size != file.file_size:
-                raise ValueError(f"{syd}. File size mismatch. Expected: {file.file_size}, Got: {downloaded_size}")
-
-        except Exception as e:
-            return await ms.edit(e)
+        downsyd = 0
+        maxsyd = 2
+        while downsyd < maxsyd:
+            try:
+                path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("\n⚠️ __**{syd}**__\n\n❄️ **Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+                if not os.path.exists(path):
+                    raise FileNotFoundError(f"Download failed, file not found at {path}")
+                downloaded_size = os.path.getsize(path)
+                if downloaded_size == file.file_size:
+                        break  # Exit SyD_XyZ
+                    else:
+                        downsyd += 1
+                        await ms.edit(f"⚠️{syd} \nSize mismatch detected. Attempting to re-download... ({downsyd}/{maxsyd})")
+                        os.remove(path)
+            except Exception as e:
+                return await ms.edit(e)
+        else:
+            return await ms.edit("⚠️{syd} Failed to download the file after multiple attempts.")
 
         _bool_metadata = await db.get_metadata(chat_id)
 
