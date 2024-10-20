@@ -46,9 +46,6 @@ async def refunc(client, message):
     if len(mrsyd) > 1:
     # Check if any of the specified terms are in the second part
         if any(term in mrsyd[1].strip().lower() for term in sydd):
-            if len(mrsyd) > 1:
-    # Check if any of the specified terms are in the second part
-        if any(term in mrsyd[1].strip().lower() for term in sydd):
             new_name = mrsyd[0].strip()  # Remove the second part and use only the first part
         else:
             new_name = filename
