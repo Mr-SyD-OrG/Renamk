@@ -41,11 +41,16 @@ async def refunc(client, message):
     syd = file.file_name
     filename = ' '.join(filter(lambda x: not x.startswith('-PrimeFix') and not x.startswith('-HDA') and not x.startswith('-PSA') and not x.startswith('-PAHE') and not x.startswith('-GalaxyRG') and not x.startswith('-Bigil') and not x.startswith('-TR') and not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
     filesize = humanize.naturalsize(file.file_size)
-    mrsyd = filename.rsplit('-', 1)
+    sydd = ['psa', 'bigil', 'primefix', 'bone', 'lssjbroly', 'soan', 'pahe', 'galaxytv', 'galaxyrg']
+    mrsyd = filename.rsplit('-', 1)  # Split filename from the right at the last hyphen
     if len(mrsyd) > 1:
-        new_name = mrsyd[0].strip().lower() in ['psa', 'bigil','PrimeFix', 'Bone', 'LSSJBroly', 'soan', 'Pahe', 'GalaxyTV', 'GalaxyRG']
+    # Check if any of the specified terms are in the second part
+        if any(term in mrsyd[1].strip().lower() for term in sydd):
+            new_name = mrsyd[0].strip()  # Remove the second part and use only the first part
+        else:
+            new_name = filename  # Keep the original filename if no terms to remove in the second part
     else:
-        new_name = filename
+        new_name = filename  #SyD_Xyz
     
     media = file
     if ".mkv" in new_name.lower():  # If "mkv" is already part of the name
@@ -125,6 +130,7 @@ async def refunc(client, message):
         else:
              await ms.edit("__**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**😇__\n\n**Uᴩʟᴏᴀᴅɪɴɢ....🗯️**")
     duration = 0
+    #SyD_Xyz
     try:
         parser = createParser(file_path)
         metadata = extractMetadata(parser)
@@ -214,7 +220,7 @@ async def refunc(client, message):
             return await ms.edit(f" Eʀʀᴏʀ {e}")
 
     await ms.delete()
-
+  #SyD_Xyz
     if ph_path:
         os.remove(ph_path)
     if file_path:
