@@ -94,7 +94,7 @@ async def refunc(client, message):
                 raise FileNotFoundError(f"Download failed, file not found at {path}")
             downloaded_size = os.path.getsize(path)
             if downloaded_size != file.file_size:
-                raise ValueError(f"File size mismatch. Expected: {file.file_size}, Got: {downloaded_size}")
+                raise ValueError(f"{syd}. File size mismatch. Expected: {file.file_size}, Got: {downloaded_size}")
 
         except Exception as e:
             return await ms.edit(e)
