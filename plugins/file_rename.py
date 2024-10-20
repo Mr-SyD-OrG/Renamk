@@ -85,6 +85,12 @@ async def refunc(client, message):
         )
         try:
             path = await client.download_media(message=file, file_name=file_path, progress=progress_for_pyrogram, progress_args=("\n⚠️ __**{syd}**__\n\n❄️ **Dᴏᴡɴʟᴏᴀᴅ Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+            if not os.path.exists(path):
+                raise FileNotFoundError(f"Download failed, file not found at {path}")
+            downloaded_size = os.path.getsize(path)
+            if downloaded_size != file.file_size:
+                raise ValueError(f"File size mismatch. Expected: {file.file_size}, Got: {downloaded_size}")
+
         except Exception as e:
             return await ms.edit(e)
 
