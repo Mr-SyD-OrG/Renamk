@@ -211,7 +211,7 @@ async def refunc(client, message):
             return await ms.edit(f" Eʀʀᴏʀ {e}")
 
     await ms.delete()
-    await file.delete()
+    await message.delete()
   #SyD_Xyz
     if ph_path:
         os.remove(ph_path)
