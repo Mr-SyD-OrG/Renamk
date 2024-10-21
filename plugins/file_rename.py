@@ -75,14 +75,14 @@ async def refunc(client, message):
     async with sydtg:
         ms = await client.send_message(
              chat_id=message.chat.id,
-             text=f"__**{syd}**__\n\n**Downloading...⏳**"
+             text=f"__**{syd}**__"
         )
         max_retries = 2
         for attempt in range(max_retries):
             try:
                 path = await client.download_media(message=media, file_name=file_path, 
                                                     progress=progress_for_pyrogram, 
-                                                    progress_args=(f"\n⚠️ __**{syd}**__\n\n❄️ **Download Started...**", ms, time.time()))
+                                                    progress_args=(f"\n⚠️ __**{syd}**__\n\n❄️", ms, time.time()))
                 if os.path.exists(path) and os.path.getsize(path) == file.file_size:
                     break  # Exit the loop if the file is downloaded successfully
                 else:
@@ -170,7 +170,7 @@ async def refunc(client, message):
                 thumb=ph_path,
                 caption=caption,
                 progress=progress_for_pyrogram,
-                progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+                progress_args=("__{syd}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
 
             from_chat = filw.chat.id
             mg_id = filw.id
@@ -198,7 +198,7 @@ async def refunc(client, message):
                 thumb=ph_path,
                 caption=caption,
                 progress=progress_for_pyrogram,
-                progress_args=("⚠️ __**Pʟᴇᴀꜱᴇ Wᴀɪᴛ...**__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+                progress_args=("__{syd}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
            
         except Exception as e:
             os.remove(file_path)
@@ -211,6 +211,7 @@ async def refunc(client, message):
             return await ms.edit(f" Eʀʀᴏʀ {e}")
 
     await ms.delete()
+    await file.delete()
   #SyD_Xyz
     if ph_path:
         os.remove(ph_path)
