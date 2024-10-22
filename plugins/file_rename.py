@@ -39,9 +39,9 @@ async def refunc(client, message):
     chat_id = message.chat.id
     file = getattr(message, message.media.value)
     syd = file.file_name
-    filename = ' '.join(filter(lambda x: not x.startswith('NazzY') not x.startswith('PAHE') and not x.startswith('PrimeFix') and not x.startswith('HDA') and not x.startswith('PSA') and not x.startswith('PAHE') and not x.startswith('GalaxyRG') and not x.startswith('-Bigil') and not x.startswith('TR') and not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
+    filename = ' '.join(filter(lambda x: not x.startswith('YTS.MX') not x.startswith('Moviez') not x.startswith('NazzY') not x.startswith('PAHE') and not x.startswith('PrimeFix') and not x.startswith('HDA') and not x.startswith('PSA') and not x.startswith('PAHE') and not x.startswith('GalaxyRG') and not x.startswith('-Bigil') and not x.startswith('TR') and not x.startswith('[') and not x.startswith('www.') and (not x.startswith('@') or x == '@GetTGLinks'), file.file_name.split()))
     filesize = humanize.naturalsize(file.file_size)
-    sydd = ['psa', 'bigil', 'budgetbits', 'HDA', 'TR', 'primefix', 'GalaxyRG265', 'bone', 'Incursi0', 'StreliziA', 'ikaRos', 'lssjbroly', 'soan', 'pahe', 'poke', 'galaxytv', 'galaxyrg', 'NazzY']
+    sydd = ['psa', 'bigil', 'YTS.MX', 'budgetbits', 'HDA', 'TR', 'primefix', 'GalaxyRG265', 'bone', 'Incursi0', 'StreliziA', 'ikaRos', 'lssjbroly', 'soan', 'pahe', 'poke', 'galaxytv', 'galaxyrg', 'NazzY', 'VARYG', 'MICHAEL']
     mrsyd = filename.rsplit('-', 1)  # Split filename from the right at the last hyphen
     new_name = mrsyd[0].strip() if len(mrsyd) > 1 and any(term in mrsyd[1].strip().lower() for term in sydd) else filename
     if not new_name.lower().endswith(".mkv"):
