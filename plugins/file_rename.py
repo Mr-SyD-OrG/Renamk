@@ -39,7 +39,7 @@ async def refunc(client, message):
     chat_id = message.chat.id
     file = getattr(message, message.media.value)
     syd = file.file_name
-    mrsyds = ['YTS.MX', 'Moviez', 'NazzY', 'PAHE', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', '[', 'www.', '@']
+    mrsyds = ['YTS.MX', 'SH3LBY', 'Moviez', 'NazzY', 'PAHE', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', '[', 'www.', '@']
     filename = ' '.join([x for x in file.file_name.split() if not any(x.startswith(mrsyd) for mrsyd in mrsyds) or x == '@GetTGLinks'])
     filesize = humanize.naturalsize(file.file_size)
     sydd = ['psa', 'SH3LBY', 'bigil', 'YTS.MX', 'budgetbits', 'HDA', 'TR', 'primefix', 'GalaxyRG265', 'bone', 'Incursi0', 'StreliziA', 'ikaRos', 'lssjbroly', 'soan', 'pahe', 'poke', 'galaxytv', 'galaxyrg', 'NazzY', 'VARYG', 'MICHAEL', 'FLUX', 'RAV1NE']
