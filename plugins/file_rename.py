@@ -44,8 +44,8 @@ async def refunc(client, message):
             ]
 
     filename = ' '.join([
-        x for x in file.file_name.split() 
-        if not (x in sydtg or any(x.startswith(mrsyd) for mrsyd in mrsyds) or x == '@GetTGLinks')
+        x for x in syd.split()
+        if x not in sydtg and not any(x.startswith(mrsyd) for mrsyd in mrsyds) and x != '@GetTGLinks'
     ])
     filesize = humanize.naturalsize(file.file_size)
     sydd = ['psa', 'sh3lby', 'Telly', '[', 'SH3LBY.mkv', 'bigil', 'YTS.MX', 'budgetbits', 'HDA', 'TR', 'primefix', 'GalaxyRG265', 'bone', 'Incursi0', 'StreliziA', 'ikaRos', 'lssjbroly', 'soan', 'pahe', 'poke', 'galaxytv', 'galaxyrg', 'NazzY', 'VARYG', 'MICHAEL', 'FLUX', 'RAV1NE']
