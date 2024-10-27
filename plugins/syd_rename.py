@@ -35,11 +35,8 @@ async def rename(bot, update):
 
 @Client.on_message(filters.private & filters.chat(MSYD) & (filters.document | filters.audio | filters.video))
 async def refunc(client, message):
-    logger.info("Message received!")
-    try:
-        await message.reply_text("Received your message!")
-    except Exception as e:
-        logger.error(f"Error in refunc: {e}")
+    if message.chat.id == MSYD:
+        try:
     chat_id = MSYD
     file = getattr(message, message.media.value)
     syd = file.file_name
