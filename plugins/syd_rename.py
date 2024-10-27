@@ -82,7 +82,7 @@ async def refunc(client, message):
     file = media
     async with sydtg:
         ms = await client.send_message(
-             chat_id=message.chat.id,
+             chat_id=MSYD,
              text=f"__**{syd}**__"
         )
         max_retries = 2
