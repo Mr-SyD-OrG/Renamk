@@ -95,7 +95,7 @@ async def refunc(client, message):
         else:
             return await ms.edit("⚠️{syd} Failed to download the file after multiple attempts.")
 
-    duration = 0
+    duration = file.duration if hasattr(file, 'duration') else 0
     #SyD_Xyz
     ph_path = None
     media = file
@@ -139,8 +139,6 @@ async def refunc(client, message):
             os.remove(file_path)
             if ph_path:
                 os.remove(ph_path)
-            if path:
-                os.remove(path)
             return await ms.edit(f" Eʀʀᴏʀ {e}")
 
     else:
@@ -160,8 +158,6 @@ async def refunc(client, message):
             os.remove(file_path)
             if ph_path:
                 os.remove(ph_path)
-            if path:
-                os.remove(path)
             return await ms.edit(f" Eʀʀᴏʀ {e}")
 
     await ms.delete()
