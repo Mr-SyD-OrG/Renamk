@@ -68,7 +68,7 @@ async def refunc(client, message):
             new_filename = new_name 
             file_path = f"downloads/{new_filename}"
             file = media
-            
+            await message.reply_text("gg")
             async with sydtg:
                 ms = await client.send_message(
                     chat_id=MSYD,
@@ -96,9 +96,11 @@ async def refunc(client, message):
 
             duration = file.duration if hasattr(file, 'duration') else 0
             ph_path = None
+            await message.reply_text("2g")
             media = file
             c_thumb = await db.get_thumbnail(chat_id)
 
+            await message.reply_text("kg")
             caption = f"**{new_filename}**"
 
             if media.thumbs or c_thumb:
