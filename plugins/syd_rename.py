@@ -97,7 +97,7 @@ async def refunc(client, message):
             duration = file.duration if hasattr(file, 'duration') else 0
             ph_path = None
             media = file
-            c_thumb = 'https://envs.sh/Arr.jpg'
+            c_thumb = await db.get_thumbnail(chat_id)
 
             caption = f"**{new_filename}**"
 
