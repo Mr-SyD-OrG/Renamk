@@ -35,6 +35,7 @@ async def rename(bot, update):
 
 @Client.on_message(filters.private & filters.chat(MSYD) & (filters.document | filters.audio | filters.video))
 async def refunc(client, message):
+    logger.info("Message received!")
     try:
         await message.reply_text("Received your message!")
     except Exception as e:
