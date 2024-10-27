@@ -167,6 +167,8 @@ async def refunc(client, message):
             if file_path:
                 os.remove(file_path)
 
-    
+        except Exception as e:
+            logger.error(f"An error occurred: {e}")
+            await message.reply_text(f"An error")
 
 
