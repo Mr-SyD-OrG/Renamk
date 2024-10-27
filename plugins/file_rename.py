@@ -211,13 +211,14 @@ async def refunc(client, message):
 
         try:
            syd_id = await db.get_dump(chat_id)
+           sy = syd
            await client.send_document(
                 syd_id,
                 document=metadata_path if _bool_metadata else file_path,
                 thumb=ph_path,
                 caption=caption,
                 progress=progress_for_pyrogram,
-                progress_args=("__{syd}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+                progress_args=("__{sy}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
            
         except Exception as e:
             os.remove(file_path)
