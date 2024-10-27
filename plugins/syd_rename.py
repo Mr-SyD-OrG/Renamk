@@ -82,7 +82,7 @@ async def refunc(client, message):
                             message=media,
                             file_name=file_path, 
                             progress=progress_for_pyrogram, 
-                            progress_args=(f"\n⚠️ __**{syd}**__\n\n❄️", ms, time.time())
+                            progress_args=(f"\n⚠️ __**{syd}**__\n", ms, time.time())
                         )
                         if os.path.exists(path) and os.path.getsize(path) == file.file_size:
                             break  # Exit the loop if the file is downloaded successfully
