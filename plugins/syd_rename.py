@@ -94,14 +94,12 @@ async def refunc(client, message):
                 else:
                     return await ms.edit(f"⚠️ {syd} Failed to download the file after multiple attempts.")
 
-            await message.reply_text("gp")
+    
             duration = file.duration if hasattr(file, 'duration') else 0
             ph_path = None
             await message.reply_text("2g")
             media = file
-            c_thumb = Config.PICS
-
-            await message.reply_text("kg")
+            c_thumb = Config.SYD
             caption = f"**{new_filename}**"
 
             if media.thumbs or c_thumb:
