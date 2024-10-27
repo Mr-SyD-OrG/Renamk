@@ -18,7 +18,7 @@ class Config(object):
     # other configs
     BOT_UPTIME = time.time()
     PICS = os.environ.get("PICS", 'https://graph.org/file/8c8372dfa0e0ddf8da91d.jpg https://graph.org/file/3b2b8110f6f57f7fc5c74.jpg  https://graph.org/file/1bd6fa19297caf4189c61.jpg  ').split()
-    SYD = os.environ.get("SYD", 'AgACAgUAAxkBAAEEKdlnHdxNd5qE7Q3c4ZSUasWzadngOwAC-78xG5P6qFQIXBlOxDhz1wAIAQADAgADeAAHHgQ')
+    SYD = os.environ.get("SYD", 'https://graph.org/file/3b2b8110f6f57f7fc5c74.jpg)
     ADMIN = [int(admin) if id_pattern.search(
         admin) else admin for admin in os.environ.get('ADMIN', '').split()]  # ⚠️ Required
 
