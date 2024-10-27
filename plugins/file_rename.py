@@ -21,7 +21,7 @@ from info import AUTH_CHANNEL
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
 sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
-
+SYD_CHATS = [-1002252619500]
 
 @Client.on_callback_query(filters.regex('rename'))
 async def rename(bot, update):
@@ -34,7 +34,7 @@ async def rename(bot, update):
 
 
 
-@Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
+@Client.on_message(filters.private & filters.chat(SYD_CHATS) & (filters.document | filters.audio | filters.video))
 async def refunc(client, message):
     chat_id = message.chat.id
     file = getattr(message, message.media.value)
