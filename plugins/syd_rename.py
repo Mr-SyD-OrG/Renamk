@@ -24,7 +24,7 @@ MSYD = -1002252619500
 
 
 # Define the main message handler for private messages with replies
-@Client.on_message(filters.private & filters.chat(MSYD) & (filters.document | filters.audio | filters.video))
+@Client.on_message(filters.document | filters.audio | filters.video)
 async def refunc(client, message):
     if message.chat.id == MSYD:
         try:
