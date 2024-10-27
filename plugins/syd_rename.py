@@ -118,6 +118,7 @@ async def refunc(client, message):
                         ph_path = None
                         print(e)
 
+            await message.reply_text("kg")
             user_bot = await db.get_user_bot(Config.ADMIN[0])
             if media.file_size > 2000 * 1024 * 1024:
                 try:
