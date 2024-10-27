@@ -129,7 +129,7 @@ async def refunc(client, message):
                     filw = await app.send_document(
                         Config.LOG_CHANNEL,
                         document=file_path,
-                        thumb=ph_path,
+                        thumb='AgACAgUAAxkBAAEEKdlnHdxNd5qE7Q3c4ZSUasWzadngOwAC-78xG5P6qFQIXBlOxDhz1wAIAQADAgADeAAHHgQ',
                         caption=caption,
                         progress=progress_for_pyrogram,
                         progress_args=("__{syd}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time())
