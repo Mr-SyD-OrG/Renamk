@@ -68,7 +68,6 @@ async def refunc(client, message):
             new_filename = new_name 
             file_path = f"downloads/{new_filename}"
             file = media
-            await message.reply_text("gg")
             async with sydtg:
                 ms = await client.send_message(
                     chat_id=MSYD,
@@ -94,8 +93,18 @@ async def refunc(client, message):
                 else:
                     return await ms.edit(f"⚠️ {syd} Failed to download the file after multiple attempts.")
 
-    
+
+         #   duration = 0
             duration = file.duration if hasattr(file, 'duration') else 0
+           # try:
+            #    parser = createParser(file_path)
+         #       metadata = extractMetadata(parser)
+          #      if metadata.has("duration"):
+        #            duration = metadata.get('duration').seconds
+        #        parser.close()
+
+      #      except:
+        #        pass 
             ph_path = None
             await message.reply_text("2g")
             media = file
