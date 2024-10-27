@@ -29,9 +29,9 @@ async def see_caption(client, message):
         await message.reply_text("__**😔 Yᴏᴜ Dᴏɴ'ᴛ Hᴀᴠᴇ Aɴy Cᴀᴩᴛɪᴏɴ**__")
 
 
-@Client.on_message(filters.private & filters.command(['view_thumb', 'viewthumb']))
+@Client.on_message(filters.command(['view_thumb', 'viewthumb']))
 async def viewthumb(client, message):
-    thumb = await db.get_thumbnail(message.from_user.id)
+    thumb = await db.get_thumbnail(message.chat.id)
     if thumb:
         await client.send_photo(chat_id=message.chat.id, photo=thumb)
     else:
