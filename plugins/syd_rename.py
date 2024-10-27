@@ -102,11 +102,16 @@ async def refunc(client, message):
             c_thumb = Config.SYD
             caption = f"**{new_filename}**"
 
-            if media.thumbs or c_thumb:
+            if c_thumb:
                 ph_path = await client.download_media(c_thumb)
                 width, height, ph_path = await fix_thumb(ph_path)
-                
-
+            else:
+                try:
+                   ph_path_ = await take_screen_shot(file_path, os.path.dirname(os.path.abspath(file_path)), random.randint(0, duration - 1))
+                   width, height, ph_path = await fix_thumb(ph_path_)
+                except Exception as e:
+                    ph_path = None
+                    print(e)
             await message.reply_text("kg")
             user_bot = await db.get_user_bot(Config.ADMIN[0])
             if media.file_size > 2000 * 1024 * 1024:
