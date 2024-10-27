@@ -28,6 +28,7 @@ MSYD = -1002252619500
 async def refunc(client, message):
     if message.chat.id == MSYD:
         try:
+            logger.info(f"Message")
             chat_id = MSYD
             file = getattr(message, message.media.value)
             syd = file.file_name
