@@ -99,7 +99,7 @@ async def refunc(client, message):
             ph_path = None
             await message.reply_text("2g")
             media = file
-            c_thumb = await db.get_thumbnail(chat_id)
+            c_thumb = Config.PICS
 
             await message.reply_text("kg")
             caption = f"**{new_filename}**"
