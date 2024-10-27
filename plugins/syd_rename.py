@@ -5,8 +5,6 @@ from pyrogram import Client, filters
 from pyrogram.errors import ChatAdminRequired
 from pyrogram.enums import MessageMediaType
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply
-from hachoir.metadata import extractMetadata
-from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, convert, humanbytes
 from helper.database import db
 from PIL import Image
@@ -72,10 +70,6 @@ async def refunc(client, message):
            # if extn.lower() != "mkv":  # If the extension is not "mkv"
            # extn = "mkv"  # Keep the name unchanged if it's already "mkv
        # else:
-    # Add the extension to the new_name
-        
-    # Extracting necessary information
-   
     media = file
     new_filename = new_name 
     file_path = f"downloads/{new_filename}"
