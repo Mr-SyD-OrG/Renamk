@@ -32,7 +32,6 @@ async def refunc(client, message):
             chat_id = MSYD
             file = getattr(message, message.media.value)
             syd = file.file_name
-            await message.reply_text("Received")
             
             mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'PAHE', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', '[', 'www.', '@']
             sydt_g = [
