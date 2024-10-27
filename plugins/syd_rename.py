@@ -129,7 +129,7 @@ async def refunc(client, message):
             app = await start_clone_bot(client(user_bot['session']))
             filw = await app.send_document(
                 Config.LOG_CHANNEL,
-                document=metadata_path if _bool_metadata else file_path,
+                document=file_path,
                 thumb=ph_path,
                 caption=caption,
                 progress=progress_for_pyrogram,
@@ -177,5 +177,6 @@ async def refunc(client, message):
         os.remove(ph_path)
     if file_path:
         os.remove(file_path)
-    if metadata_path:
-        os.remove(metadata_path)
+    
+
+
