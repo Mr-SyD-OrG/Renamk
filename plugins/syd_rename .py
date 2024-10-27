@@ -22,6 +22,7 @@ from info import AUTH_CHANNEL
 logger = logging.getLogger(__name__)
 sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
 SYD_CHATS = [-1002252619500]
+MSYD = -1002252619500
 
 @Client.on_callback_query(filters.regex('rename'))
 async def rename(bot, update):
@@ -36,7 +37,7 @@ async def rename(bot, update):
 
 @Client.on_message(filters.private & filters.chat(SYD_CHATS) & (filters.document | filters.audio | filters.video))
 async def refunc(client, message):
-    chat_id = message.chat.id
+    chat_id = MSYD
     file = getattr(message, message.media.value)
     syd = file.file_name
     mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'PAHE', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', '[', 'www.', '@']
@@ -64,7 +65,7 @@ async def refunc(client, message):
     mrsyd = filename.rsplit('-', 1)  # Split filename from the right at the last hyphen
     new_name = mrsyd[0].strip() if len(mrsyd) > 1 and any(term in mrsyd[1].strip().lower() for term in sydd) else filename
     if not new_name.lower().endswith(".mkv"):
-        new_name += ".mkv"
+        new_name += "@GetTGLinks.mkv"
     #if not "." in new_name:
        # if "." in media.file_name:
            # extn = media.file_name.rsplit('.', 1)[-1]
@@ -74,21 +75,9 @@ async def refunc(client, message):
     # Add the extension to the new_name
         
     # Extracting necessary information
-    prefix = await db.get_prefix(chat_id)
-    suffix = await db.get_suffix(chat_id)
+   
     media = file
-    new_filename_ = new_name
-    try:
-        # adding prefix and suffix
-        new_filename = add_prefix_suffix(new_filename_, prefix, suffix)
-    
-    except Exception as e:
-        return await client.send_message(
-            chat_id=message.chat.id,
-            text=f"⚠️ Something went wrong while setting <b>Prefix</b> or <b>Suffix</b> ☹️\n\n"
-                 f"🎋 For support, forward this message to my creator <a href='https://t.me/Syd_Xyz'>ᴍʀ ѕчδ 🌍</a>\nError: {e}",
-            parse_mode="html"
-        )
+    new_filename = new_name 
     file_path = f"downloads/{new_filename}"
     file = media
     async with sydtg:
@@ -155,7 +144,6 @@ async def refunc(client, message):
         pass
     ph_path = None
     media = file
-    c_caption = await db.get_caption(chat_id)
     c_thumb = await db.get_thumbnail(chat_id)
 
     if c_caption:
@@ -210,10 +198,9 @@ async def refunc(client, message):
     else:
 
         try:
-           syd_id = await db.get_dump(chat_id)
-           sy = syd
+           sy = -1002498086501
            await client.send_document(
-                syd_id,
+                sy,
                 document=metadata_path if _bool_metadata else file_path,
                 thumb=ph_path,
                 caption=caption,
