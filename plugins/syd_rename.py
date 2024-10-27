@@ -35,9 +35,14 @@ async def rename(bot, update):
 
 @Client.on_message(filters.private & filters.chat(SYD_CHATS) & (filters.document | filters.audio | filters.video))
 async def refunc(client, message):
+    try:
+        await message.reply_text("Received your message!")
+    except Exception as e:
+        logger.error(f"Error in refunc: {e}")
     chat_id = MSYD
     file = getattr(message, message.media.value)
     syd = file.file_name
+    await message.reply_text("Received")
     mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'PAHE', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', '[', 'www.', '@']
     sydt_g = [
         '[Tam', '[Tamil', '[Tel', '[Telugu', '[Kan', '[Kannada', '[Mal', '[Malayalam',
