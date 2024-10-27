@@ -101,59 +101,15 @@ async def refunc(client, message):
         else:
             return await ms.edit("⚠️{syd} Failed to download the file after multiple attempts.")
 
-        _bool_metadata = await db.get_metadata(chat_id)
-
-
-        if (_bool_metadata):
-             metadata_path = f"Metadata/{new_filename}"
-             metadata = await db.get_metadata_code(update.message.chat.id)
-             if metadata:
-
-                 await ms.edit("I Fᴏᴜɴᴅ Yᴏᴜʀ Mᴇᴛᴀᴅᴀᴛᴀ\n\n__**Pʟᴇᴀsᴇ Wᴀɪᴛ...**__\n**Aᴅᴅɪɴɢ Mᴇᴛᴀᴅᴀᴛᴀ Tᴏ Fɪʟᴇ....**")
-                 cmd = f"""ffmpeg -i "{path}" {metadata} "{metadata_path}" """
-
-                 process = await asyncio.create_subprocess_shell(
-                     cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
-                 )
-
-                 stdout, stderr = await process.communicate()
-                 er = stderr.decode()
-
-              
-                 if er:
-                     try:
-                         os.remove(path)
-                         os.remove(metadata_path)
-                     except:
-                         pass
-                     return await ms.edit(str(er) + "\n\n**Error**")
-
-             await ms.edit("**Metadata added to the file successfully ✅**\n\n⚠️ __**Please wait...**__\n\n**Tʀyɪɴɢ Tᴏ Uᴩʟᴏᴀᴅɪɴɢ....**")
-        else:
-             await ms.edit("__**Pʟᴇᴀꜱᴇ ᴡᴀɪᴛ...**😇__\n\n**Uᴩʟᴏᴀᴅɪɴɢ....🗯️**")
     duration = 0
     #SyD_Xyz
-    try:
-        parser = createParser(file_path)
-        metadata = extractMetadata(parser)
-        if metadata.has("duration"):
-            duration = metadata.get('duration').seconds
-        parser.close()
-
-    except:
-        pass
     ph_path = None
     media = file
-    c_thumb = await db.get_thumbnail(chat_id)
+    c_thumb = 'https://envs.sh/Arr.jpg'
 
-    if c_caption:
-        try:
-            caption = c_caption.format(filename=new_filename, filesize=humanbytes(
-                media.file_size), duration=convert(duration))
-        except Exception as e:
-            return await ms.edit(text=f"Yᴏᴜʀ Cᴀᴩᴛɪᴏɴ Eʀʀᴏʀ Exᴄᴇᴩᴛ Kᴇyᴡᴏʀᴅ Aʀɢᴜᴍᴇɴᴛ ●> ({e})")
-    else:
-        caption = f"**{new_filename}**"
+
+    
+    caption = f"**{new_filename}**"
 
     if (media.thumbs or c_thumb):
         if c_thumb:
@@ -189,8 +145,6 @@ async def refunc(client, message):
             os.remove(file_path)
             if ph_path:
                 os.remove(ph_path)
-            if metadata_path:
-                os.remove(metadata_path)
             if path:
                 os.remove(path)
             return await ms.edit(f" Eʀʀᴏʀ {e}")
@@ -198,21 +152,20 @@ async def refunc(client, message):
     else:
 
         try:
+           mrsy = syd
            sy = -1002498086501
            await client.send_document(
                 sy,
-                document=metadata_path if _bool_metadata else file_path,
+                document=file_path,
                 thumb=ph_path,
                 caption=caption,
                 progress=progress_for_pyrogram,
-                progress_args=("__{sy}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
+                progress_args=("__{mrsy}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time()))
            
         except Exception as e:
             os.remove(file_path)
             if ph_path:
                 os.remove(ph_path)
-            if metadata_path:
-                os.remove(metadata_path)
             if path:
                 os.remove(path)
             return await ms.edit(f" Eʀʀᴏʀ {e}")
