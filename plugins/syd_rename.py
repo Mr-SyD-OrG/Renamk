@@ -121,7 +121,7 @@ async def refunc(client, message):
           #      except Exception as e:
             #        ph_path = None
           #          print(e)
-            await message.reply_text("kg")
+            PIS = 'https://graph.org/file/eae9dee51fa10528df4ad.jpg'
             user_bot = await db.get_user_bot(Config.ADMIN[0])
             if media.file_size > 2000 * 1024 * 1024:
                 try:
@@ -129,7 +129,7 @@ async def refunc(client, message):
                     filw = await app.send_document(
                         Config.LOG_CHANNEL,
                         document=file_path,
-                        thumb='https://graph.org/file/f33b4b707841609127ccd.jpg',
+                        thumb=PIS,
                         caption=caption,
                         progress=progress_for_pyrogram,
                         progress_args=("__{syd}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time())
@@ -153,7 +153,7 @@ async def refunc(client, message):
                     await client.send_document(
                         sy,
                         document=file_path,
-                        thumb=ph_path,
+                        thumb=PIS,
                         caption=caption,
                         progress=progress_for_pyrogram,
                         progress_args=("__{mrsy}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time())
