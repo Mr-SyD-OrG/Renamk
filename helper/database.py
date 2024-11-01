@@ -5,6 +5,17 @@ import datetime
 import aiohttp
 
 
+async def download_image(url, save_path):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            if resp.status == 200:
+                with open(save_path, 'wb') as f:
+                    f.write(await resp.read())
+                return save_path
+            else:
+                raise Exception(f"Failed to download image, status code: {resp.status}")
+
+
 class Database:
 
     def __init__(self, uri, database_name):
@@ -125,16 +136,6 @@ class Database:
     async def set_metadata_code(self, id, metadata_code):
         await self.col.update_one({'_id': int(id)}, {'$set': {'metadata_code': metadata_code}})
 
-    async def download_image(url, save_path):
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url) as resp:
-                if resp.status == 200:
-                    with open(save_path, 'wb') as f:
-                        f.write(await resp.read())
-                    return save_path
-                else:
-                    raise Exception(f"Failed to download image, status code: {resp.status}")
-                    
     async def get_metadata_code(self, id):
         user = await self.col.find_one({'_id': int(id)})
         return user.get('metadata_code', None)
