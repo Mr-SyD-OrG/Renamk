@@ -106,9 +106,7 @@ async def refunc(client, message):
       #      except:
         #        pass 
             ph_path = None
-            await message.reply_text("2g")
             media = file
-            c_thumb = Config.SYD
             caption = f"**{new_filename}**"
 
           #  if c_thumb:
@@ -121,7 +119,7 @@ async def refunc(client, message):
           #      except Exception as e:
             #        ph_path = None
           #          print(e)
-            PIS = 'https://graph.org/file/eae9dee51fa10528df4ad.jpg'
+            PIS = 'https://envs.sh/Arr.jpg'
             SYD_PATH = 'downloads/thumbnail.jpg'
             user_bot = await db.get_user_bot(Config.ADMIN[0])
             if media.file_size > 2000 * 1024 * 1024:
