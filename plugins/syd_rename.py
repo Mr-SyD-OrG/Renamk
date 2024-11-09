@@ -45,17 +45,24 @@ async def refunc(client, message):
         except Exception as e:
             logger.error(f"An error occurred: {e}")
             await message.reply_text("An error occurred while processing your request.")
+
+async def process_queue(client):
+    # Process files from the queue with a limit of two at a time
+    async with sydtg:
+        while mrsydt_g:
+            file_details = mrsydt_g.pop(0)
+            await autosyd(client, file_details)
             
-async def start_queue_processor(client):
-    while True:
-        file_details = await file_queue.get()  # Wait for an item in the queue
-        try:
-            await autosyd(client, file_details)  # Process the file
-        except Exception as e:
-            logger.error(f"Failed to process file: {e}")
-        finally:
-            file_queue.task_done()  # Mark the task as complete
-async def autosyd(client, file_details, message):
+#async def start_queue_processor(client):
+  #  while True:
+       # file_details = await file_queue.get()  # Wait for an item in the queue
+        #try:
+          #  await autosyd(client, file_details)  # Process the file
+     #   except Exception as e:
+            #logger.error(f"Failed to process file: {e}")
+      #  finally:
+         #   file_queue.task_done()  # Mark the task as complete
+async def autosyd(client, file_details):
     try:
         syd = file_details['file_name']
         media = file_details['media']
@@ -184,7 +191,10 @@ async def autosyd(client, file_details, message):
     except Exception as e:
         logger.error(f"An error occurred: {e}")
         await message.reply_text(f"An error")
-    mrsydt_g.pop(0)
+    while mrsydt_g:
+            file_details = mrsydt_g.pop(0)
+            await autosyd(client, file_details)
+            
 
 
 
