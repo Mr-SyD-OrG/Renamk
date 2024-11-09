@@ -13,16 +13,16 @@ import logging
 import re
 import os
 import time
-from helper.utils import client, start_clone_bot
+from helper.utils import add_prefix_suffix, client, start_clone_bot, is_req_subscribed
 from config import Config
 from info import AUTH_CHANNEL
 
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
-#sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
+sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
 SYD_CHATS = [-1002252619500]
 MSYD = -1002464733363
-#file_queue = asyncio.Queue()
+
 mrsydt_g = []
 
 # Define the main message handler for private messages with replies
@@ -35,37 +35,32 @@ async def refunc(client, message):
             syd = file.file_name
             
             sydfile = {
+                'chat_id': chat_id,
                 'file_name': syd,
                 'file_size': file.file_size,
-                'media': file,
-                'message': message
+                'message_id': message.id,
+                'media': file
             }
             mrsydt_g.append(sydfile)
+            if len(mrsydt_g) > 0:
+                asyncio.create_task(process_queue(client))
+
 
         except Exception as e:
             logger.error(f"An error occurred: {e}")
             await message.reply_text("An error occurred while processing your request.")
-
-
+            
 async def process_queue(client):
-    while mrsydt_g:
-        file_details = mrsydt_g.pop(0)  # Get the next file
-        await autosyd(client, file_details)
-    
-#async def start_queue_processor(client):
-  #  while True:
-       # file_details = await file_queue.get()  # Wait for an item in the queue
-        #try:
-          #  await autosyd(client, file_details)  # Process the file
-     #   except Exception as e:
-            #logger.error(f"Failed to process file: {e}")
-      #  finally:
-         #   file_queue.task_done()  # Mark the task as complete
-async def autosyd(client, file_details):
+    # Process files from the queue with a limit of two at a time
+    async with sydtg:
+        while mrsydt_g:
+            file_details = mrsydt_g.pop(0)
+            await autosyd(client, file_details, file_details['message'])
+            
+async def autosyd(client, file_details, message):
     try:
         syd = file_details['file_name']
         media = file_details['media']
-        message = file_details['message']
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'PAHE', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', '[', 'www.', '@']
         sydt_g = [
             '[Tam', '[Tamil', '[Tel', '[Telugu', '[Kan', '[Kannada', '[Mal', '[Malayalam',
@@ -190,10 +185,6 @@ async def autosyd(client, file_details):
     except Exception as e:
         logger.error(f"An error occurred: {e}")
         await message.reply_text(f"An error")
-    while mrsydt_g:
-            file_details = mrsydt_g.pop(0)
-            await autosyd(client, file_details)
-            
-
+    mrsydt_g.pop(0)
 
 
