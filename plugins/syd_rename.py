@@ -19,7 +19,7 @@ from info import AUTH_CHANNEL
 
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
-sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
+#sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
 SYD_CHATS = [-1002252619500]
 MSYD = -1002464733363
 
@@ -52,10 +52,10 @@ async def refunc(client, message):
             
 async def process_queue(client):
     # Process files from the queue with a limit of two at a time
-    async with sydtg:
-        while mrsydt_g:
-            file_details = mrsydt_g.pop(0)
-            await autosyd(client, file_details)
+    #async with sydtg:
+    while mrsydt_g:
+        file_details = mrsydt_g.pop(0)
+        await autosyd(client, file_details)
             
 async def autosyd(client, file_details):
     try:
