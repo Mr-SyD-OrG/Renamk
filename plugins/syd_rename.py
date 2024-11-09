@@ -41,25 +41,18 @@ async def refunc(client, message):
                 'message': message 
             }
             mrsydt_g.append(sydfile)
-            if len(mrsydt_g) == 0:
-                asyncio.create_task(process_queue(client))
-
-
+            asyncio.create_task(process_queue(client))
         except Exception as e:
             logger.error(f"An error occurred: {e}")
             await message.reply_text("An error occurred while processing your request.")
             
 async def process_queue(client):
-    # Process files from the queue with a limit of two at a time
-    #async with sydtg:
-    global processing
-    processing = True  # Set processing flag
+    # Process files
+    
     while mrsydt_g:
         file_details = mrsydt_g.pop(0)
         await autosyd(client, file_details)
-
-    processing = False
-            
+        
 async def autosyd(client, file_details):
     try:
         syd = file_details['file_name']
