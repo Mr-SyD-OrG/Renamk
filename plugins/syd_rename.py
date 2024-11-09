@@ -13,15 +13,16 @@ import logging
 import re
 import os
 import time
-from helper.utils import add_prefix_suffix, client, start_clone_bot, is_req_subscribed
+from helper.utils import client, start_clone_bot
 from config import Config
 from info import AUTH_CHANNEL
 
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
+#sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
 SYD_CHATS = [-1002252619500]
 MSYD = -1002464733363
-processing = False
+#file_queue = asyncio.Queue()
 mrsydt_g = []
 
 # Define the main message handler for private messages with replies
@@ -36,30 +37,30 @@ async def refunc(client, message):
             sydfile = {
                 'file_name': syd,
                 'file_size': file.file_size,
-                'message_id': message.id,
                 'media': file,
-                'message': message 
+                'message': message
             }
             mrsydt_g.append(sydfile)
-            if len(mrsydt_g) == 0:
-                asyncio.create_task(process_queue(client))
-
 
         except Exception as e:
             logger.error(f"An error occurred: {e}")
             await message.reply_text("An error occurred while processing your request.")
-            
-async def process_queue(client):
-    # Process files from the queue with a limit of two at a time
-    #async with sydtg:
-    global processing
-    processing = True  # Set processing flag
-    while mrsydt_g:
-        file_details = mrsydt_g.pop(0)
-        await autosyd(client, file_details)
 
-    processing = False
-            
+
+async def process_queue(client):
+    while mrsydt_g:
+        file_details = mrsydt_g.pop(0)  # Get the next file
+        await autosyd(client, file_details)
+    
+#async def start_queue_processor(client):
+  #  while True:
+       # file_details = await file_queue.get()  # Wait for an item in the queue
+        #try:
+          #  await autosyd(client, file_details)  # Process the file
+     #   except Exception as e:
+            #logger.error(f"Failed to process file: {e}")
+      #  finally:
+         #   file_queue.task_done()  # Mark the task as complete
 async def autosyd(client, file_details):
     try:
         syd = file_details['file_name']
@@ -103,19 +104,32 @@ async def autosyd(client, file_details):
         kinsyd = "@GetTGLinks"
         new_filename = f"{filename} {kinsyd}{extension}" 
         file_path = f"downloads/{new_filename}"
-        ms = await client.send_message(
-            chat_id=MSYD,
-            text=f"__**{syd}**__"
-        )
-  
-        path = await client.download_media(
-            message=media,
-            file_name=file_path, 
-            progress=progress_for_pyrogram, 
-            progress_args=(f"\n⚠️ __**{syd}**__\n", ms, time.time())
-        )
-     
- 
+        async with sydtg:
+            ms = await client.send_message(
+                chat_id=MSYD,
+                text=f"__**{syd}**__"
+            )
+                
+            max_retries = 2
+            for attempt in range(max_retries):
+                try:
+                    path = await client.download_media(
+                        message=media,
+                        file_name=file_path, 
+                        progress=progress_for_pyrogram, 
+                        progress_args=(f"\n⚠️ __**{syd}**__\n", ms, time.time())
+                    )
+                    if os.path.exists(path) and os.path.getsize(path) == media.file_size:
+                        break  # Exit the loop if the file is downloaded successfully
+                    else:
+                        await ms.edit(f"⚠️ {syd} \nSize mismatch detected. Attempting to re-download... ({attempt + 1}/{max_retries})")
+                        os.remove(path)
+                except Exception as e:
+                    return await ms.edit(f"⚠️ Error downloading file: {e}")
+            else:
+                return await ms.edit(f"⚠️ {syd} Failed to download the file after multiple attempts.")
+
+
         duration = media.duration if hasattr(media, 'duration') else 0
         ph_path = None
         caption = f"**{new_filename}**" 
@@ -176,5 +190,9 @@ async def autosyd(client, file_details):
     except Exception as e:
         logger.error(f"An error occurred: {e}")
         await message.reply_text(f"An error")
+    while mrsydt_g:
+            file_details = mrsydt_g.pop(0)
+            await autosyd(client, file_details)
+            
 
 
