@@ -21,7 +21,7 @@ from info import AUTH_CHANNEL
 logger = logging.getLogger(__name__)
 sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
 SYD_CHATS = [-1002252619500]
-MSYD = -1002252619500
+MSYD = -1002464733363
 
 mrsydtg = []
 
