@@ -89,10 +89,14 @@ async def autosyd(client, file_details):
         new_name = mrsyd[0].strip() if len(mrsyd) > 1 and any(term in mrsyd[1].strip().lower() for term in sydd) else filename
             
         if not new_name.lower().endswith(".mkv"):
-            new_name += "@GetTGLinks.mkv"
+            new_name += ".mkv"
                 
         media = file
-        new_filename = new_name 
+        pattern = r'(?P<filename>.*?)(\.\w+)?$'
+        match = re.search(pattern, new_name)
+        filename = match.group('filename')
+        extension = match.group(2) or ''
+        new_filename = f"{filename} {suffix}{extension}" 
         file_path = f"downloads/{new_filename}"
         file = media
         async with sydtg:
