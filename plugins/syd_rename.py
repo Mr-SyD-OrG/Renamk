@@ -27,6 +27,7 @@ mrsydt_g = []
 # Define the main message handler for private messages with replies
 @Client.on_message(filters.document | filters.audio | filters.video)
 async def refunc(client, message):
+    global processing
     if message.chat.id == MSYD:
         try:
             chat_id = MSYD
