@@ -96,7 +96,8 @@ async def autosyd(client, file_details):
         match = re.search(pattern, new_name)
         filename = match.group('filename')
         extension = match.group(2) or ''
-        new_filename = f"{filename} {suffix}{extension}" 
+        kinsyd = "@GetTGLinks"
+        new_filename = f"{filename} {kinsyd}{extension}" 
         file_path = f"downloads/{new_filename}"
         file = media
         async with sydtg:
