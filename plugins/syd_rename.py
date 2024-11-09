@@ -91,7 +91,6 @@ async def autosyd(client, file_details):
         if not new_name.lower().endswith(".mkv"):
             new_name += ".mkv"
                 
-        media = file
         pattern = r'(?P<filename>.*?)(\.\w+)?$'
         match = re.search(pattern, new_name)
         filename = match.group('filename')
