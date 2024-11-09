@@ -55,9 +55,9 @@ async def process_queue(client):
     async with sydtg:
         while mrsydtg:
             file_details = mrsydtg.pop(0)
-            await autosyd(client, file_details)
+            await autosyd(client, file_details, file_details['message'])
             
-async def autosyd(client, file_details):
+async def autosyd(client, file_details, message):
     try:
         syd = file_details['file_name']
         media = file_details['media']
