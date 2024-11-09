@@ -42,7 +42,7 @@ async def refunc(client, message):
                 'media': file
             }
             mrsydt_g.append(sydfile)
-            if len(mrsydtg) > 0:
+            if len(mrsydt_g) > 0:
                 asyncio.create_task(process_queue(client))
 
 
@@ -53,7 +53,7 @@ async def refunc(client, message):
 async def process_queue(client):
     # Process files from the queue with a limit of two at a time
     async with sydtg:
-        while mrsydtg:
+        while mrsydt_g:
             file_details = mrsydt_g.pop(0)
             await autosyd(client, file_details, file_details['message'])
             
