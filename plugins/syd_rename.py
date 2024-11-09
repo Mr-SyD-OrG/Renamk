@@ -119,7 +119,7 @@ async def autosyd(client, file_details):
                         break  # Exit the loop if the file is downloaded successfully
                     else:
                         await ms.edit(f"⚠️ {syd} \nSize mismatch detected. Attempting to re-download... ({attempt + 1}/{max_retries})")
-                         os.remove(path)
+                        os.remove(path)
                 except Exception as e:
                     return await ms.edit(f"⚠️ Error downloading file: {e}")
             else:
