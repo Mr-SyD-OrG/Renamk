@@ -35,12 +35,10 @@ async def refunc(client, message):
             syd = file.file_name
             
             sydfile = {
-                'chat_id': chat_id,
                 'file_name': syd,
-                'file_size': file.file_size,
-                'message_id': message.id,
+                'file_size': file.file_size
                 'media': file,
-                'original_message': message
+                'message': message
             }
             mrsydt_g.append(sydfile)
             if len(mrsydt_g) > 0:
@@ -56,12 +54,13 @@ async def process_queue(client):
     async with sydtg:
         while mrsydt_g:
             file_details = mrsydt_g.pop(0)
-            await autosyd(client, file_details, file_details['original_message'])
+            await autosyd(client, file_details, file_details['message'])
             
 async def autosyd(client, file_details, message):
     try:
         syd = file_details['file_name']
         media = file_details['media']
+        message = file_details['message']
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'PAHE', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', '[', 'www.', '@']
         sydt_g = [
             '[Tam', '[Tamil', '[Tel', '[Telugu', '[Kan', '[Kannada', '[Mal', '[Malayalam',
