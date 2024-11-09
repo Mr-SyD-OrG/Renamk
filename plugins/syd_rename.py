@@ -23,7 +23,7 @@ sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
 SYD_CHATS = [-1002252619500]
 MSYD = -1002464733363
 
-mrsydtg = []
+mrsydt_g = []
 
 # Define the main message handler for private messages with replies
 @Client.on_message(filters.document | filters.audio | filters.video)
@@ -41,7 +41,7 @@ async def refunc(client, message):
                 'message_id': message.id,
                 'media': file
             }
-            mrsydtg.append(sydfile)
+            mrsydt_g.append(sydfile)
             if len(mrsydtg) > 0:
                 asyncio.create_task(process_queue(client))
 
@@ -54,7 +54,7 @@ async def process_queue(client):
     # Process files from the queue with a limit of two at a time
     async with sydtg:
         while mrsydtg:
-            file_details = mrsydtg.pop(0)
+            file_details = mrsydt_g.pop(0)
             await autosyd(client, file_details, file_details['message'])
             
 async def autosyd(client, file_details, message):
@@ -185,7 +185,7 @@ async def autosyd(client, file_details, message):
     except Exception as e:
         logger.error(f"An error occurred: {e}")
         await message.reply_text(f"An error")
-    mrsydtg.pop(0)
+    mrsydt_g.pop(0)
 
 
 
