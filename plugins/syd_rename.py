@@ -98,7 +98,6 @@ async def autosyd(client, file_details):
         kinsyd = "@GetTGLinks"
         new_filename = f"{filename} {kinsyd}{extension}" 
         file_path = f"downloads/{new_filename}"
-        file = media
         async with sydtg:
             ms = await client.send_message(
                 chat_id=MSYD,
@@ -114,7 +113,7 @@ async def autosyd(client, file_details):
                         progress=progress_for_pyrogram, 
                         progress_args=(f"\n⚠️ __**{syd}**__\n", ms, time.time())
                     )
-                    if os.path.exists(path) and os.path.getsize(path) == file.file_size:
+                    if os.path.exists(path) and os.path.getsize(path) == media.file_size:
                         break  # Exit the loop if the file is downloaded successfully
                     else:
                         await ms.edit(f"⚠️ {syd} \nSize mismatch detected. Attempting to re-download... ({attempt + 1}/{max_retries})")
@@ -127,7 +126,6 @@ async def autosyd(client, file_details):
 
         duration = file.duration if hasattr(file, 'duration') else 0
         ph_path = None
-        media = file
         caption = f"**{new_filename}**" 
            
         PIS = 'https://envs.sh/Arr.jpg'
