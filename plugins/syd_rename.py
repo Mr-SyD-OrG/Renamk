@@ -39,7 +39,8 @@ async def refunc(client, message):
                 'file_name': syd,
                 'file_size': file.file_size,
                 'message_id': message.id,
-                'media': file
+                'media': file,
+                'original_message': message
             }
             mrsydt_g.append(sydfile)
             if len(mrsydt_g) > 0:
@@ -55,7 +56,7 @@ async def process_queue(client):
     async with sydtg:
         while mrsydt_g:
             file_details = mrsydt_g.pop(0)
-            await autosyd(client, file_details, file_details['message'])
+            await autosyd(client, file_details, file_details['original_message'])
             
 async def autosyd(client, file_details, message):
     try:
