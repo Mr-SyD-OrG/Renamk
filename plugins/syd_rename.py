@@ -13,7 +13,7 @@ import logging
 import re
 import os
 import time
-from helper.utils import add_prefix_suffix, client, start_clone_bot, is_req_subscribed
+from helper.utils import client, start_clone_bot
 from config import Config
 from info import AUTH_CHANNEL
 
@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 #sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
 SYD_CHATS = [-1002252619500]
 MSYD = -1002464733363
-file_queue = asyncio.Queue()
+#file_queue = asyncio.Queue()
 mrsydt_g = []
 
 # Define the main message handler for private messages with replies
@@ -36,11 +36,11 @@ async def refunc(client, message):
             
             sydfile = {
                 'file_name': syd,
-                'file_size': file.file_size
+                'file_size': file.file_size,
                 'media': file,
                 'message': message
             }
-            file_queue.put(sydfile)
+            mrsydt_g.append(sydfile)
 
         except Exception as e:
             logger.error(f"An error occurred: {e}")
