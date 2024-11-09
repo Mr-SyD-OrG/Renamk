@@ -41,7 +41,7 @@ async def refunc(client, message):
                 'message': message 
             }
             mrsydt_g.append(sydfile)
-            if len(mrsydt_g) > 0:
+            if len(mrsydt_g) == 0:
                 asyncio.create_task(process_queue(client))
 
 
