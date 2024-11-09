@@ -172,6 +172,5 @@ async def autosyd(client, file_details):
     except Exception as e:
         logger.error(f"An error occurred: {e}")
         await message.reply_text(f"An error")
-    mrsydt_g.pop(0)
 
 
