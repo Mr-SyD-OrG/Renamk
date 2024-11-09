@@ -46,13 +46,10 @@ async def refunc(client, message):
             logger.error(f"An error occurred: {e}")
             await message.reply_text("An error occurred while processing your request.")
 
-async def process_queue(client):
-    # Process files from the queue with a limit of two at a time
-    async with sydtg:
-        while mrsydt_g:
-            file_details = mrsydt_g.pop(0)
-            await autosyd(client, file_details)
-            
+while mrsydt_g:
+        file_details = mrsydt_g.pop(0)  # Get the next file
+        await autosyd(client, file_details)
+    
 #async def start_queue_processor(client):
   #  while True:
        # file_details = await file_queue.get()  # Wait for an item in the queue
