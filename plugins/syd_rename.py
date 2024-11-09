@@ -19,7 +19,7 @@ from info import AUTH_CHANNEL
 
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
-#sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
+sydtg = asyncio.Semaphore(2)   #improve Accuracy @Syd_Xyz
 SYD_CHATS = [-1002252619500]
 MSYD = -1002464733363
 
@@ -100,32 +100,19 @@ async def autosyd(client, file_details):
         kinsyd = "@GetTGLinks"
         new_filename = f"{filename} {kinsyd}{extension}" 
         file_path = f"downloads/{new_filename}"
-        async with sydtg:
-            ms = await client.send_message(
-                chat_id=MSYD,
-                text=f"__**{syd}**__"
-            )
-                
-            max_retries = 2
-            for attempt in range(max_retries):
-                try:
-                    path = await client.download_media(
-                        message=media,
-                        file_name=file_path, 
-                        progress=progress_for_pyrogram, 
-                        progress_args=(f"\n⚠️ __**{syd}**__\n", ms, time.time())
-                    )
-                    if os.path.exists(path) and os.path.getsize(path) == media.file_size:
-                        break  # Exit the loop if the file is downloaded successfully
-                    else:
-                        await ms.edit(f"⚠️ {syd} \nSize mismatch detected. Attempting to re-download... ({attempt + 1}/{max_retries})")
-                        os.remove(path)
-                except Exception as e:
-                    return await ms.edit(f"⚠️ Error downloading file: {e}")
-            else:
-                return await ms.edit(f"⚠️ {syd} Failed to download the file after multiple attempts.")
-
-
+        ms = await client.send_message(
+            chat_id=MSYD,
+            text=f"__**{syd}**__"
+        )
+  
+        path = await client.download_media(
+            message=media,
+            file_name=file_path, 
+            progress=progress_for_pyrogram, 
+            progress_args=(f"\n⚠️ __**{syd}**__\n", ms, time.time())
+        )
+     
+ 
         duration = media.duration if hasattr(media, 'duration') else 0
         ph_path = None
         caption = f"**{new_filename}**" 
