@@ -21,7 +21,7 @@ from info import AUTH_CHANNEL
 logger = logging.getLogger(__name__)
 SYD_CHATS = [-1002252619500]
 MSYD = -1002464733363
-
+processing = False
 mrsydt_g = []
 
 # Define the main message handler for private messages with replies
@@ -52,9 +52,13 @@ async def refunc(client, message):
 async def process_queue(client):
     # Process files from the queue with a limit of two at a time
     #async with sydtg:
+    global processing
+    processing = True  # Set processing flag
     while mrsydt_g:
         file_details = mrsydt_g.pop(0)
         await autosyd(client, file_details)
+
+    processing = False
             
 async def autosyd(client, file_details):
     try:
