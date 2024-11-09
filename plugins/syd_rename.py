@@ -48,7 +48,7 @@ async def refunc(client, message):
 
 
 async def process_queue(client):
-while mrsydt_g:
+    while mrsydt_g:
         file_details = mrsydt_g.pop(0)  # Get the next file
         await autosyd(client, file_details)
     
