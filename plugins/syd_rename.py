@@ -82,7 +82,7 @@ async def autosyd(client, file_details):
             if x not in sydt_g and not any(x.startswith(mrsyd) for mrsyd in mrsyds) and x != '@GetTGLinks'
         ])
 
-        filesize = humanize.naturalsize(file.file_size)
+        filesize = humanize.naturalsize(media.file_size)
         sydd = ['psa', 'sh3lby', 'Telly', '[', 'SH3LBY.mkv', 'bigil', 'YTS.MX', 'budgetbits', 'HDA', 'TR', 'primefix', 'GalaxyRG265', 'bone', 'Incursi0', 'StreliziA', 'ikaRos', 'lssjbroly', 'soan', 'pahe', 'poke', 'galaxytv', 'galaxyrg', 'NazzY', 'VARYG', 'MICHAEL', 'FLUX', 'RAV1NE']
             
         mrsyd = filename.rsplit('-', 1)  # Split filename from the right at the last hyphen
@@ -124,7 +124,7 @@ async def autosyd(client, file_details):
                 return await ms.edit(f"⚠️ {syd} Failed to download the file after multiple attempts.")
 
 
-        duration = file.duration if hasattr(file, 'duration') else 0
+        duration = media.duration if hasattr(media, 'duration') else 0
         ph_path = None
         caption = f"**{new_filename}**" 
            
