@@ -28,14 +28,17 @@ mrsydt_g = []
 @Client.on_message(filters.document | filters.audio | filters.video)
 async def refunc(client, message):
     global processing
-    if file.file_size > 2000 * 1024 * 1024:
-        return
-    if file.file_size < 1024 * 1024:
-        return
     if message.chat.id == MSYD:
         try:
             chat_id = MSYD
             file = getattr(message, message.media.value)
+            if not file:
+                return
+            if file.file_size > 2000 * 1024 * 1024:  # > 2 GB
+                return
+            if file.file_size < 1024 * 1024:  # < 1 MB
+                return
+                
             syd = file.file_name
             
             sydfile = {
