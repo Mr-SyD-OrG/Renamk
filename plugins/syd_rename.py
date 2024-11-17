@@ -30,7 +30,7 @@ async def refunc(client, message):
     global processing
     if file.file_size > 2000 * 1024 * 1024:
         return
-    if media.file_size < 1024 * 1024:
+    if file.file_size < 1024 * 1024:
         return
     if message.chat.id == MSYD:
         try:
