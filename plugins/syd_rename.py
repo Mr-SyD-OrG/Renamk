@@ -21,6 +21,7 @@ from info import AUTH_CHANNEL
 logger = logging.getLogger(__name__)
 SYD_CHATS = [-1002252619500]
 MSYD = -1002464733363
+MRSSYD = -1002429058090
 processing = False
 mrsydt_g = []
 
@@ -28,9 +29,10 @@ mrsydt_g = []
 @Client.on_message(filters.document | filters.audio | filters.video)
 async def refunc(client, message):
     global processing
-    if message.chat.id == MSYD:
+    syd_id = {MSYD, MRSSYD}
+    if message.chat.id in syd_id :
         try:
-            chat_id = MSYD
+          #  chat_id = MSYD
             file = getattr(message, message.media.value)
             if not file:
                 return
