@@ -27,42 +27,26 @@ processing = False
 mrsydt_g = []
 
 
-def thesyd_message(text):
-    match = re.search(r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; (\d+)", text)
+def message_count(text, pattern, default_value):
+    match = re.search(pattern, text)
     if match:
         current_count = int(match.group(1))
         new_count = current_count + 1
-        new_text = re.sub(r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; \d+", f"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; {new_count}", text)
-        return new_text
+        new_text = re.sub(pattern, f"{match.group(0).split(':')[0]} : {new_count}", text)
     else:
-        return "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; <1>"
-    syd = re.search(r"#1 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", text)
-    if syd:
-        current_count = int(syd.group(1))
-        new_count = current_count + 1
-        new_text = re.sub(r"#1 ʀᴇᴍᴀɪɴɪɴɢ : \d+", f"#1 ʀᴇᴍᴀɪɴɪɴɢ : {new_count}", text)
-        return new_text
-    else:
-        return "#1 ʀᴇᴍᴀɪɴɪɴɢ : <1>"
+        # Add the missing count if the pattern is not found
+        new_text = f"{text}\n{default_value} : <1>"
+    return new_text
+    
+def thesyd_message(text):
+    text = message_count(text, r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; (\d+)", "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ;")
+    text = message_count(text, r"#1 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", "#1 ʀᴇᴍᴀɪɴɪɴɢ :")
+    return text
 
 def thesydd_message(text):
-    match = re.search(r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; (\d+)", text)
-    if match:
-        current_count = int(match.group(1))
-        new_count = current_count + 1
-        new_text = re.sub(r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; \d+", f"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; {new_count}", text)
-        return new_text
-    else:
-        return "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; <1>"
-    syd = re.search(r"#2 ʀᴇᴍᴀɪɴɪɴɢ :  (\d+)", text)
-    if syd:
-        current_count = int(syd.group(1))
-        new_count = current_count - 1
-        new_text = re.sub(r"#2 ʀᴇᴍᴀɪɴɪɴɢ : \d+", f"#2 ʀᴇᴍᴀɪɴɪɴɢ : {new_count}", text)
-        return new_text
-    else:
-        return "#2 ʀᴇᴍᴀɪɴɪɴɢ : <1>"
-
+    text = message_count(text, r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; (\d+)", "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ;")
+    text = message_count(text, r"#2 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", "#2 ʀᴇᴍᴀɪɴɪɴɢ :")
+    return text
         
 def syd_message(text):
     match = re.search(r"#1 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", text)
