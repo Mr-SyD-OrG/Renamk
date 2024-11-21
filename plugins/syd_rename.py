@@ -115,6 +115,7 @@ async def refunc(client, message):
             if not processing:
                 processing = True  # Set processing flag
                 await process_queue(client)
+            await asyncio.sleep(20)
             syd_id = -1002332730533
             mrsyd_id = 13
             chat_message = await client.get_messages(syd_id, mrsyd_id)
