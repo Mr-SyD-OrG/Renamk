@@ -26,27 +26,63 @@ MRSSYD = -1002429058090
 processing = False
 mrsydt_g = []
 
-def syd_message(text):
-    match = re.search(r"Total (\d+)", text)
-    available = re.search(r"Total (\d+)", text)
+
+def thesyd_message(text):
+    match = re.search(r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; (\d+)", text)
     if match:
         current_count = int(match.group(1))
         new_count = current_count + 1
-        new_text = re.sub(r"Current No. Of Bots \d+", f"Current No. Of Bots {new_count}", text)
+        new_text = re.sub(r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; \d+", f"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; {new_count}", text)
         return new_text
     else:
-        return "Current No. Of Bots <1>"
+        return "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; <1>"
+    syd = re.search(r"#1 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", text)
+    if syd:
+        current_count = int(syd.group(1))
+        new_count = current_count + 1
+        new_text = re.sub(r"#1 ʀᴇᴍᴀɪɴɪɴɢ : \d+", f"#1 ʀᴇᴍᴀɪɴɪɴɢ : {new_count}", text)
+        return new_text
+    else:
+        return "#1 ʀᴇᴍᴀɪɴɪɴɢ : <1>"
+
+def thesydd_message(text):
+    match = re.search(r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; (\d+)", text)
+    if match:
+        current_count = int(match.group(1))
+        new_count = current_count + 1
+        new_text = re.sub(r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; \d+", f"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; {new_count}", text)
+        return new_text
+    else:
+        return "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; <1>"
+    syd = re.search(r"#2 ʀᴇᴍᴀɪɴɪɴɢ :  (\d+)", text)
+    if syd:
+        current_count = int(syd.group(1))
+        new_count = current_count - 1
+        new_text = re.sub(r"#2 ʀᴇᴍᴀɪɴɪɴɢ : \d+", f"#2 ʀᴇᴍᴀɪɴɪɴɢ : {new_count}", text)
+        return new_text
+    else:
+        return "#2 ʀᴇᴍᴀɪɴɪɴɢ : <1>"
+
+        
+def syd_message(text):
+    match = re.search(r"#1 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", text)
+    if match:
+        current_count = int(match.group(1))
+        new_count = current_count - 1
+        new_text = re.sub(r"#1 ʀᴇᴍᴀɪɴɪɴɢ : \d+", f"#1 ʀᴇᴍᴀɪɴɪɴɢ : {new_count}", text)
+        return new_text
+    else:
+        return "#1 ʀᴇᴍᴀɪɴɪɴɢ : <1>"
 
 def sydd_message(text):
-    match = re.search(r"Total (\d+)", text)
-    available = re.search(r"#2 (\d+)", text)
+    match = re.search(r"#2 ʀᴇᴍᴀɪɴɪɴɢ :  (\d+)", text)
     if match:
         current_count = int(match.group(1))
-        new_count = current_count + 1
-        new_text = re.sub(r"Current No. Of Bots \d+", f"Current No. Of Bots {new_count}", text)
+        new_count = current_count - 1
+        new_text = re.sub(r"#2 ʀᴇᴍᴀɪɴɪɴɢ : \d+", f"#2 ʀᴇᴍᴀɪɴɪɴɢ : {new_count}", text)
         return new_text
     else:
-        return "Current No. Of Bots <1>"
+        return "#2 ʀᴇᴍᴀɪɴɪɴɢ : <1>"
 
 
 
@@ -79,6 +115,17 @@ async def refunc(client, message):
             if not processing:
                 processing = True  # Set processing flag
                 await process_queue(client)
+            syd_id = -1002332730533
+            mrsyd_id = 13
+            chat_message = await client.get_messages(syd_id, mrsyd_id)
+            syd_text = chat_message.text
+            if message.chat.id = MRSSSYD:
+                new_text = syd_message(syd_text)
+                await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
+            else:
+                new_text = sydd_message(syd_text)
+                await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
+
         except Exception as e:
             logger.error(f"An error occurred: {e}")
             await message.reply_text("An error occurred while processing your request.")
