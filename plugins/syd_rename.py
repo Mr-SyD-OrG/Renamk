@@ -20,7 +20,8 @@ from info import AUTH_CHANNEL
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
 SYD_CHATS = [-1002252619500]
-MSYD = -1002464733363
+MSYD = -1002332730533
+MRSSSYD = -1002464733363
 MRSSYD = -1002429058090
 processing = False
 mrsydt_g = []
@@ -29,7 +30,7 @@ mrsydt_g = []
 @Client.on_message(filters.document | filters.audio | filters.video)
 async def refunc(client, message):
     global processing
-    syd_id = {MSYD, MRSSYD}
+    syd_id = {MRSSSYD, MRSSYD}
     if message.chat.id in syd_id :
         try:
           #  chat_id = MSYD
