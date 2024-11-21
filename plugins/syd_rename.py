@@ -26,6 +26,19 @@ MRSSYD = -1002429058090
 processing = False
 mrsydt_g = []
 
+def syd_message(text):
+    match = re.search(r"Total (\d+)", text)
+    available = re.search(r"Total (\d+)", text)
+    if match:
+        current_count = int(match.group(1))
+        new_count = current_count + 1
+        new_text = re.sub(r"Current No. Of Bots \d+", f"Current No. Of Bots {new_count}", text)
+        return new_text
+    else:
+        return "Current No. Of Bots <1>"
+
+
+
 # Define the main message handler for private messages with replies
 @Client.on_message(filters.document | filters.audio | filters.video)
 async def refunc(client, message):
