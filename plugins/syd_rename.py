@@ -198,9 +198,10 @@ async def autosyd(client, file_details):
         mrsyd_id = 13
         chat_message = await client.get_messages(syd_id, mrsyd_id)
         syd_text = chat_message.text
-        if message.chat.id = MRSSSYD
+        if message.chat.id = MRSSSYD:
             new_text = increment_count_in_message(syd_text)
             await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
+        else:
 
     except Exception as e:
         logger.error(f"An error occurred: {e}")
