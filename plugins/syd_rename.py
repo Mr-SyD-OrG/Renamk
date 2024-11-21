@@ -35,7 +35,7 @@ def message_count(text, pattern, default_value):
         new_text = re.sub(pattern, f"{match.group(0).split(':')[0]} : {new_count}", text)
     else:
         # Add the missing count if the pattern is not found
-        new_text = f"{text}\n{default_value} : <1>"
+        new_text = f"{text}\n{default_value} : 1"  # Removed '<>' for consistency
     return new_text
     
 def thesyd_message(text):
