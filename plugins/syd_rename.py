@@ -105,10 +105,10 @@ async def refunc(client, message):
             chat_message = await client.get_messages(syd_id, mrsyd_id)
             syd_text = chat_message.text
             if message.chat.id == MRSSSYD:
-                new_text = syd_message(syd_text)
+                new_text = thesyd_message(syd_text)
                 await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
             else:
-                new_text = sydd_message(syd_text)
+                new_text = thesydd_message(syd_text)
                 await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
 
         except Exception as e:
