@@ -139,29 +139,11 @@ async def refunc(client, message):
             if not processing:
                 processing = True  # Set processing flag
                 await process_queue(client)
-            syd_id = -1002332730533
-            mrsyd_id = 13
-            chat_message = await client.get_messages(syd_id, mrsyd_id)
-            syd_text = chat_message.text
-
-            await asyncio.sleep(1)
-            
-            if message.chat.id == MRSSSYD:
-                await batch_edit(client, syd_id, mrsyd_id, syd_text, thesyd_message)
-            elif message.chat.id == MRSSYD:
-                await batch_edit(client, syd_id, mrsyd_id, syd_text, thesydd_message)
-            elif message.chat.id == MRSSSSYD:
-                await batch_edit(client, syd_id, mrsyd_id, syd_text, thesyddd_message)
-
-
+        
         except Exception as e:
             logger.error(f"An error occurred: {e}")
             await message.reply_text("An error occurred while processing your request.")
          
-        finally:
-            # Force a final edit if there are leftover files
-            await batch_edit(client, syd_id, mrsyd_id, syd_text, thesyd_message, final=True)
-
 async def process_queue(client):
     global processing
     try:
@@ -284,13 +266,10 @@ async def autosyd(client, file_details):
             os.remove(ph_path)
         if file_path:
             os.remove(file_path)
-        syd_id = -1002332730533
-        mrsyd_id = 13
-        chat_message = await client.get_messages(syd_id, mrsyd_id)
-        syd_text = chat_message.text
-        if message.chat.id == MRSSSYD:
-            new_text = syd_message(syd_text)
-            await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
+        
+      #  if message.chat.id == MRSSSYD:
+            #new_text = syd_message(syd_text)
+           # await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
         elif message.chat.id == MRSSYD:
             new_text = sydd_message(syd_text)
             await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
