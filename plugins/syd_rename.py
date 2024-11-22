@@ -144,7 +144,7 @@ async def refunc(client, message):
             chat_message = await client.get_messages(syd_id, mrsyd_id)
             syd_text = chat_message.text
 
-            await asyncio.sleep(20)
+            await asyncio.sleep(1)
             
             if message.chat.id == MRSSSYD:
                 await batch_edit(client, syd_id, mrsyd_id, syd_text, thesyd_message)
