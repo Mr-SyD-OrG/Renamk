@@ -39,12 +39,12 @@ def message_count(text, pattern, default_value):
     return new_text
     
 def thesyd_message(text):
-    text = message_count(text, r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; (\d+)", "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ;")
+    text = message_count(text, r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ : (\d+)", "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ :")
     text = message_count(text, r"#1 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", "#1 ʀᴇᴍᴀɪɴɪɴɢ :")
     return text
 
 def thesydd_message(text):
-    text = message_count(text, r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ; (\d+)", "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ ;")
+    text = message_count(text, r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ : (\d+)", "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ :")
     text = message_count(text, r"#2 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", "#2 ʀᴇᴍᴀɪɴɪɴɢ :")
     return text
         
