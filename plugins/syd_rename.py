@@ -196,7 +196,7 @@ async def autosyd(client, file_details):
         match = re.search(pattern, new_name)
         filename = match.group('filename')
         extension = match.group(2) or ''
-        kinsyd = "@GetTGLinks"
+        kinsyd = "@GetTGLinks -8чᴅ"
         new_filename = f"{filename} {kinsyd}{extension}" 
         file_path = f"downloads/{new_filename}"
         ms = await client.send_message(
