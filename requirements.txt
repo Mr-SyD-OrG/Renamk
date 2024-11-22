@@ -10,3 +10,4 @@ humanize
 pyromod
 ffmpeg-python
 psutil
+aiolimiter
