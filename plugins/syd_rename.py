@@ -99,7 +99,7 @@ async def limited_edit(client, syd_id, mrsyd_id, new_text):
         await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
 
 
-async def batch_edit(client, syd_id, mrsyd_id, syd_text, update_func):
+async def batch_edit(client, syd_id, mrsyd_id, syd_text, update_func, final=False):
     global file_counter
     global total_files_processed
 
@@ -108,7 +108,7 @@ async def batch_edit(client, syd_id, mrsyd_id, syd_text, update_func):
     if file_counter % batch_size == 0 or final:
         new_text = update_func(syd_text)
         await limited_edit(client, syd_id, mrsyd_id, new_text)
-        file_counter = 0
+        file_counter = 0 if final else file_counter
 
 # Define the main message handler for private messages with replies
 @Client.on_message(filters.document | filters.audio | filters.video)
@@ -157,7 +157,11 @@ async def refunc(client, message):
         except Exception as e:
             logger.error(f"An error occurred: {e}")
             await message.reply_text("An error occurred while processing your request.")
-            
+         
+        finally:
+            # Force a final edit if there are leftover files
+            await batch_edit(client, syd_id, mrsyd_id, syd_text, thesyd_message, final=True)
+
 async def process_queue(client):
     global processing
     try:
