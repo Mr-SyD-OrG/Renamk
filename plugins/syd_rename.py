@@ -159,7 +159,9 @@ async def autosyd(client, file_details):
         syd = file_details['file_name']
         media = file_details['media']
         message = file_details['message']
-        mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'PAHE', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', '[', 'www.', '@']
+        mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'PAHE', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', '[', 'www.', '@',
+            '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE'
+        ]
         sydt_g = [
             '[Tam', '[Tamil', '[Tel', '[Telugu', '[Kan', '[Kannada', '[Mal', '[Malayalam',
             '[Eng', '[English', '[Hin', '[Hindi', '[Mar', '[Marathi', '[Ben', '[Bengali',
@@ -270,14 +272,7 @@ async def autosyd(client, file_details):
       #  if message.chat.id == MRSSSYD:
             #new_text = syd_message(syd_text)
            # await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
-        elif message.chat.id == MRSSYD:
-            new_text = sydd_message(syd_text)
-            await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
-        elif message.chat.id == MRSSSSYD:
-            new_text = syddd_message(syd_text)
-            await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
-
-
+        
     except Exception as e:
         logger.error(f"An error occurred: {e}")
         await message.reply_text(f"An error")
