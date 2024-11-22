@@ -90,7 +90,7 @@ def syddd_message(text):
 @Client.on_message(filters.document | filters.audio | filters.video)
 async def refunc(client, message):
     global processing
-    syd_id = {MRSSSYD, MRSSYD}
+    syd_id = {MRSSSYD, MRSSYD, MRSSSSYD}
     if message.chat.id in syd_id :
         try:
           #  chat_id = MSYD
@@ -125,9 +125,13 @@ async def refunc(client, message):
             if message.chat.id == MRSSSYD:
                 new_text = thesyd_message(syd_text)
                 await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
-            else:
+            elif message.chat.id == MRSSYD:
                 new_text = thesydd_message(syd_text)
                 await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
+            elif message.chat.id == MRSSSSYD:
+                new_text = thesyddd_message(syd_text)
+                await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
+                
 
         except Exception as e:
             logger.error(f"An error occurred: {e}")
@@ -262,9 +266,13 @@ async def autosyd(client, file_details):
         if message.chat.id == MRSSSYD:
             new_text = syd_message(syd_text)
             await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
-        else:
+        elif message.chat.id == MRSSYD:
             new_text = sydd_message(syd_text)
             await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
+        elif message.chat.id == MRSSSSYD:
+            new_text = syddd_message(syd_text)
+            await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
+
 
     except Exception as e:
         logger.error(f"An error occurred: {e}")
