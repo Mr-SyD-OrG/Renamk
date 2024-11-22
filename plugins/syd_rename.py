@@ -23,6 +23,7 @@ SYD_CHATS = [-1002252619500]
 MSYD = -1002332730533
 MRSSSYD = -1002464733363
 MRSSYD = -1002429058090
+MRSSSSYD = -1002433450358
 processing = False
 mrsydt_g = []
 
@@ -47,6 +48,11 @@ def thesydd_message(text):
     text = message_count(text, r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ : (\d+)", "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ :")
     text = message_count(text, r"#2 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", "#2 ʀᴇᴍᴀɪɴɪɴɢ :")
     return text
+
+def thesyddd_message(text):
+    text = message_count(text, r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ : (\d+)", "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ :")
+    text = message_count(text, r"#3 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", "#3 ʀᴇᴍᴀɪɴɪɴɢ :")
+    return text
         
 def syd_message(text):
     match = re.search(r"#1 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", text)
@@ -56,7 +62,7 @@ def syd_message(text):
         new_text = re.sub(r"#1 ʀᴇᴍᴀɪɴɪɴɢ : \d+", f"#1 ʀᴇᴍᴀɪɴɪɴɢ : {new_count}", text)
         return new_text
     else:
-        return "#1 ʀᴇᴍᴀɪɴɪɴɢ : <1>"
+        return "#1 ʀᴇᴍᴀɪɴɪɴɢ : 1 [ᴇʀʀᴏʀ]"
 
 def sydd_message(text):
     match = re.search(r"#2 ʀᴇᴍᴀɪɴɪɴɢ :  (\d+)", text)
@@ -66,7 +72,17 @@ def sydd_message(text):
         new_text = re.sub(r"#2 ʀᴇᴍᴀɪɴɪɴɢ : \d+", f"#2 ʀᴇᴍᴀɪɴɪɴɢ : {new_count}", text)
         return new_text
     else:
-        return "#2 ʀᴇᴍᴀɪɴɪɴɢ : <1>"
+        return "#2 ʀᴇᴍᴀɪɴɪɴɢ : 1 [ᴇʀʀᴏʀ]"
+        
+def syddd_message(text):
+    match = re.search(r"#3 ʀᴇᴍᴀɪɴɪɴɢ :  (\d+)", text)
+    if match:
+        current_count = int(match.group(1))
+        new_count = current_count - 1
+        new_text = re.sub(r"#4 ʀᴇᴍᴀɪɴɪɴɢ : \d+", f"#3 ʀᴇᴍᴀɪɴɪɴɢ : {new_count}", text)
+        return new_text
+    else:
+        return "#3 ʀᴇᴍᴀɪɴɪɴɢ : 1 [ᴇʀʀᴏʀ]"
 
 
 
