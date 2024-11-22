@@ -147,15 +147,12 @@ async def refunc(client, message):
             await asyncio.sleep(20)
             
             if message.chat.id == MRSSSYD:
-                new_text = thesyd_message(syd_text)
-                await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
+                await batch_edit(client, syd_id, mrsyd_id, syd_text, thesyd_message)
             elif message.chat.id == MRSSYD:
-                new_text = thesydd_message(syd_text)
-                await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
+                await batch_edit(client, syd_id, mrsyd_id, syd_text, thesydd_message)
             elif message.chat.id == MRSSSSYD:
-                new_text = thesyddd_message(syd_text)
-                await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
-                
+                await batch_edit(client, syd_id, mrsyd_id, syd_text, thesyddd_message)
+
 
         except Exception as e:
             logger.error(f"An error occurred: {e}")
