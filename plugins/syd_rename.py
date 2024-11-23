@@ -205,7 +205,7 @@ async def autosyd(client, file_details):
 
         syd_name = new_name.replace("-Telly", "").replace("-GalaxyRG", "").replace("-TR", "").replace("-PSA", "").replace("-GalaxyRG265", "").replace("-GalaxyTV", "").replace("-VARYG", "").replace("-PrimeFix", "").replace("-Pahe", "").replace("-Saon", "").replace("-Archie", "").replace("-Spidey", "").replace("-Jo", "")
         pattern = r'(?P<filename>.*?)(\.\w+)?$'
-        match = re.search(pattern, new_name)
+        match = re.search(pattern, syd_name)
         filename = match.group('filename')
         extension = match.group(2) or ''
         kinsyd = "@GetTGLinks -8чᴅ"
