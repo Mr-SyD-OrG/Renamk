@@ -67,14 +67,14 @@ def thesyddd_message(text):
     return text
         
 def syd_message(text):
-    match = re.search(r"#1 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", text)
+    match = re.search(r"ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", text)
     if match:
         current_count = int(match.group(1))
-        new_count = current_count - 1
-        new_text = re.sub(r"#1 ʀᴇᴍᴀɪɴɪɴɢ : \d+", f"#1 ʀᴇᴍᴀɪɴɪɴɢ : {new_count}", text)
+        new_count = current_count + 1
+        new_text = re.sub(r"ʀᴇᴍᴀɪɴɪɴɢ : \d+", f"ʀᴇᴍᴀɪɴɪɴɢ : {new_count}", text)
         return new_text
     else:
-        return "#1 ʀᴇᴍᴀɪɴɪɴɢ : 1 [ᴇʀʀᴏʀ]"
+        return "ʀᴇᴍᴀɪɴɪɴɢ : 1 [ᴇʀʀᴏʀ]"
 
 def sydd_message(text):
     match = re.search(r"#2 ʀᴇᴍᴀɪɴɪɴɢ :  (\d+)", text)
@@ -281,8 +281,9 @@ async def autosyd(client, file_details):
             os.remove(file_path)
         
       #  if message.chat.id == MRSSSYD:
-            #new_text = syd_message(syd_text)
-           # await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
+    
+        new_text = syd_message(syd_text)
+        await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
         
     except Exception as e:
         logger.error(f"An error occurred: {e}")
