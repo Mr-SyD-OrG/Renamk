@@ -117,7 +117,7 @@ async def batch_edit(client, syd_id, mrsyd_id, syd_text, update_func, final=Fals
 @Client.on_message(filters.document | filters.audio | filters.video)
 async def refunc(client, message):
     global processing
-    syd_id = {MRSSSYD, MRSSYD, MRSSSSYD}
+    syd_id = {MRSSSYD, MRSSYD, MRSSSSYD, MRSSSSSYD}
     if message.chat.id in syd_id :
         try:
           #  chat_id = MSYD
