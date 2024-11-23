@@ -35,6 +35,8 @@ MRSSYD = -1002429058090
 MRSSSSYD = -1002433450358
 processing = False
 mrsydt_g = []
+sydtg = -1002305372915
+Syd_T_G = -1002160523059
 
 
 def message_count(text, pattern, default_value):
@@ -122,8 +124,16 @@ async def refunc(client, message):
             if not file:
                 return
             if file.file_size > 2000 * 1024 * 1024:  # > 2 GB
+                from_syd = message.chat.id
+                syd_id = message.id
+                await client.copy_message(sydtg, from_syd, syd_id)
+                await message.delete()
                 return
             if file.file_size < 1024 * 1024:  # < 1 MB
+                from_syd = message.chat.id
+                syd_id = message.id
+                await client.copy_message(Syd_T_G, from_syd, syd_id)
+                await message.delete()
                 return
                 
             syd = file.file_name
@@ -138,7 +148,8 @@ async def refunc(client, message):
             mrsydt_g.append(sydfile)
             if not processing:
                 processing = True  # Set processing flag
-                await process_queue(client)
+                await process_queue(clienGB
+                                    
         
         except Exception as e:
             logger.error(f"An error occurred: {e}")
