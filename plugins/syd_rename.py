@@ -148,7 +148,7 @@ async def refunc(client, message):
             mrsydt_g.append(sydfile)
             if not processing:
                 processing = True  # Set processing flag
-                await process_queue(clienGB
+                await process_queue(client)
                                     
         
         except Exception as e:
