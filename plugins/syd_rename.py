@@ -281,7 +281,10 @@ async def autosyd(client, file_details):
             os.remove(file_path)
         
       #  if message.chat.id == MRSSSYD:
-    
+        syd_id = -1002332730533
+        mrsyd_id = 13
+        chat_message = await client.get_messages(syd_id, mrsyd_id)
+        syd_text = chat_message.text
         new_text = syd_message(syd_text)
         await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
         
