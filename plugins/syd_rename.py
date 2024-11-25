@@ -171,7 +171,7 @@ async def autosyd(client, file_details):
         syd = file_details['file_name']
         media = file_details['media']
         message = file_details['message']
-        mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', '[', 'www.', '@',
+        mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', 'www.', '@',
             '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE', '-WADU',
         ]
         sydt_g = [
