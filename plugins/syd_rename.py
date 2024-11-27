@@ -33,7 +33,7 @@ MSYD = -1002332730533
 MRSSSYD = -1002464733363
 MRSSYD = -1002429058090
 MRSSSSYD = -1002433450358
-MRSSSSSYD = -1002280144341
+MRSSSSSYD = -1002377676305
 processing = False
 mrsydt_g = []
 sydtg = -1002305372915
@@ -247,7 +247,7 @@ async def autosyd(client, file_details):
 
                 from_chat = filw.chat.id
                 mg_id = filw.id
-                time.sleep(2)
+                time.sleep(1)
                 await client.copy_message(message.from_user.id, from_chat, mg_id)
                 await ms.delete()
                 await client.delete_messages(from_chat, mg_id)
@@ -267,7 +267,7 @@ async def autosyd(client, file_details):
                     thumb=SYD_PATH,
                     caption=caption,
                     progress=progress_for_pyrogram,
-                    progress_args=("__{mrsy}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time())
+                    progress_args=(f"__{mrsy}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time())
                 )
             except Exception as e:
                 os.remove(file_path)
