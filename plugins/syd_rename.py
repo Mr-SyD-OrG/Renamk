@@ -204,7 +204,7 @@ async def autosyd(client, file_details):
         if not new_name.lower().endswith(".mkv"):
             new_name += ".mkv"
 
-        syd_name = new_name.replace("-Telly", "").replace("-GalaxyRG", "").replace("-TR", "").replace("-PSA", "").replace("-GalaxyRG265", "").replace("-GalaxyTV", "").replace("-VARYG", "").replace("-PrimeFix", "").replace("-Pahe", "").replace("-Saon", "").replace("-Archie", "").replace("-Spidey", "").replace("-Jo", "").replace("-TR", "").replace("-POKE", "").replace("-LSSJBroly", "")
+        syd_name = new_name.replace("-Telly", "").replace("-GalaxyRG", "").replace("-TR", "").replace("-PSA", "").replace("-GalaxyRG265", "").replace("-GalaxyTV", "").replace("-VARYG", "").replace("-PrimeFix", "").replace("-Pahe", "").replace("-Saon", "").replace("-Archie", "").replace("-Spidey", "").replace("-Jo", "").replace("[YTS.MX]", "").replace("-POKE", "").replace("-LSSJBroly", "")
         pattern = r'(?P<filename>.*?)(\.\w+)?$'
         match = re.search(pattern, syd_name)
         filename = match.group('filename')
@@ -219,9 +219,9 @@ async def autosyd(client, file_details):
   
         path = await client.download_media(
             message=media,
-            file_name=file_path, 
-            progress=progress_for_pyrogram, 
-            progress_args=(f"\n⚠️ __**{syd}**__\n", ms, time.time())
+            file_name=file_path
+           # progress=progress_for_pyrogram, 
+           # progress_args=(f"\n⚠️ __**{syd}**__\n", ms, time.time())
         )
      
  
