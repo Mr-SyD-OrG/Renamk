@@ -172,7 +172,7 @@ async def autosyd(client, file_details):
         media = file_details['media']
         message = file_details['message']
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'VisTa', 'PiRO', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', 'www.', '@',
-            '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE', '-WADU', 'MoviezVerse',
+            '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE', '-WADU', 'MoviezVerse', 't3nzin'
         ]
         sydt_g = [
             '[Tam', '[Tamil', '[Tel', '[Telugu', '[Kan', '[Kannada', '[Mal', '[Malayalam',
@@ -204,7 +204,7 @@ async def autosyd(client, file_details):
         if not new_name.lower().endswith(".mkv"):
             new_name += ".mkv"
 
-        syd_name = new_name.replace("-Telly", "").replace("-GalaxyRG", "").replace("-TR", "").replace("-PSA", "").replace("-GalaxyRG265", "").replace("-GalaxyTV", "").replace("-VARYG", "").replace("-PrimeFix", "").replace("-Pahe", "").replace("-Saon", "").replace("-Archie", "").replace("-Spidey", "").replace("-Jo", "").replace("[YTS.MX]", "").replace("-POKE", "").replace("-LSSJBroly", "").replace("-ViSTA", "")
+        syd_name = new_name.replace("-Telly", "").replace("-GalaxyRG", "").replace("-TR", "").replace("-PSA", "").replace("-GalaxyRG265", "").replace("-GalaxyTV", "").replace("-VARYG", "").replace("-PrimeFix", "").replace("-Pahe", "").replace("-Saon", "").replace("-Archie", "").replace("-Spidey", "").replace("-Jo", "").replace("[YTS.MX]", "").replace("-POKE", "").replace("-LSSJBroly", "").replace("-BiGiL", "").replace("-XEBEC", "").replace("-CPTN5DW", "").replace("DEVENU", "").replace("-ViSTA", "")
         pattern = r'(?P<filename>.*?)(\.\w+)?$'
         match = re.search(pattern, syd_name)
         filename = match.group('filename')
