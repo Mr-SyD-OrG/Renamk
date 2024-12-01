@@ -204,12 +204,21 @@ async def autosyd(client, file_details):
         if not new_name.lower().endswith(".mkv"):
             new_name += ".mkv"
 
-        syd_name = new_name.replace("-Telly", "").replace("-GalaxyRG", "").replace("-TR", "").replace("-PSA", "").replace("-GalaxyRG265", "").replace("-GalaxyTV", "").replace("-VARYG", "").replace("-PrimeFix", "").replace("-Pahe", "").replace("-Saon", "").replace("-Archie", "").replace("-Spidey", "").replace("-Jo", "").replace("[YTS.MX]", "").replace("-POKE", "").replace("-LSSJBroly", "").replace("-BiGiL", "").replace("-XEBEC", "").replace("-CPTN5DW", "").replace("DEVENU", "").replace("-ViSTA", "")
+
+        remove_list = ["-Telly", "-GalaxyRG", "-TR", "-PSA", "-GalaxyRG265", "-GalaxyTV", 
+                       "-VARYG", "-PrimeFix", "-Pahe", "-Saon", "-Archie", "-Spidey", 
+                       "-Jo", "[YTS.MX]", "-POKE", "-LSSJBroly", "-BiGiL", "-XEBEC", 
+                       "-CPTN5DW", "DEVENU", "-ViSTA", "-SH3LBY"]
+
+        for item in remove_list:
+            new_name = new_name.replace(item, "")
+
+        syd_name = new_name
         pattern = r'(?P<filename>.*?)(\.\w+)?$'
         match = re.search(pattern, syd_name)
         filename = match.group('filename')
         extension = match.group(2) or ''
-        kinsyd = "@GetTGLinks -8чᴅ"
+        kinsyd = "-SyD @GetTGLinks"
         new_filename = f"{filename} {kinsyd}{extension}" 
         file_path = f"downloads/{new_filename}"
         ms = await client.send_message(
