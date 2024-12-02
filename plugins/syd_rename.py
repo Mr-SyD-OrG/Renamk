@@ -208,7 +208,7 @@ async def autosyd(client, file_details):
 
         remove_list = ["-Telly", "-GalaxyRG", "-TR", "-PSA", "-GalaxyRG265", "-GalaxyTV", 
                        "-VARYG", "-PrimeFix", "-Pahe", "-Saon", "-Archie", "-Spidey", 
-                       "-Jo", "[YTS.MX]", "-POKE", "-LSSJBroly", "-BiGiL", "-XEBEC", 
+                       "-Jo", "[YTS.MX]", "-POKE", "-LSSJBroly", "-BiGiL", "-XEBEC", "-L0C1P3R",
                        "-CPTN5DW", "DEVENU", "-ViSTA", "-SH3LBY", "+ -", "- +", "- -", "[", "]"]
 
         for item in remove_list:
