@@ -209,7 +209,7 @@ async def autosyd(client, file_details):
         remove_list = ["-Telly", "-GalaxyRG", "-TR", "-PSA", "-GalaxyRG265", "-GalaxyTV", 
                        "-VARYG", "-PrimeFix", "-Pahe", "-Saon", "-Archie", "-Spidey", 
                        "-Jo", "[YTS.MX]", "-POKE", "-LSSJBroly", "-BiGiL", "-XEBEC", 
-                       "-CPTN5DW", "DEVENU", "-ViSTA", "-SH3LBY"]
+                       "-CPTN5DW", "DEVENU", "-ViSTA", "-SH3LBY", "+ -", "- +", "- -", "[", "]", "(", ")"]
 
         for item in remove_list:
             new_name = new_name.replace(item, "")
