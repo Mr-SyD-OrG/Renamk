@@ -212,9 +212,9 @@ async def autosyd(client, file_details):
                        "-CPTN5DW", "DEVENU", "-ViSTA", "-SH3LBY", "+ -", "- +", "- -", "[", "]"]
 
         for item in remove_list:
-            new_names = new_name.replace(item, "")
+            new_name = new_name.replace(item, "")
 
-        syd_name = new_names
+        syd_name = new_name
         pattern = r'(?P<filename>.*?)(\.\w+)?$'
         match = re.search(pattern, syd_name)
         filename = match.group('filename')
