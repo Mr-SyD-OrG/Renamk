@@ -252,7 +252,7 @@ async def autosyd(client, file_details):
                 filw = await app.send_document(
                     Config.LOG_CHANNEL,
                     document=file_path,
-                    thumb=SYD_PATH,
+                    thumb=syd_des,
                     caption=caption,
                     progress=progress_for_pyrogram,
                     progress_args=("__{syd}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time())
