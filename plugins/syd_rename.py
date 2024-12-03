@@ -203,7 +203,7 @@ async def autosyd(client, file_details):
         new_name = mrsyd[0].strip() if len(mrsyd) > 1 and any(term in mrsyd[1].strip().lower() for term in sydd) else filename
             
         if not (new_name.lower().endswith(".mkv") or new_name.lower().endswith(".mp4")):
-            new_names += ".mkv"
+            new_name += ".mkv"
 
 
         remove_list = ["-Telly", "-GalaxyRG", "-TR", "-PSA", "-GalaxyRG265", "-GalaxyTV", "PIRO", "Eac3", "-BUAM",
@@ -212,9 +212,9 @@ async def autosyd(client, file_details):
                        "-CPTN5DW", "DEVENU", "-ViSTA", "-SH3LBY", "+ -", "- +", "- -", "[", "]"]
 
         for item in remove_list:
-            new_namess = new_names.replace(item, "")
+            new_names = new_name.replace(item, "")
 
-        syd_name = new_namess
+        syd_name = new_names
         pattern = r'(?P<filename>.*?)(\.\w+)?$'
         match = re.search(pattern, syd_name)
         filename = match.group('filename')
