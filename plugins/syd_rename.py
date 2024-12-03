@@ -271,13 +271,14 @@ async def autosyd(client, file_details):
                 return await ms.edit(f" Eʀʀᴏʀ {e}")
         else:
             try:
-                await download_image(PIS, SYD_PATH)
+                syd_irl, syd_des = random.choice([(PIS, SYD_PATH), (PISS, SYDD_PATH)])
+                await download_image(syd_irl, syd_des)
                 mrsy = syd
                 sy = -1002498086501
                 await client.send_document(
                     sy,
                     document=file_path,
-                    thumb=SYD_PATH,
+                    thumb=syd_des,
                     caption=caption,
                     progress=progress_for_pyrogram,
                     progress_args=(f"__{mrsy}__\n\n🌨️ **Uᴩʟᴏᴀᴅɪɴ' Sᴛᴀʀᴛᴇᴅ....**", ms, time.time())
