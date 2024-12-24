@@ -7,10 +7,22 @@ from config import Config, Txt
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from pyrogram import Client
 from info import AUTH_CHANNEL
-import re
+import re, aiohttp
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
+
+
+async def download_image(url, save_path):
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as resp:
+            if resp.status == 200:
+                with open(save_path, 'wb') as f:
+                    f.write(await resp.read())
+                return save_path
+            else:
+                raise Exception(f"Failed to download image, status code: {resp.status}")
+
 
 async def is_req_subscribed(bot, query):
     if await db.find_join_req(query.from_user.id):
