@@ -322,8 +322,8 @@ async def autosyd(client, file_details):
        # shutil.copy(file_path, syd_path)
         upload_msg = await download_msg.edit("Trying To Uploading.....")
         ph_path = None
-        c_caption = await madflixbotz.get_caption(1733124290)
-        c_thumb = await madflixbotz.get_thumbnail(1733124290)
+        c_caption = await db.get_caption(1733124290)
+        c_thumb = await db.get_thumbnail(1733124290)
 
         topic_syd_id = file_details['topic']
         caption = c_caption.format(filename=new_file_name, filesize=humanbytes(message.document.file_size), duration=convert(duration)) if c_caption else f"**{new_file_name}**"
