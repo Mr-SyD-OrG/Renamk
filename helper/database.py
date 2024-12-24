@@ -151,7 +151,7 @@ class Database:
         )
 
     async def set_sydson(self, id, syd):
-        await self.col.update_one({'_id': int(id)}, {'$set': {'syd': syd}})
+        await self.col.update_one({'_id': int(id)}, {'$set': {'sydson': syd}})
 
     async def set_topic(self, id, syd: int):
         await self.col.update_one({'_id': int(id)}, {'$set': {'topic': int(syd)}})
