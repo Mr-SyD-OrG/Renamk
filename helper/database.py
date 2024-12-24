@@ -44,7 +44,11 @@ class Database:
             metadata=False,
             metadata_code=""" -map 0 -c:s copy -c:a copy -c:v copy -metadata title="Powered By:- " -metadata author="@" -metadata:s:s title="Subtitled By :- @" -metadata:s:a title="By :- @" -metadata:s:v title="By:@""",
             dump=int(id),
-            frm=int(id)
+            frm=int(id),
+            sydd=None,
+            syddd=None,
+            topic=None,
+            sydson="True"
         )
 
     async def add_user(self, b, m):
@@ -139,6 +143,37 @@ class Database:
     async def get_metadata_code(self, id):
         user = await self.col.find_one({'_id': int(id)})
         return user.get('metadata_code', None)
+
+    async def set_rep(self, id, sydd, syddd):
+        await self.col.update_one(
+            {'_id': int(id)},  # Find the document by its ID
+            {'$set': {'sydd': sydd, 'syddd': syddd}}  # Update 'sydd' and 'syddd' fields
+        )
+
+    async def set_sydson(self, id, syd):
+        await self.col.update_one({'_id': int(id)}, {'$set': {'syd': syd}})
+
+    async def set_topic(self, id, syd: int):
+        await self.col.update_one({'_id': int(id)}, {'$set': {'topic': int(syd)}})
+    
+    async def get_sydson(self, id):
+        user = await self.col.find_one({'_id': int(id)})
+        return user.get('sydson', id)
+    
+    async def get_topic(self, id):
+        user = await self.col.find_one({'_id': int(id)})
+        return user.get('topic', int(id))
+
+    async def get_rep(self, id):
+        user = await self.col.find_one({'_id': int(id)})
+        if user:  # Check if the document exists
+            return {
+                'sydd': user.get('sydd', ""),   # Default to an empty string if 'sydd' is not found
+                'syddd': user.get('syddd', "")  # Default to an empty string if 'syddd' is not found
+            }
+        return {'sydd': "", 'syddd': ""}  # Default return if the document doesn't exist
+
+
 
 
 db = Database(Config.DB_URL, Config.DB_NAME)
