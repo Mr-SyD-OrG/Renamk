@@ -16,7 +16,7 @@ import os
 import time
 from helper.utils import add_prefix_suffix, client, start_clone_bot, is_req_subscribed
 from config import Config
-from info import AUTH_CHANNEL, ADMIN
+from info import AUTH_CHANNEL
 
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
@@ -35,7 +35,7 @@ async def rename(bot, update):
 @Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def refunc(client, message):
     chat_id = message.chat.id
-    if chat_id != ADMIN:
+    if chat_id != Config.ADMIN:
         return await message.reply_text("ʏᴏᴜ ᴅᴏɴᴛ ʜᴀᴠᴇ ᴀᴄᴄᴇꜱꜱ, ᴩʟᴇᴀꜱᴇ ᴍᴇꜱꜱᴀɢᴇ @Syd_xyZ ꜰᴏʀ ɪᴛ")
     file = getattr(message, message.media.value)
     syd = file.file_name
