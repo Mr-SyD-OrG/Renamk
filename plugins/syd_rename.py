@@ -19,13 +19,6 @@ from helper.utils import add_prefix_suffix, client, start_clone_bot, is_req_subs
 from config import Config
 from info import AUTH_CHANNEL
 
-
-edit_limiter = AsyncLimiter(max_rate=1, time_period=1)
-file_counter = 0  # Tracks processed files
-total_files_processed = 0  # Tracks total processed files to ensure final edits
-batch_size = 88
-last_edit_time = 0
-
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
 SYD_CHATS = [-1002252619500]
@@ -97,21 +90,6 @@ def syddd_message(text):
     else:
         return "#3 ʀᴇᴍᴀɪɴɪɴɢ : 1 [ᴇʀʀᴏʀ]"
 
-async def limited_edit(client, syd_id, mrsyd_id, new_text):
-    async with edit_limiter:
-        await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
-
-
-async def batch_edit(client, syd_id, mrsyd_id, syd_text, update_func, final=False):
-    global file_counter
-    global total_files_processed
-
-    file_counter += 1
-    total_files_processed += 1
-    if file_counter % batch_size == 0 or final:
-        new_text = update_func(syd_text)
-        await limited_edit(client, syd_id, mrsyd_id, new_text)
-        file_counter = 0 if final else file_counter
 
 # Define the main message handler for private messages with replies
 @Client.on_message(filters.document | filters.audio | filters.video)
@@ -295,8 +273,10 @@ async def autosyd(client, file_details):
             os.remove(ph_path)
         if file_path:
             os.remove(file_path)
-        
-      #  if message.chat.id == MRSSSYD:
+        if SYD_PATH:
+            os.remove(SYD_PATH)
+        if SYDD_PATH:
+            os.remove(SYDD_PATH)
         syd_id = -1002332730533
         mrsyd_id = 13
         chat_message = await client.get_messages(syd_id, mrsyd_id)
