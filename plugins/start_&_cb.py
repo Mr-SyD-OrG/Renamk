@@ -39,6 +39,24 @@ async def start(client, message):
     else:
         await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
 
+@Client.on_message(filters.private & filters.command("season"))
+async def sydson(client, message):
+    mrsyd = await db.get_sydson(message.from_user.id)
+    if mrsyd == "True":
+        button = InlineKeyboardMarkup([[
+          InlineKeyboardButton('Fᴀʟꜱᴇ ✖️', callback_data='season_false')
+          ],[
+          InlineKeyboardButton("✖️ Close", callback_data="close")
+        ]])
+    else:
+        button = InlineKeyboardMarkup([[
+          InlineKeyboardButton('Tʀᴜᴇ ✅', callback_data='season_true')
+          ],[
+          InlineKeyboardButton("✖️ Close", callback_data="close")
+        ]])
+    await message.reply_text(text="Sᴇᴛ ᴛʀᴜᴇ ᴏʀ ꜰᴀʟꜱᴇ, ɪꜰ ꜱᴇᴀꜱᴏɴ ɴᴜᴍʙᴇʀ ɪꜱ ᴛᴏ ʙᴇ ɪɴ ꜰɪʟᴇ ᴇᴠᴇʀʏᴛɪᴍᴇ (ɪꜰ ꜰɪʟᴇ ᴅᴏɴᴛ ʜᴀᴠᴇ ꜱᴇᴀꜱᴏɴ ɴᴏ. ɪᴛ ᴡɪʟʟ ʙᴇ ᴅᴇꜰᴜᴀʟᴛ ᴛᴏ 1) ᴏʀ ꜰᴀʟꜱᴇ ᴛᴏ ᴀᴠᴏɪᴅ ꜱᴇᴀꜱᴏɴ ᴛᴀɢ", reply_markup=button)   
+
+
 @Client.on_message(filters.command("restart") & filters.user(Config.ADMIN))
 async def stop_button(bot, message):
     msg = await bot.send_message(text="<b><i>ʙᴏᴛ ɪꜱ ʀᴇꜱᴛᴀʀᴛɪɴɢ</i></b>", chat_id=message.chat.id)       
