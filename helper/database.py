@@ -158,7 +158,7 @@ class Database:
     
     async def get_sydson(self, id):
         user = await self.col.find_one({'_id': int(id)})
-        return user.get('sydson', id)
+        return user.get('sydson', "True")
     
     async def get_topic(self, id):
         user = await self.col.find_one({'_id': int(id)})
