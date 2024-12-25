@@ -18,6 +18,7 @@ import re
 
 fulsyd = "faibjkmmr"
 processing_lock = Lock()
+lock = asyncio.Lock()
 #mrsydt_g = []
 mrsydt_g = deque()
 processing = False
@@ -187,25 +188,30 @@ async def refuntion(client, message):
                 'message': message,
                 'timestamp': message.date.timestamp()
             }
-            mrsydt_g.append(sydfile)
+            async with lock:  # Ensure thread-safe access to the queue
+                mrsydt_g.append(sydfile)
+                # Sort the queue only when a new file is added to ensure order
+                mrsydt_g = deque(sorted(mrsydt_g, key=lambda x: x['timestamp']))  # Sort by timestamp
+
             if not processing:
                 processing = True
                 await process_queue(client)
                                     
-        
         except Exception as e:
             logger.error(f"An error occurred: {e}")
             await message.reply_text("An error occurred while processing your request.")
-         
+
 async def process_queue(client):
     global processing
     try:
         while mrsydt_g:
-            mrsydt_g = deque(sorted(mrsydt_g, key=lambda x: x['timestamp']))  # Sort by timestamp
-            file_details = mrsydt_g.popleft()  # Get the file with the earliest timestamp
-            await autosyd(client, file_details)  # Process it
-    finally:
-        processing = False
+            async with lock:  # Lock the queue while accessing it
+                file_details = mrsydt_g.popleft()  # Get the file with the earliest timestamp
+            await autosyd(client, file_details)  # Process it one by one
+    except Exception as e:
+        logger.error(f"An error occurred during queue processing: {e}")
+        await client.send_message(Syd_T_G, "Error during processing.")
+    
 
 
 async def autosyd(client, file_details):
