@@ -201,10 +201,11 @@ async def refuntion(client, message):
 async def process_queue(client):
     global processing
     try:
+        async with processing_lock:
         # Process files one by one from the queue
-        while mrsydt_g:
-            file_details = mrsydt_g.pop(0)  # Get the first file in the queue
-            await autosyd(client, file_details)  # Process it
+            while mrsydt_g:
+                file_details = mrsydt_g.pop(0)  # Get the file with the earliest timestamp
+                await autosyd(client, file_details)  # Process it
     finally:
         processing = False
 
