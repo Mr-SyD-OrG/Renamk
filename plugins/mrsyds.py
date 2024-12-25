@@ -24,6 +24,7 @@ renaming_operations = {}
 logger = logging.getLogger(__name__)
 last_season_number = 0
 syd_top = 0
+syd_qua = "None"
 syd_mov = "None"
 
 # Pattern 1: S01E02 or S01EP02
@@ -79,27 +80,6 @@ def extract_quality(filename):
         quality7 = "2k"
         print(f"Quality: {quality7}")
         return quality7
-
-    match8 = re.search(pattern8, filename)
-    if match8:
-        print("Matched Pattern 8")
-        quality8 = "HdRip"
-        print(f"Quality: {quality8}")
-        return quality8
-
-    match9 = re.search(pattern9, filename)
-    if match9:
-        print("Matched Pattern 9")
-        quality9 = "4kX264"
-        print(f"Quality: {quality9}")
-        return quality9
-
-    match10 = re.search(pattern10, filename)
-    if match10:
-        print("Matched Pattern 10")
-        quality10 = "4kx265"
-        print(f"Quality: {quality10}")
-        return quality10    
 
     # Return "Unknown" if no pattern matches
     unknown_quality = "Unknown"
@@ -224,7 +204,7 @@ async def process_queue(client):
 
 
 async def autosyd(client, file_details):
-    global last_season_number, syd_top, syd_mov
+    global last_season_number, syd_top, syd_mov, syd_qua
     sydd = file_details['file_name']
     media = file_details['media']
     message = file_details['message']
@@ -262,6 +242,7 @@ async def autosyd(client, file_details):
             print("File is being ignored as it is currently being renamed or was renamed recently.")
             return  # Exit the handler if the file is being ignored
     renaming_operations[file_id] = datetime.now()
+    qualit = extract_quality(file_name)
     episode_number = extract_episode_number(file_name)
     season_no = extract_season_number(file_name) if extract_season_number(file_name) else '01'
     print(f"Extracted Episode Number: {episode_number}")
@@ -372,6 +353,49 @@ async def autosyd(client, file_details):
             except Exception as e:
                 print(f"Failed to send sticker to topic: {e}")
         last_season_number = syd_xyz
+        if syd_qua == "None":
+            syd_qua = qualit
+        if syd_qua != qualit:
+            try:
+                if qualit == "360p":
+                    await client.send_sticker(
+                        chat_id=-1002322136660,
+                        sticker="CAACAgUAAxkBAAEEOvZnasxONLg3zHkwBi52PsbiYZDy4AACLxQAAuwdUFcKB6KPifdvMB4E",
+                        reply_to_message_id=topic_syd_id
+                    )
+                elif qualit == "480p":
+                    await client.send_sticker(
+                        chat_id=-1002322136660,
+                        sticker="CAACAgUAAxkBAAEEOvVnasxNvJquI8hykr3CUvnFwuhD0AACvhIAAkZ3WVeHD_oDDwlT-h4E",
+                        reply_to_message_id=topic_syd_id
+                )
+                elif qualit == "720p":
+                    await client.send_sticker(
+                        chat_id=-1002322136660,
+                        sticker="CAACAgUAAxkBAAEEOvdnasxPpmOR0wtba78SUUrcz7OCdgACjhEAArLMWVeqZU0pn2UNDx4E",
+                        reply_to_message_id=topic_syd_id
+                    )
+                elif qualit == "1080p":
+                    await client.send_sticker(
+                        chat_id=-1002322136660,
+                        sticker="CAACAgUAAxkBAAEEOvhnasxQl3SeR-S-iLJuLmW16ItMfQACWxUAAvcKWVdq4miltFHN9h4E",
+                        reply_to_message_id=topic_syd_id
+                    )
+                elif qualit == "2160p":
+                    await client.send_sticker(
+                        chat_id=-1002322136660,
+                        sticker="CAACAgUAAxkBAAEEOvlnasxRvumZMN2V17odpte8j6NxgwACnRUAAicgWFcwwUluHbCrbR4E",
+                        reply_to_message_id=topic_syd_id
+                    )
+                elif qualit == "4K":
+                    await client.send_sticker(
+                        chat_id=-1002322136660,
+                        sticker="CAACAgUAAxkBAAEEOvpnasxTpXTMsefsYw-pEBXpmFvzPwACawgAAvJ9SFVrAAGBhWipiW4eBA",
+                        reply_to_message_id=topic_syd_id
+                )
+            except Exception as e:
+                print(f"Failed to send sticker to topic for quality : {e}")
+        syd_qua = qualit
         try:
             mrsyd = -1002267379845
             type = media_type  # Use 'media_type' variable instead
