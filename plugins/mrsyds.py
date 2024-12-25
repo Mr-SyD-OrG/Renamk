@@ -154,7 +154,7 @@ print(f"Extracted Episode Number: {episode_number}")
 # Inside the handler for file uploads
 @Client.on_message(filters.document | filters.video | filters.audio)
 async def refuntion(client, message):
-    global processing
+    global processing, mrsydt_g
     syd_id = {MRSYD, MRSYD}
     if message.chat.id in syd_id :
         try:
@@ -202,7 +202,7 @@ async def refuntion(client, message):
             await message.reply_text("An error occurred while processing your request.")
 
 async def process_queue(client):
-    global processing
+    global processing, mrsydt_g
     try:
         while mrsydt_g:
             async with lock:  # Lock the queue while accessing it
