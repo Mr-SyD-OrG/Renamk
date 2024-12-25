@@ -182,7 +182,8 @@ async def refuntion(client, message):
                 'media': file,
                 'topic': mrsyd,
                 'season': sydmen,
-                'message': message 
+                'message': message,
+                'timestamp': message.date.timestamp()
             }
             async with processing_lock:
                 mrsydt_g.append(sydfile)
