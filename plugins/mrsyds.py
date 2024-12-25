@@ -8,13 +8,15 @@ from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, humanbytes, convert, download_image
 from helper.database import db
 from config import Config
+from asyncio import Lock
 import os
 import time, asyncio
 import logging
 import re
 #import shutil
 
-fulsyd = "fair"
+fulsyd = "faibjkmmr"
+processing_lock = Lock()
 mrsydt_g = []
 processing = False
 MRSYD = -1002200259696
@@ -182,10 +184,13 @@ async def refuntion(client, message):
                 'season': sydmen,
                 'message': message 
             }
-            mrsydt_g.append(sydfile)
-            if not processing:
-                processing = True  # Set processing flag
-                await process_queue(client)
+            async with processing_lock:
+                mrsydt_g.append(sydfile)
+                mrsydt_g.sort(key=lambda x: x['timestamp'])  # Ensure chronological order
+
+                if not processing:
+                    processing = True
+                    await process_queue(client)
                                     
         
         except Exception as e:
