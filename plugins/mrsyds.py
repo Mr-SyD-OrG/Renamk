@@ -17,7 +17,8 @@ import re
 
 fulsyd = "faibjkmmr"
 processing_lock = Lock()
-mrsydt_g = []
+#mrsydt_g = []
+mrsydt_g = deque()
 processing = False
 MRSYD = -1002200259696
 sydtg = -1002305372915
@@ -186,8 +187,6 @@ async def refuntion(client, message):
                 'timestamp': message.date.timestamp()
             }
             mrsydt_g.append(sydfile)
-            mrsydt_g.sort(key=lambda x: x['timestamp'])  # Ensure chronological order
-
             if not processing:
                 processing = True
                 await process_queue(client)
@@ -201,7 +200,8 @@ async def process_queue(client):
     global processing
     try:
         while mrsydt_g:
-            file_details = mrsydt_g.pop(0)  # Get the file with the earliest timestamp
+            mrsydt_g = deque(sorted(mrsydt_g, key=lambda x: x['timestamp']))  # Sort by timestamp
+            file_details = mrsydt_g.popleft()  # Get the file with the earliest timestamp
             await autosyd(client, file_details)  # Process it
     finally:
         processing = False
