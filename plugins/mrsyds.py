@@ -242,7 +242,7 @@ async def autosyd(client, file_details):
             print("File is being ignored as it is currently being renamed or was renamed recently.")
             return  # Exit the handler if the file is being ignored
     renaming_operations[file_id] = datetime.now()
-    qualit = extract_quality(file_name)
+    qualit = extract_quality(file_name) if extract_quality(file_name) else '4k'
     episode_number = extract_episode_number(file_name)
     season_no = extract_season_number(file_name) if extract_season_number(file_name) else '01'
     print(f"Extracted Episode Number: {episode_number}")
