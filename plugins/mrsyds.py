@@ -10,6 +10,7 @@ from helper.database import db
 from config import Config
 from asyncio import Lock
 import os
+from collections import deque
 import time, asyncio
 import logging
 import re
