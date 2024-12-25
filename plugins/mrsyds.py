@@ -10,17 +10,17 @@ from helper.database import db
 from config import Config
 from asyncio import Lock
 import os
-from collections import deque
+#from collections import deque
 import time, asyncio
 import logging
 import re
 #import shutil
 
 fulsyd = "faibjkmmr"
-processing_lock = Lock()
-lock = asyncio.Lock()
-#mrsydt_g = []
-mrsydt_g = deque()
+#processing_lock = Lock()
+#lock = asyncio.Lock()
+mrsydt_g = []
+#mrsydt_g = deque()
 processing = False
 MRSYD = -1002200259696
 sydtg = -1002305372915
@@ -180,38 +180,32 @@ async def refuntion(client, message):
             mrsyd = await db.get_topic(1733124290)
             sydfile = {
                 'file_name': syd,
-                'file_size': file.file_size,
                 'message_id': message.id,
                 'media': file,
                 'topic': mrsyd,
                 'season': sydmen,
-                'message': message,
-                'timestamp': message.date.timestamp()
+                'message': message
+                #'timestamp': message.date.timestamp()
             }
-            async with lock:  # Ensure thread-safe access to the queue
-                mrsydt_g.append(sydfile)
-                # Sort the queue only when a new file is added to ensure order
-                mrsydt_g = deque(sorted(mrsydt_g, key=lambda x: x['timestamp']))  # Sort by timestamp
-
+            mrsydt_g.append(sydfile)
             if not processing:
-                processing = True
+                processing = True  # Set processing flag
                 await process_queue(client)
                                     
+        
         except Exception as e:
             logger.error(f"An error occurred: {e}")
             await message.reply_text("An error occurred while processing your request.")
-
+         
 async def process_queue(client):
-    global processing, mrsydt_g
+    global processing
     try:
+        # Process files one by one from the queue
         while mrsydt_g:
-            async with lock:  # Lock the queue while accessing it
-                file_details = mrsydt_g.popleft()  # Get the file with the earliest timestamp
-            await autosyd(client, file_details)  # Process it one by one
-    except Exception as e:
-        logger.error(f"An error occurred during queue processing: {e}")
-        await client.send_message(Syd_T_G, "Error during processing.")
-    
+            file_details = mrsydt_g.pop(0)  # Get the first file in the queue
+            await autosyd(client, file_details)  # Process it
+    finally:
+        processing = False
 
 
 async def autosyd(client, file_details):
