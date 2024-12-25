@@ -185,13 +185,12 @@ async def refuntion(client, message):
                 'message': message,
                 'timestamp': message.date.timestamp()
             }
-            async with processing_lock:
-                mrsydt_g.append(sydfile)
-                mrsydt_g.sort(key=lambda x: x['timestamp'])  # Ensure chronological order
+            mrsydt_g.append(sydfile)
+            mrsydt_g.sort(key=lambda x: x['timestamp'])  # Ensure chronological order
 
-                if not processing:
-                    processing = True
-                    await process_queue(client)
+            if not processing:
+                processing = True
+                await process_queue(client)
                                     
         
         except Exception as e:
@@ -201,11 +200,9 @@ async def refuntion(client, message):
 async def process_queue(client):
     global processing
     try:
-        async with processing_lock:
-        # Process files one by one from the queue
-            while mrsydt_g:
-                file_details = mrsydt_g.pop(0)  # Get the file with the earliest timestamp
-                await autosyd(client, file_details)  # Process it
+        while mrsydt_g:
+            file_details = mrsydt_g.pop(0)  # Get the file with the earliest timestamp
+            await autosyd(client, file_details)  # Process it
     finally:
         processing = False
 
