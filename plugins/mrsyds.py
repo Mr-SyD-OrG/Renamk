@@ -178,14 +178,19 @@ async def refuntion(client, message):
             syd = file.file_name
             await asyncio.sleep(1)
             mrsyd = await db.get_topic(1733124290)
+            mrsydt = await db.get_rep(1733124290)
+            syd1 = mrsydt['sydd']
+            syd2 = mrsydt['syddd']
             sydfile = {
                 'file_name': syd,
+                'file_size': file.file_size,
                 'message_id': message.id,
                 'media': file,
                 'topic': mrsyd,
                 'season': sydmen,
-                'message': message
-                #'timestamp': message.date.timestamp()
+                'repm': syd1,
+                'repw': syd2,
+                'message': message 
             }
             mrsydt_g.append(sydfile)
             if not processing:
@@ -267,6 +272,8 @@ async def autosyd(client, file_details):
         sydmen = await db.get_rep(1733124290)
         syd1 = sydmen['sydd']
         syd2 = sydmen['syddd']
+        sydd1 = file_details['repw']
+        sydd2 = file_details['repm']
         if syd1 in Syd:
             Syd = Syd.replace(syd1, syd2)
         remove_list = ['-', '[AL]', '[KDL]', '@Anime_Fair', '@Klands', 'Syd', 'KDL', 'foooir', '[', ']']
@@ -282,6 +289,8 @@ async def autosyd(client, file_details):
             x for x in Syd.split()
             if not any(x.startswith(mrsyd) for mrsyd in mrsyds) and x != '@GetTGLinks'
         ])
+        if sydd1 in Syd:
+            Syd = Syd.replace(sydd1, sydd2)
         if '_' in Syd:
             Syd = Syd.replace('_', ' ')
         if not (filenme.lower().endswith(".mkv") or filenme.lower().endswith(".mp4") or filenme.lower().endswith(".Mkv")):
@@ -304,7 +313,44 @@ async def autosyd(client, file_details):
             del renaming_operations[file_id]
             return await download_msg.edit(e)     
 
+        _bool_metadata = await db.get_metadata(1733124290)
+
+        if (_bool_metadata):
+            metadata_path = f"Metadata/{new_filename}"
+            metadata = await db.get_metadata_code(1733124290)
+            if metadata:
+
+                await ms.edit("I Fᴏᴜɴᴅ Yᴏᴜʀ Mᴇᴛᴀᴅᴀᴛᴀ\n\n__**Pʟᴇᴀsᴇ Wᴀɪᴛ...**__\n**Aᴅᴅɪɴɢ Mᴇᴛᴀᴅᴀᴛᴀ Tᴏ Fɪʟᴇ....**")
+                cmd = f"""ffmpeg -i "{path}" {metadata} "{metadata_path}" """
+
+                process = await asyncio.create_subprocess_shell(
+                    cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE
+                )
+
+                stdout, stderr = await process.communicate()
+                er = stderr.decode()
+
+                try:
+                    if er:
+                        try:
+                            os.remove(path)
+                            os.remove(metadata_path)
+                        except:
+                            pass
+                        return await ms.edit(str(er) + "\n\n**Error**")
+                except BaseException:
+                    pass
+
         duration = 0
+        try:
+            parser = createParser(file_path)
+            metadata = extractMetadata(parser)
+            if metadata.has("duration"):
+                duration = metadata.get('duration').seconds
+            parser.close()
+
+        except:
+            pass
        # shutil.copy(file_path, syd_path)
         upload_msg = await download_msg.edit("Trying To Uploading.....")
         ph_path = None
@@ -345,7 +391,7 @@ async def autosyd(client, file_details):
         if last_season_number == 0:
             last_season_number = syd_xyz
             
-        if syd_xyz == last_season_number + 1:
+        if syd_xyz != last_season_number:
             try:
                 await client.send_sticker(
                     chat_id=-1002322136660,
