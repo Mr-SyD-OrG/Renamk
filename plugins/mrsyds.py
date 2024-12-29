@@ -777,8 +777,8 @@ async def autosyd(client, file_details):
         del renaming_operations[file_id]
         await message.reply_text("ʀᴇᴜᴩʟᴏᴀᴅᴇᴅ")
 
-    if mrsyyd != mrsydnew:
-        return await message.reply_text("ꜱɪᴢᴇ ᴍɪꜱᴍᴀᴛᴄʜ ᴀꜰᴛᴇʀ ꜱᴇᴄᴏɴᴅ ᴛʀʏ")
+        if mrsyyd != mrsydnew:
+            return await message.reply_text("ꜱɪᴢᴇ ᴍɪꜱᴍᴀᴛᴄʜ ᴀꜰᴛᴇʀ ꜱᴇᴄᴏɴᴅ ᴛʀʏ")
     if ph_path:
         os.remove(ph_path)
     if metadata_path:
