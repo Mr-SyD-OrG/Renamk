@@ -215,7 +215,7 @@ async def autosyd(client, file_details):
     sydd = file_details['file_name']
     media = file_details['media']
     message = file_details['message']
-    await message.reply_text("g")
+    #await message.reply_text("g")
     #user_id = message.from_user.id
     #firstname = message.from_user.first_name
    # format_template = await madflixbotz.get_format_template(user_id)
