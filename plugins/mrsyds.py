@@ -152,7 +152,7 @@ print(f"Extracted Episode Number: {episode_number}")
 @Client.on_message(filters.document | filters.video | filters.audio)
 async def refuntion(client, message):
     global processing
-    syd_id = {MRSYD, MRSYD}
+    syd_id = {MRSYD, MRSYYD}
     if message.chat.id in syd_id :
         try:
             file = getattr(message, message.media.value)
