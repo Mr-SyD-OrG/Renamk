@@ -688,7 +688,7 @@ async def autosyd(client, file_details):
             if type == "document":
                 sydfil = await client.send_document(
                     mrsyd,
-                    document=file_path,
+                    document=metadata_path if _bool_metadata else file_path,
                     thumb=ph_path,
                     caption=caption,
                     progress=progress_for_pyrogram,
@@ -697,7 +697,7 @@ async def autosyd(client, file_details):
             elif type == "video":
                 sydfil = await client.send_video(
                     mrsyd,
-                    video=file_path,
+                    video=metadata_path if _bool_metadata else file_path,
                     caption=caption,
                     thumb=ph_path,
                     duration=duration,
@@ -707,7 +707,7 @@ async def autosyd(client, file_details):
             elif type == "audio":
                 sydfil = await client.send_audio(
                     mrsyd,
-                    audio=file_path,
+                    audio=metadata_path if _bool_metadata else file_path,
                     caption=caption,
                     thumb=ph_path,
                     duration=duration,
@@ -738,7 +738,7 @@ async def autosyd(client, file_details):
             if type == "document":
                 newsydfil = await client.send_document(
                     mrsyd,
-                    document=file_path,
+                    document=metadata_path if _bool_metadata else file_path,
                     thumb=ph_path,
                     caption=caption,
                     progress=progress_for_pyrogram,
@@ -747,7 +747,7 @@ async def autosyd(client, file_details):
             elif type == "video":
                 newsydfil = await client.send_video(
                     mrsyd,
-                    video=file_path,
+                    video=metadata_path if _bool_metadata else file_path,
                     caption=caption,
                     thumb=ph_path,
                     duration=duration,
@@ -757,7 +757,7 @@ async def autosyd(client, file_details):
             elif type == "audio":
                 newsydfil = await client.send_audio(
                     mrsyd,
-                    audio=file_path,
+                    audio=metadata_path if _bool_metadata else file_path,
                     caption=caption,
                     thumb=ph_path,
                     duration=duration,
