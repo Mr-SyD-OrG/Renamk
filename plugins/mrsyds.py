@@ -770,14 +770,14 @@ async def autosyd(client, file_details):
                 os.remove(ph_path)
             # Mark the file as ignored
             return await upload_msg.edit(f"Error: {e}")
-        mrsydddd = newsydfil.document.file_size if type == "document" else newsydfil.video.file_size if type == "video" else newsydfil.audio.file_size
+        mrsydnew = newsydfil.document.file_size if type == "document" else newsydfil.video.file_size if type == "video" else newsydfil.audio.file_size
         os.remove(file_path)
         if ph_path:
             os.remove(ph_path)
         del renaming_operations[file_id]
-        return await message.reply_text("ʀᴇᴜᴩʟᴏᴀᴅᴇᴅ")
+        await message.reply_text("ʀᴇᴜᴩʟᴏᴀᴅᴇᴅ")
 
-    if mrsyyd != mrsydddd:
+    if mrsyyd != mrsydnew:
         return await message.reply_text("ꜱɪᴢᴇ ᴍɪꜱᴍᴀᴛᴄʜ ᴀꜰᴛᴇʀ ꜱᴇᴄᴏɴᴅ ᴛʀʏ")
     if ph_path:
         os.remove(ph_path)
