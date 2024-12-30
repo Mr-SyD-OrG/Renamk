@@ -788,6 +788,7 @@ async def autosyd(client, file_details):
         os.remove(ph_path)
     if _bool_metadata:
         os.remove(metadata_path)
+    os.remove(file_path)
     del renaming_operations[file_id]
     await message.delete()
     
