@@ -48,7 +48,8 @@ class Database:
             sydd=None,
             syddd=None,
             topic=None,
-            sydson="True"
+            sydson="True",
+            format_template=None
         )
 
     async def add_user(self, b, m):
@@ -129,6 +130,14 @@ class Database:
     async def get_suffix(self, id):
         user = await self.col.find_one({'_id': int(id)})
         return user.get('suffix', None)
+
+
+    async def set_format_template(self, id, format_template):
+        await self.col.update_one({'_id': int(id)}, {'$set': {'format_template': format_template}})
+
+    async def get_format_template(self, id):
+        user = await self.col.find_one({'_id': int(id)})
+        return user.get('format_template', None)
 
     async def set_metadata(self, id, bool_meta):
         await self.col.update_one({'_id': int(id)}, {'$set': {'metadata': bool_meta}})
