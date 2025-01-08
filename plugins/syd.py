@@ -237,7 +237,7 @@ def extract_episode_number(filename):
     match = re.search(patternX, filename)
     if match:
         print("Matched Pattern X")
-        return match.group(1)  # Extracted episode number
+        return match  # Extracted episode number
         
     # Return None if no pattern matches
     return None
