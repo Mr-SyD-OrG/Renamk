@@ -7,7 +7,7 @@ from datetime import datetime
 from hachoir.metadata import extractMetadata
 from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, humanbytes, convert, download_image
-from helper.database import madflixbotz
+from helper.database import db as madflixbotz
 from config import Config
 import os
 import time, asyncio
