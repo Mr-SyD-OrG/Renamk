@@ -130,7 +130,7 @@ async def process_existing_messages(client, chat_id, message_id, sydtopic):
         logger.error(f"An error occurred while processing message {message_id}: {e}")
 
 @Client.on_message(filters.command("process") & filters.user(1733124290))
-async def process_queue(client, message):
+async def process_quee(client, message):
     global processing
     try:
         # Process files one by one from the queue
