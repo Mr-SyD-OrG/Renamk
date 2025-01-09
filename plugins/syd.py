@@ -292,26 +292,27 @@ async def autosyd(client, file_details):
         media_type = "audio"  # Use preferred media type or default to audio
     else:
         return await client.send_message(1733124290, "Unsupported File Type")
-
-    await client.send_message(1733124290, text="👍")
-    pat1 = re.sub(pattern1, "", sydd)
-    pat2 = re.sub(pattern2, "", pat1)
-    pat3 = re.sub(pattern3, "", pat2)
-    pat4 = re.sub(pattern3_2, "", pat3)
-    pat5 = re.sub(pattern4, "", pat4)
-    pat6 = re.sub(patternX, "", pat5)
-    pat7 = re.sub(season_pattern1, "", pat6)
-    sydX = re.sub(season_pattern2, "", pat7)
+        
+  #  pat1 = re.sub(pattern1, "", sydd)
+  #  pat2 = re.sub(pattern2, "", pat1)
+   # pat3 = re.sub(pattern3, "", pat2)
+   # pat4 = re.sub(pattern3_2, "", pat3)
+   # pat5 = re.sub(pattern4, "", pat4)
+  #  pat6 = re.sub(patternX, "", pat5)
+   # pat7 = re.sub(season_pattern1, "", pat6)
+  #  sydX = re.sub(season_pattern2, "", pat7)
     if file_id in renaming_operations:
         elapsed_time = (datetime.now() - renaming_operations[file_id]).seconds
         if elapsed_time < 10:
             print("File is being ignored as it is currently being renamed or was renamed recently.")
             return  # Exit the handler if the file is being ignored
     renaming_operations[file_id] = datetime.now()
+    await client.send_message(1733124290, text="👍")
     episode_number = extract_episode_number(file_name)
     qualit = extract_quality(file_name) if extract_quality(file_name) else '4k'
     if qualit == "2160p":
         return
+    await client.send_message(1733124290, text="👍")
     season_no = extract_season_number(file_name) if extract_season_number(file_name) else '01'
     print(f"Extracted Episode Number: {episode_number}")
     
@@ -323,7 +324,7 @@ async def autosyd(client, file_details):
             formatted_episode = f"S{syd_xyz:02d}E{syd_tg:02d} "
         else:
             formatted_episode = f"E{syd_tg:02d} "
-        Syd = formatted_episode + sydX
+        Syd = formatted_episode + sydd
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'VisTa', 'PiRO', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', 'www.', '@',
             '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE', '-WADU', 'MoviezVerse', 't3nzin', '[Tips', 'Eac3', '(@'
                  ]
