@@ -132,11 +132,13 @@ async def process_existing_messages(client, chat_id, message_id, sydtopic):
 @Client.on_message(filters.command("process") & filters.user(1733124290))
 async def process_quee(client, message):
     global processing
+    await client.send_message(1733124290, text="⚡")
     try:
         # Process files one by one from the queue
         await client.send_message(1733124290, text="🎉")
         while mrsydt_g:
-            file_details = mrsydt_g.pop(0)  # Get the first file in the queue
+            file_details = mrsydt_g.pop(0)
+            await client.send_message(1733124290, text="☺️")# Get the first file in the queue
             await autosyd(client, file_details)  # Process it
     finally:
         processing = False  # Reset the processing flag
@@ -267,6 +269,7 @@ print(f"Extracted Episode Number: {episode_number}")
 
 async def autosyd(client, file_details):
     global last_season_number, syd_top, syd_mov, syd_qua
+    await client.send_message(1733124290, text="🩵")
     sydd = file_details['file_name']
     media = file_details['media']
     message = file_details['message']
@@ -290,6 +293,7 @@ async def autosyd(client, file_details):
     else:
         return await client.send_message(1733124290, "Unsupported File Type")
 
+    await client.send_message(1733124290, text="👍")
     pat1 = re.sub(pattern1, "", sydd)
     pat2 = re.sub(pattern2, "", pat1)
     pat3 = re.sub(pattern3, "", pat2)
