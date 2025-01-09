@@ -311,6 +311,7 @@ async def autosyd(client, file_details):
     if qualit == "2160p":
         return
     season_no = extract_season_number(file_name) or '01'
+    print(f"Extracted Episode Number: {season_no}")
     print(f"Extracted Episode Number: {episode_number}")
     
     if episode_number and season_no:
