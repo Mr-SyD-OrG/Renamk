@@ -257,7 +257,7 @@ def extract_season_number(filename):
     if match:
         print("Matched Pattern 2")
         return match.group(1)  # Extracted episode number
-    return None
+    return '1'
 
 # Example Usage:
 filename = "Naruto Shippuden S01 - EP07 - 1080p [Dual Audio].mkv"
