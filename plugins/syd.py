@@ -314,11 +314,14 @@ async def autosyd(client, file_details):
         return
     await client.send_message(1733124290, text="👍")
     season_no = extract_season_number(file_name) if extract_season_number(file_name) else '01'
+    await client.send_message(1733124290, text="😉")
     print(f"Extracted Episode Number: {episode_number}")
     
     if episode_number and season_no:
+        await client.send_message(1733124290, text="😜")
         syd_tg = int(episode_number)
         syd_xyz = int(season_no)
+        await client.send_message(1733124290, text="😜")
         tg_Syd_Xyz = file_details['season']
         if tg_Syd_Xyz == "True":
             formatted_episode = f"S{syd_xyz:02d}E{syd_tg:02d} "
