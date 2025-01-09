@@ -306,7 +306,7 @@ async def autosyd(client, file_details):
             return  # Exit the handler if the file is being ignored
     renaming_operations[file_id] = datetime.now()
     episode_number = extract_episode_number(file_name)
-    qualit = extract_quality(file_name) if extract_quality(file_name) else '4k'
+    qualit = extract_quality(file_name) or '4k'
     if qualit == "2160p":
         return
     season_no = extract_season_number(file_name) or '01'
