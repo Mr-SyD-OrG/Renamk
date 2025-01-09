@@ -134,6 +134,7 @@ async def process_quee(client, message):
     global processing
     try:
         # Process files one by one from the queue
+        await client.send_message(1733124290, text="🎉")
         while mrsydt_g:
             file_details = mrsydt_g.pop(0)  # Get the first file in the queue
             await autosyd(client, file_details)  # Process it
