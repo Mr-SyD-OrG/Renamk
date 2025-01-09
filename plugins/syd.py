@@ -132,10 +132,10 @@ async def process_existing_messages(client, chat_id, message_id, sydtopic):
 @Client.on_message(filters.command("process") & filters.user(1733124290))
 async def process_quee(client, message):
     global processing
-    await client.send_message(1733124290, text="⚡")
+ #   await client.send_message(1733124290, text="⚡")
     try:
         # Process files one by one from the queue
-        await client.send_message(1733124290, text="🎉")
+      #  await client.send_message(1733124290, text="🎉")
         while mrs:
             file_details = mrs.pop(0)
             await client.send_message(1733124290, text="☺️")# Get the first file in the queue
@@ -269,7 +269,7 @@ print(f"Extracted Episode Number: {episode_number}")
 
 async def autosyd(client, file_details):
     global last_season_number, syd_top, syd_mov, syd_qua
-    await client.send_message(1733124290, text="🩵")
+  #  await client.send_message(1733124290, text="🩵")
     sydd = file_details['file_name']
     media = file_details['media']
     message = file_details['message']
@@ -312,8 +312,7 @@ async def autosyd(client, file_details):
     qualit = extract_quality(file_name) if extract_quality(file_name) else '4k'
     if qualit == "2160p":
         return
-    await client.send_message(1733124290, text="👍")
-    season_no = extract_season_number(file_name) if extract_season_number(file_name) else '01'
+    season_no = extract_season_number(file_name) or '01'
     await client.send_message(1733124290, text="😉")
     print(f"Extracted Episode Number: {episode_number}")
     
