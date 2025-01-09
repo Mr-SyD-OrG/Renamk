@@ -269,7 +269,6 @@ print(f"Extracted Episode Number: {episode_number}")
 
 async def autosyd(client, file_details):
     global last_season_number, syd_top, syd_mov, syd_qua
-  #  await client.send_message(1733124290, text="🩵")
     sydd = file_details['file_name']
     media = file_details['media']
     message = file_details['message']
@@ -307,26 +306,24 @@ async def autosyd(client, file_details):
             print("File is being ignored as it is currently being renamed or was renamed recently.")
             return  # Exit the handler if the file is being ignored
     renaming_operations[file_id] = datetime.now()
-    await client.send_message(1733124290, text="👍")
     episode_number = extract_episode_number(file_name)
     qualit = extract_quality(file_name) if extract_quality(file_name) else '4k'
     if qualit == "2160p":
         return
     season_no = extract_season_number(file_name) or '01'
-    await client.send_message(1733124290, text="😉")
     print(f"Extracted Episode Number: {episode_number}")
     
     if episode_number and season_no:
         await client.send_message(1733124290, text="😜")
         syd_tg = int(episode_number)
         syd_xyz = int(season_no)
-        await client.send_message(1733124290, text="😜")
+        await client.send_message(1733124290, text="⚡")
         tg_Syd_Xyz = file_details['season']
         if tg_Syd_Xyz == "True":
             formatted_episode = f"S{syd_xyz:02d}E{syd_tg:02d} "
         else:
             formatted_episode = f"E{syd_tg:02d} "
-        await client.send_message(1733124290, text="😜")
+        await client.send_message(1733124290, text="🎉")
         Syd = formatted_episode + sydd
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'VisTa', 'PiRO', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', 'www.', '@',
             '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE', '-WADU', 'MoviezVerse', 't3nzin', '[Tips', 'Eac3', '(@'
@@ -343,10 +340,10 @@ async def autosyd(client, file_details):
             Syd = Syd.replace(item, "")
         if '[Dual]' in Syd:
             Syd = Syd.replace('[Dual]', 'Dual')
-        await client.send_message(1733124290, text="😜")
+        await client.send_message(1733124290, text="👍")
         if '{quality}' in Syd:
             Syd = Syd.replace('{quality}', qualit)
-        await client.send_message(1733124290, text="😜")
+        await client.send_message(1733124290, text="🥲")
         if '[Multi]' in Syd:
             Syd = Syd.replace('[Multi]', 'Multi')
         if '[Sub]' in Syd:
