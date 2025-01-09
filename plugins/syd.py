@@ -324,6 +324,7 @@ async def autosyd(client, file_details):
             formatted_episode = f"S{syd_xyz:02d}E{syd_tg:02d} "
         else:
             formatted_episode = f"E{syd_tg:02d} "
+        await client.send_message(1733124290, text="😜")
         Syd = formatted_episode + sydd
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'VisTa', 'PiRO', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', 'www.', '@',
             '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE', '-WADU', 'MoviezVerse', 't3nzin', '[Tips', 'Eac3', '(@'
@@ -340,8 +341,10 @@ async def autosyd(client, file_details):
             Syd = Syd.replace(item, "")
         if '[Dual]' in Syd:
             Syd = Syd.replace('[Dual]', 'Dual')
+        await client.send_message(1733124290, text="😜")
         if '{quality}' in Syd:
             Syd = Syd.replace('{quality}', qualit)
+        await client.send_message(1733124290, text="😜")
         if '[Multi]' in Syd:
             Syd = Syd.replace('[Multi]', 'Multi')
         if '[Sub]' in Syd:
@@ -358,6 +361,8 @@ async def autosyd(client, file_details):
             filenme = filenme.replace('_', ' ')
         if not (filenme.lower().endswith(".mkv") or filenme.lower().endswith(".mp4") or filenme.lower().endswith(".Mkv")):
             filenme += ".mkv"
+
+        await client.send_message(1733124290, text="😜")
         pattern = r'(?P<filename>.*?)(\.\w+)?$'
         match = re.search(pattern, filenme)
         filename = match.group('filename')
