@@ -132,14 +132,13 @@ async def process_existing_messages(client, chat_id, message_id, sydtopic):
 @Client.on_message(filters.command("process") & filters.user(1733124290))
 async def process_quee(client, message):
     global processing
- #   await client.send_message(1733124290, text="⚡")
     try:
         # Process files one by one from the queue
-      #  await client.send_message(1733124290, text="🎉")
+        await client.send_message(1733124290, text="Pʀᴏᴄᴄᴇꜱꜱɪɴɢ!")
         while mrs:
-            file_details = mrs.pop(0)
-            await client.send_message(1733124290, text="☺️")# Get the first file in the queue
-            await autosyd(client, file_details)  # Process it
+            file_details = mrs.pop(0)# Get the first file in the queue
+            await autosyd(client, file_details)  # Process i
+        await client.send_message(1733124290, text="Done!")
     finally:
         processing = False  # Reset the processing flag
 
