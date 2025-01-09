@@ -87,7 +87,7 @@ async def start_processing(client, message):
             else:
                 for message_id in range(1, last_message_id + 1):
                     await process_existing_messages(client, chat_id, message_id, topic)
-            await prsyd.edit_text("Now /process 🎉")
+            await prsyd.edit_text(f"Now /process 🎉 {chat_id}")
         except Exception as e:
             logger.error(f"An error occurred in start_processing: {e}")
             await message.reply_text("An error occurred while processing your command.")
@@ -314,16 +314,13 @@ async def autosyd(client, file_details):
     print(f"Extracted Episode Number: {episode_number}")
     
     if episode_number and season_no:
-        await client.send_message(1733124290, text="😜")
         syd_tg = int(episode_number)
         syd_xyz = int(season_no)
-        await client.send_message(1733124290, text="⚡")
         tg_Syd_Xyz = file_details['season']
         if tg_Syd_Xyz == "True":
             formatted_episode = f"S{syd_xyz:02d}E{syd_tg:02d} "
         else:
             formatted_episode = f"E{syd_tg:02d} "
-        await client.send_message(1733124290, text="🎉")
         Syd = formatted_episode + sydd
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'VisTa', 'PiRO', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', 'www.', '@',
             '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE', '-WADU', 'MoviezVerse', 't3nzin', '[Tips', 'Eac3', '(@'
@@ -340,10 +337,8 @@ async def autosyd(client, file_details):
             Syd = Syd.replace(item, "")
         if '[Dual]' in Syd:
             Syd = Syd.replace('[Dual]', 'Dual')
-        await client.send_message(1733124290, text="👍")
         if '{quality}' in Syd:
             Syd = Syd.replace('{quality}', qualit)
-        await client.send_message(1733124290, text="🥲")
         if '[Multi]' in Syd:
             Syd = Syd.replace('[Multi]', 'Multi')
         if '[Sub]' in Syd:
@@ -361,7 +356,6 @@ async def autosyd(client, file_details):
         if not (filenme.lower().endswith(".mkv") or filenme.lower().endswith(".mp4") or filenme.lower().endswith(".Mkv")):
             filenme += ".mkv"
 
-        await client.send_message(1733124290, text="😜")
         pattern = r'(?P<filename>.*?)(\.\w+)?$'
         match = re.search(pattern, filenme)
         filename = match.group('filename')
