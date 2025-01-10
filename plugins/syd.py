@@ -202,7 +202,7 @@ def extract_quality(filename):
     # Return "Unknown" if no pattern matches
     unknown_quality = "Unknown"
     print(f"Quality: {unknown_quality}")
-    return unknown_quality
+    return None
     
 
 def extract_episode_number(filename):    
