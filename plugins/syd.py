@@ -67,7 +67,7 @@ async def start_processing(client, message):
                 last_message_id = int(message_d)
             else:
                 await message.reply_text("Invalid chat link.")
-                return
+                chat_id, message_d = chat_d, chat_d.split('/')[-1]
 
             try:
                 chat = await client.get_chat(chat_id)
