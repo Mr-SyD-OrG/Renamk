@@ -164,7 +164,7 @@ season_pattern2 = re.compile(r'(?:^|[^\w])(?:S|Season)\s*[-:]?\s*(\d+)(?=[^\d]|$
 
 #QUALITY PATTERNS 
 # Pattern 5: 3-4 digits before 'p' as quality
-pattern5 = re.compile(r'\b(?:.*?(\d{3,4}[^\dp]*p).*?|.*?(\d{3,4}p))\b', re.IGNORECASE)
+pattern5 = re.compile(r'\b(\d{3,4}p)\b', re.IGNORECASE)
 # Pattern 6: Find 4k in brackets or parentheses
 pattern6 = re.compile(r'[([<{]?\s*4k\s*[)\]>}]?', re.IGNORECASE)
 # Pattern 7: Find 2k in brackets or parentheses
