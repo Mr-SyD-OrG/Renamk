@@ -38,7 +38,7 @@ pattern3 = re.compile(r'(?:[([<{]?\s*(?:E|EP)\s*(\d+)\s*[)\]>}]?)')
 # Pattern 3_2: episode number after - [hyphen]
 pattern3_2 = re.compile(r'(?:\s*-\s*(\d+)(?!p)\s*)')
 # Pattern 4: S2 09 ex.
-pattern4 = re.compile(r'S(\d+)[^\d]*(\d+)', re.IGNORECASE)
+pattern4 = re.compile(r'S(\d+)\s*[-E ]\s*(\d+)', re.IGNORECASE)
 # Pattern X: Standalone Episode Number
 patternX = re.compile(r'\b(?!\d{3,4}p\b)\d{3,4}\b', re.IGNORECASE)
 # Pattern 1: Explicit "S" or "Season" with optional separators
@@ -236,16 +236,16 @@ async def autosyd(client, file_details):
     else:
         return await message.reply_text("Unsupported File Type")
 
-    await message.reply_text(f"Matchedn {sydd} 1")
+    #await message.reply_text(f"Matchedn {sydd} 1")
     pat1 = re.sub(pattern1, "", sydd)
     pat2 = re.sub(pattern2, "", pat1)
-    await message.reply_text(f"Matchedk {pat1} {pat2}2")
+    #await message.reply_text(f"Matchedk {pat1} {pat2}2")
     pat3 = re.sub(pattern3, "", pat2)
     pat4 = re.sub(pattern3_2, "", pat3)
-    await message.reply_text(f"Matchedn {pat4} {pat3} 3")
+    #await message.reply_text(f"Matchedn {pat4} {pat3} 3")
     pat5 = re.sub(pattern4, "", pat4)
     pat6 = re.sub(patternX, "", pat5)
-    await message.reply_text(f"Matchedn 200 {pat5} {pat6}")
+  #  await message.reply_text(f"Matchedn 200 {pat5} {pat6}")
     pat7 = re.sub(season_pattern1, "", pat6)
     sydX = re.sub(season_pattern2, "", pat7)
     await message.reply_text(f"Matchedn ajk1 {sydX} {pat7}")
