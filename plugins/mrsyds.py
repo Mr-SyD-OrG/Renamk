@@ -36,7 +36,7 @@ pattern2 = re.compile(r'S(\d+)\s*(?:E|EP|-\s*EP)(\d+)')
 # Pattern 3: Episode Number After "E" or "EP"
 pattern3 = re.compile(r'(?:[([<{]?\s*(?:E|EP)\s*(\d+)\s*[)\]>}]?)')
 # Pattern 3_2: episode number after - [hyphen]
-pattern3_2 = re.compile(r'(?:\s*-\s*(\d+)\s*)')
+pattern3_2 = re.compile(r'(?:\s*-\s*(\d+)(?!p)\s*)')
 # Pattern 4: S2 09 ex.
 pattern4 = re.compile(r'S(\d+)[^\d]*(\d+)', re.IGNORECASE)
 # Pattern X: Standalone Episode Number
@@ -86,7 +86,7 @@ def extract_quality(filename):
     # Return "Unknown" if no pattern matches
     unknown_quality = "Unknown"
     print(f"Quality: {unknown_quality}")
-    return unknown_quality
+    return None
     
 
 def extract_episode_number(filename):    
@@ -251,8 +251,8 @@ async def autosyd(client, file_details):
             return  # Exit the handler if the file is being ignored
     renaming_operations[file_id] = datetime.now()
     episode_number = extract_episode_number(file_name)
-    qualit = extract_quality(file_name) if extract_quality(file_name) else '4k'
-    season_no = extract_season_number(file_name) if extract_season_number(file_name) else '01'
+    qualit = extract_quality(file_name) or extract_quality(message.caption) or '4k'
+    season_no = extract_season_number(file_name) or '01'
     print(f"Extracted Episode Number: {episode_number}")
     
     if episode_number and season_no:
