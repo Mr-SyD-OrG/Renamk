@@ -236,19 +236,19 @@ async def autosyd(client, file_details):
     else:
         return await message.reply_text("Unsupported File Type")
 
-    print(f"Matchedn {sydd} 1")
+    await message.reply_text(f"Matchedn {sydd} 1")
     pat1 = re.sub(pattern1, "", sydd)
     pat2 = re.sub(pattern2, "", pat1)
-    print(f"Matchedk {pat1} {pat2}2")
+    await message.reply_text(f"Matchedk {pat1} {pat2}2")
     pat3 = re.sub(pattern3, "", pat2)
     pat4 = re.sub(pattern3_2, "", pat3)
-    print(f"Matchedn {pat4} {pat3} 3")
+    await message.reply_text(f"Matchedn {pat4} {pat3} 3")
     pat5 = re.sub(pattern4, "", pat4)
     pat6 = re.sub(patternX, "", pat5)
-    print(f"Matchedn 200 {pat5} {pat6}")
+    await message.reply_text(f"Matchedn 200 {pat5} {pat6}")
     pat7 = re.sub(season_pattern1, "", pat6)
     sydX = re.sub(season_pattern2, "", pat7)
-    print(f"Matchedn ajk1 {sydX} {pat7}")
+    await message.reply_text(f"Matchedn ajk1 {sydX} {pat7}")
     if file_id in renaming_operations:
         elapsed_time = (datetime.now() - renaming_operations[file_id]).seconds
         if elapsed_time < 10:
@@ -282,7 +282,7 @@ async def autosyd(client, file_details):
         remove_list = ['-', '⌯', '[AL]', '[KDL]', '@Anime_Fair', '@Klands', 'Syd', 'KDL', 'foooir', '[', ']']
         for item in remove_list:
             Syd = Syd.replace(item, "")
-        print(f"Matchedn ajskka1 {Syd}")
+        await message.reply_text(f"Matchedn ajskka1 {Syd}")
         if '[Dual]' in Syd:
             Syd = Syd.replace('[Dual]', 'Dual')
         if '[Multi]' in Syd:
@@ -293,7 +293,7 @@ async def autosyd(client, file_details):
             x for x in Syd.split()
             if not any(x.startswith(mrsyd) for mrsyd in mrsyds) and x != '@GetTGLinks'
         ])
-        print(f"Matchednnskskksm 1 {filenme}")
+        await message.reply_text(f"Matchednnskskksm 1 {filenme}")
         if sydd1 in Syd:
             Syd = Syd.replace(sydd1, sydd2)
         if '_' in Syd:
