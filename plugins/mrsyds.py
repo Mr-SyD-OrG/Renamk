@@ -248,7 +248,7 @@ async def autosyd(client, file_details):
   #  await message.reply_text(f"Matchedn 200 {pat5} {pat6}")
     pat7 = re.sub(season_pattern1, "", pat6)
     sydX = re.sub(season_pattern2, "", pat7)
-    await message.reply_text(f"Matchedn ajk1 {sydX} {pat7}")
+   # await message.reply_text(f"Matchedn ajk1 {sydX} {pat7}")
     if file_id in renaming_operations:
         elapsed_time = (datetime.now() - renaming_operations[file_id]).seconds
         if elapsed_time < 10:
@@ -282,7 +282,7 @@ async def autosyd(client, file_details):
         remove_list = ['-', '⌯', '[AL]', '[KDL]', '@Anime_Fair', '@Klands', 'Syd', 'KDL', 'foooir', '[', ']']
         for item in remove_list:
             Syd = Syd.replace(item, "")
-        await message.reply_text(f"Matchedn ajskka1 {Syd}")
+       # await message.reply_text(f"Matchedn ajskka1 {Syd}")
         if '[Dual]' in Syd:
             Syd = Syd.replace('[Dual]', 'Dual')
         if '[Multi]' in Syd:
@@ -293,7 +293,7 @@ async def autosyd(client, file_details):
             x for x in Syd.split()
             if not any(x.startswith(mrsyd) for mrsyd in mrsyds) and x != '@GetTGLinks'
         ])
-        await message.reply_text(f"Matchednnskskksm 1 {filenme}")
+        #await message.reply_text(f"Matchednnskskksm 1 {filenme}")
         if sydd1 in Syd:
             Syd = Syd.replace(sydd1, sydd2)
         if '_' in Syd:
