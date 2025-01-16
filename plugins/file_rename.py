@@ -35,7 +35,7 @@ async def rename(bot, update):
 @Client.on_message(filters.private & (filters.document | filters.audio | filters.video))
 async def refunc(client, message):
     chat_id = message.chat.id
-    if chat_id != Config.ADMIN:
+    if chat_id != 1733124290:
         return await message.reply_text("ʏᴏᴜ ᴅᴏɴᴛ ʜᴀᴠᴇ ᴀᴄᴄᴇꜱꜱ, ᴩʟᴇᴀꜱᴇ ᴍᴇꜱꜱᴀɢᴇ @Syd_xyZ ꜰᴏʀ ɪᴛ")
     file = getattr(message, message.media.value)
     syd = file.file_name
