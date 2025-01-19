@@ -99,10 +99,7 @@ async def refnc(client, message):
     if message.chat.id in syd_id :
         try:
           #  chat_id = MSYD
-            await client.send_message(
-            chat_id=MSYD,
-            text=f"__**syd**__"
-            )
+            await message.reply_text("An")
             file = getattr(message, message.media.value)
             if not file:
                 return
