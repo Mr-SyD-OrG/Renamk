@@ -98,8 +98,6 @@ async def refnc(client, message):
     syd_id = {MRSSSYD, MRSSYD, MRSSSSYD, MRSSSSSYD}
     if message.chat.id in syd_id :
         try:
-          #  chat_id = MSYD
-            await message.reply_text("An")
             file = getattr(message, message.media.value)
             if not file:
                 return
@@ -139,7 +137,7 @@ async def proces_queue(client):
     global processing
     try:
         # Process files one by one from the queue
-        while mrsydt_g:
+        while mrsydtg:
             file_details = mrsydt_g.pop(0)  # Get the first file in the queue
             await autosydd(client, file_details)  # Process it
     finally:
