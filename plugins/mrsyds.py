@@ -204,12 +204,11 @@ async def refuntion(client, message):
             if not processing:
                 processing = True  # Set processing flag
                 await proces_queue(client)
-                                    
-        
+     
         except Exception as e:
             logger.error(f"An error occurred: {e}")
             await message.reply_text("An error occurred while processing your request.")
-         
+        return
     syd_id = {MRSYD, MRSYYD}
     if message.chat.id in syd_id :
         try:
