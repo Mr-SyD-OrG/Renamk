@@ -23,6 +23,14 @@ MRSYD = -1002289521919
 MRSYYD = -1002200259696
 sydtg = -1002305372915
 Syd_T_G = -1002160523059
+SYD_CHATS = [-1002252619500]
+MSYD = -1002332730533
+MRSSSYD = -1002464733363
+MRSSYD = -1002429058090
+MRSSSSYD = -1002433450358
+MRSSSSSYD = -1002280144341
+processing = False
+mrsydtg = []
 renaming_operations = {}
 logger = logging.getLogger(__name__)
 last_season_number = 0
@@ -183,7 +191,7 @@ async def refuntion(client, message):
                 'media': file,
                 'message': message 
             }
-            mrsydt_g.append(sydfile)
+            mrsydtg.append(sydfile)
             if not processing:
                 processing = True  # Set processing flag
                 await proces_queue(client)
