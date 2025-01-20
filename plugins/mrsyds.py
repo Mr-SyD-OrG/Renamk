@@ -165,7 +165,7 @@ async def refuntion(client, message):
     if message.chat.id in syd_id :
         try:
           #  chat_id = MSYD
-            await message.reply_text("An")
+            #await message.reply_text("An")
             file = getattr(message, message.media.value)
             if not file:
                 return
