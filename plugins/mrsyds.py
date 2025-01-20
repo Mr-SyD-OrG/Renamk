@@ -8,7 +8,7 @@ from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, humanbytes, convert, download_image
 from helper.database import db
 from config import Config
-from . syd_rename import proces_queue
+from .syd_rename import autosydd
 import os
 import time, asyncio
 import logging
@@ -157,6 +157,15 @@ filename = "Naruto Shippuden S01 - EP07 - 1080p [Dual Audio].mkv"
 episode_number = extract_episode_number(filename)
 print(f"Extracted Episode Number: {episode_number}")
 
+async def proces_queue(client):
+    global processing
+    try:
+        # Process files one by one from the queue
+        while mrsydtg:
+            file_details = mrsydtg.pop(0)  # Get the first file in the queue
+            await autosydd(client, file_details)  # Process it
+    finally:
+        processing = False
 # Inside the handler for file uploads
 @Client.on_message(filters.document | filters.video | filters.audio)
 async def refuntion(client, message):
