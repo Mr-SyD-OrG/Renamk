@@ -8,6 +8,7 @@ from hachoir.parser import createParser
 from helper.utils import progress_for_pyrogram, humanbytes, convert, download_image
 from helper.database import db
 from config import Config
+from . syd_rename import proces_queue
 import os
 import time, asyncio
 import logging
@@ -152,6 +153,46 @@ print(f"Extracted Episode Number: {episode_number}")
 @Client.on_message(filters.document | filters.video | filters.audio)
 async def refuntion(client, message):
     global processing
+    syd_id = {MRSSSYD, MRSSYD, MRSSSSYD, MRSSSSSYD}
+    if message.chat.id in syd_id :
+        try:
+          #  chat_id = MSYD
+            await message.reply_text("An")
+            file = getattr(message, message.media.value)
+            if not file:
+                return
+            if file.file_size > 2000 * 1024 * 1024:  # > 2 GB
+                from_syd = message.chat.id
+                syd_id = message.id
+                await client.copy_message(sydtg, from_syd, syd_id)
+                await message.delete()
+                return
+            if file.file_size < 1024 * 1024:  # < 1 MB
+                from_syd = message.chat.id
+                syd_id = message.id
+                await client.copy_message(Syd_T_G, from_syd, syd_id)
+                await message.delete()
+                return
+                
+            syd = file.file_name
+            
+            sydfile = {
+                'file_name': syd,
+                'file_size': file.file_size,
+                'message_id': message.id,
+                'media': file,
+                'message': message 
+            }
+            mrsydt_g.append(sydfile)
+            if not processing:
+                processing = True  # Set processing flag
+                await proces_queue(client)
+                                    
+        
+        except Exception as e:
+            logger.error(f"An error occurred: {e}")
+            await message.reply_text("An error occurred while processing your request.")
+         
     syd_id = {MRSYD, MRSYYD}
     if message.chat.id in syd_id :
         try:
