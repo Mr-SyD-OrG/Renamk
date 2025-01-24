@@ -50,7 +50,7 @@ syyydtg = [
 ]
 
 
-def rearrange_string(syd):
+def rearrange_string(syd, nesyd):
     """nnkk.
     """
     # Detect year (4 digits starting with 19 or 20)
@@ -59,13 +59,19 @@ def rearrange_string(syd):
 
     # Detect language prefixes
     words = syd.split()
+    sydd = nesyd.split()
     lang_prefixes = []
     remaining_words = []
 
-    for word in words:
+    for word or sydd in words:
         # Check if the word is in `sydt_g` (case-insensitive)
         if any(word.lower() == lang.lower().strip("[]") for lang in syyydtg):
             lang_prefixes.append(word)
+        if any(sydd.lower() == lang.lower().strip("[]") for lang in syyydtg):
+            lang_prefixes.append(word)
+            
+        elif sydd != year:  # Exclude the year itself
+            remaining_words.append(word)
         elif word != year:  # Exclude the year itself
             remaining_words.append(word)
 
