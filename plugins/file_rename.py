@@ -38,7 +38,10 @@ async def refunc(client, message):
     if chat_id != 1733124290:
         return await message.reply_text("ʏᴏᴜ ᴅᴏɴᴛ ʜᴀᴠᴇ ᴀᴄᴄᴇꜱꜱ, ᴩʟᴇᴀꜱᴇ ᴍᴇꜱꜱᴀɢᴇ @Syd_xyZ ꜰᴏʀ ɪᴛ")
     file = getattr(message, message.media.value)
-    syd = file.file_name
+    if ".mkv" in file.file_caption:
+        syd = file.file_caption
+    else:
+        syd = file.file_name
     mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'TeamSyndicate', 'PAHE', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', '[', 'www.', '@']
     sydt_g = [
         '[Tam', '[Tamil', '[Tel', '[Telugu', '[Kan', '[Kannada', '[Mal', '[Malayalam',
