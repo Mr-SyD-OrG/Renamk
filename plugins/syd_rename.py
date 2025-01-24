@@ -33,7 +33,46 @@ mrsydt_g = []
 sydtg = -1002305372915
 Syd_T_G = -1002160523059
 
+syyydtg = [
+    'Tam', 'Tamil', 'Tel', 'Telugu', 'Kan', 'Kannada', 'Mal', 'Malayalam',
+    'Eng', 'English', 'Hin', 'Hindi', 'Mar', 'Marathi', 'Ben', 'Bengali',
+    'Ind', 'Indonesian', 'Pun', 'Punjabi', 'Urd', 'Urdu', 'Guj', 'Gujarati',
+    'Bhoj', 'Bhojpuri', 'Ori', 'Odia', 'Ass', 'Assamese', 'San', 'Sanskrit',
+    'Sin', 'Sinhala', 'Ara', 'Arabic', 'Fre', 'French', 'Spa', 'Spanish',
+    'Por', 'Portuguese', 'Ger', 'German', 'Rus', 'Russian', 'Jap', 'Japanese',
+    'Kor', 'Korean', 'Ita', 'Italian', 'Chi', 'Chinese', 'Man', 'Mandarin',
+    'Tha', 'Thai', 'Vie', 'Vietnamese', 'Fil', 'Filipino', 'Tur', 'Turkish',
+    'Swe', 'Swedish', 'Nor', 'Norwegian', 'Dan', 'Danish', 'Pol', 'Polish',
+    'Gre', 'Greek', 'Heb', 'Hebrew', 'Cze', 'Czech', 'Hun', 'Hungarian',
+    'Fin', 'Finnish', 'Ned', 'Dutch', 'Rom', 'Romanian', 'Bul', 'Bulgarian',
+    'Ukr', 'Ukrainian', 'Cro', 'Croatian', 'Slv', 'Slovenian', 'Ser', 'Serbian',
+    'Afr', 'Afrikaans', 'Lat', 'Latin'
+]
 
+
+def rearrange_string(syd):
+    """nnkk.
+    """
+    # Detect year (4 digits starting with 19 or 20)
+    year_match = re.search(r'\b(19|20)\d{2}\b', syd)
+    year = year_match.group() if year_match else ""
+
+    # Detect language prefixes
+    words = syd.split()
+    lang_prefixes = []
+    remaining_words = []
+
+    for word in words:
+        # Check if the word is in `sydt_g` (case-insensitive)
+        if any(word.lower() == lang.lower().strip("[]") for lang in syyydtg):
+            lang_prefixes.append(word)
+        elif word != year:  # Exclude the year itself
+            remaining_words.append(word)
+
+    # Combine: Year + Language Prefixes + Remaining Words
+    result = f"{' '.join([year] + lang_prefixes + remaining_words)}".strip()
+    return result
+    
 def message_count(text, pattern, default_value):
     match = re.search(pattern, text)
     if match:
@@ -47,7 +86,8 @@ def message_count(text, pattern, default_value):
     return new_text
     
 def thesyd_message(text):
-    text = message_count(text, r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ : (\d+)", "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ :")
+    text = message_count(text, r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ : (\result
+    "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ :")
     text = message_count(text, r"#1 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", "#1 ʀᴇᴍᴀɪɴɪɴɢ :")
     return text
 
@@ -81,7 +121,7 @@ def sydd_message(text):
     else:
         return "#2 ʀᴇᴍᴀɪɴɪɴɢ : 1 [ᴇʀʀᴏʀ]"
         
-def syddd_message(text):
+def sydddmessage(text):
     match = re.search(r"#3 ʀᴇᴍᴀɪɴɪɴɢ :  (\d+)", text)
     if match:
         current_count = int(match.group(1))
@@ -115,8 +155,10 @@ async def refnc(client, message):
                 await message.delete()
                 return
                 
-            syd = file.file_name
-            
+            if ".mkv" in file.file_caption:
+                syd = file.file_caption
+            else:
+                syd = file.file_name
             sydfile = {
                 'file_name': syd,
                 'file_size': file.file_size,
@@ -146,7 +188,8 @@ async def proces_queue(client):
         
 async def autosydd(client, file_details):
     try:
-        syd = file_details['file_name']
+        sydy = file_details['file_name']
+        syd = rearrange_string(sydy)
         media = file_details['media']
         message = file_details['message']
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'VisTa', 'PiRO', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', 'www.', '@',
@@ -184,10 +227,10 @@ async def autosydd(client, file_details):
             new_name += ".mkv"
 
 
-        remove_list = ["-Telly", "-GalaxyRG", "-TR", "-PSA", "-GalaxyRG265", "-GalaxyTV", "PIRO", "Eac3", "-BUAM", "St4LiLiN",
-                       "-VARYG", "-PrimeFix", "-Pahe", "-Saon", "-Archie", "-Spidey", "-KuTTaN", "RARBG", "[KC]", "-VXT",
+        remove_list = ["-Telly", "-GalaxyRG", "-TR", "-PSA", "-GalaxyRG265", "-GalaxyTV", "PIRO", "Eac3", "-BUAM", "St4LiLiN", "-HDHub4u.Tv", "HiQVE",
+                       "-VARYG", "-PrimeFix", "-Pahe", "-Saon", "-Archie", "-Spidey", "-KuTTaN", "RARBG", "[KC]", "-VXT", "-HDHub4u",
                        "-Jo", "[YTS.MX]", "-POKE", "-LSSJBroly", "-BiGiL", "-XEBEC", "-L0C1P3R", "-JR", "PrivateMovieZ", "MM", "PMZ", "COSMOS", "YamRaaj"
-                       "-CPTN5DW", "DEVENU", "-ViSTA", "-SH3LBY", "[]", "+ -", "- +", "- -", "[", "]", "--"]
+                       "-CPTN5DW", "DEVENU", "-ViSTA", "-SH3LBY", "[]", "-.", "+ -", "- +", "- -", "[", "]", "--"]
 
         for item in remove_list:
             new_name = new_name.replace(item, "")
