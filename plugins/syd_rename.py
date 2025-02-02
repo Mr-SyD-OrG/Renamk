@@ -158,11 +158,12 @@ async def refnc(client, message):
                 return
                 
             if ".mkv" in file.file_caption:
-                syd = file.file_caption
-            else:
-                syd = file.file_name
+            sydd = file.file_caption
+            
+            syd = file.file_name
             sydfile = {
                 'file_name': syd,
+                'caption': sydd,
                 'file_size': file.file_size,
                 'message_id': message.id,
                 'media': file,
@@ -191,7 +192,8 @@ async def proces_queue(client):
 async def autosydd(client, file_details):
     try:
         sydy = file_details['file_name']
-        syd = rearrange_string(sydy)
+        sydyy = file_details['caption']
+        syd = rearrange_string(sydy, sydyy)
         media = file_details['media']
         message = file_details['message']
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'VisTa', 'PiRO', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', 'www.', '@',
@@ -232,7 +234,7 @@ async def autosydd(client, file_details):
         remove_list = ["-Telly", "-GalaxyRG", "-TR", "-PSA", "-GalaxyRG265", "-GalaxyTV", "PIRO", "Eac3", "-BUAM", "St4LiLiN", "-HDHub4u.Tv", "HiQVE",
                        "-VARYG", "-PrimeFix", "-Pahe", "-Saon", "-Archie", "-Spidey", "-KuTTaN", "RARBG", "[KC]", "-VXT", "-HDHub4u",
                        "-Jo", "[YTS.MX]", "-POKE", "-LSSJBroly", "-BiGiL", "-XEBEC", "-L0C1P3R", "-JR", "PrivateMovieZ", "MM", "PMZ", "COSMOS", "YamRaaj"
-                       "-CPTN5DW", "DEVENU", "-ViSTA", "-SH3LBY", "[]", "-.", "+ -", "- +", "- -", "[", "]", "--"]
+                       "-CPTN5DW", "DEVENU", "-ViSTA", "-SH3LBY", "[]", "-.", "+ -", "- +", "- -", "[", "]", "--", "_"]
 
         for item in remove_list:
             new_name = new_name.replace(item, "")
