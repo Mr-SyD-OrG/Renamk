@@ -88,8 +88,7 @@ def message_count(text, pattern, default_value):
     return new_text
     
 def thesyd_message(text):
-    text = message_count(text, r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ : (\result
-    "ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ :")
+    text = message_count(text, r"ᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ : tᴛᴏᴛᴀʟ ꜰɪʟᴇꜱ :")
     text = message_count(text, r"#1 ʀᴇᴍᴀɪɴɪɴɢ : (\d+)", "#1 ʀᴇᴍᴀɪɴɪɴɢ :")
     return text
 
