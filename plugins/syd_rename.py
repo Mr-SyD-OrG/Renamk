@@ -54,26 +54,24 @@ def rearrange_string(syd, nesyd):
     year_match = re.search(r'\b(19|20)\d{2}\b', syd)
     year = year_match.group() if year_match else ""
 
-    # Split words from both strings and create a set for uniqueness
     words = syd.split()
-    nesyd_words = nesyd.split()
-    all_words = list(dict.fromkeys(words + nesyd_words))  # Removes duplicates while preserving order
+    nesyd_words = [word for word in nesyd.split() if word in syyydtg]  # Keep only languages
 
-    # Group elements before the year
+    all_words = list(dict.fromkeys(words + nesyd_words))  # Remove duplicates while preserving order
+
     before_year = []
     lang_prefixes = []
     remaining_words = []
 
     for word in all_words:
         if word == year:
-            break  # Stop at the year
-        elif any(word.lower() == lang.lower() for lang in syyydtg):
-            lang_prefixes.append(word)  # Add language prefixes
+            break
+        elif word in syyydtg:
+            lang_prefixes.append(word)
         else:
-            before_year.append(word)  # Add to the "before year" group
+            before_year.append(word)
     remaining_words = [word for word in all_words if word not in before_year + [year] + lang_prefixes]
 
-    # Combine: Elements before year + Year + Language Prefixes + Remaining Words
     result = f"{' '.join(before_year)} {year} {' '.join(lang_prefixes)} {' '.join(remaining_words)}".strip()
     return result
     
