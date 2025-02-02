@@ -192,7 +192,7 @@ async def refuntion(client, message):
                 return
                 
             syd = file.file_name
-            sydd = message.caption if message.caption else "No caption provided"
+            sydd = file.caption if file.caption else "No caption provided"
             sydfile = {
                 'file_name': syd,
                 'file_size': file.file_size,
