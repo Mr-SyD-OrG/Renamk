@@ -156,7 +156,6 @@ async def refnc(client, message):
                 await message.delete()
                 return
                 
-            if ".mkv" in file.file_caption:
             sydd = file.file_caption
             
             syd = file.file_name
