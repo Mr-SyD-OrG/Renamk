@@ -192,10 +192,11 @@ async def refuntion(client, message):
                 return
                 
             syd = file.file_name
-            
+            sydd = file.file_caption
             sydfile = {
                 'file_name': syd,
                 'file_size': file.file_size,
+                'caption': sydd,
                 'message_id': message.id,
                 'media': file,
                 'message': message 
