@@ -191,6 +191,9 @@ async def autosydd(client, file_details):
     try:
         sydy = file_details['file_name']
         sydyy = file_details['caption']
+        for itm in remov_list:
+            sydy = sydysydyy
+            sydyy = sydyy
         syd = rearrange_string(sydy, sydyy)
         media = file_details['media']
         message = file_details['message']
