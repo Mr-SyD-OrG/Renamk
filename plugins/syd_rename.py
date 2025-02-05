@@ -33,47 +33,86 @@ mrsydt_g = []
 sydtg = -1002305372915
 Syd_T_G = -1002160523059
 
-syyydtg = [
-    'Tam', 'Tamil', 'Tel', 'Telugu', 'Kan', 'Kannada', 'Mal', 'Malayalam',
-    'Eng', 'English', 'Hin', 'Hindi', 'Mar', 'Marathi', 'Ben', 'Bengali',
-    'Ind', 'Indonesian', 'Pun', 'Punjabi', 'Urd', 'Urdu', 'Guj', 'Gujarati',
-    'Bhoj', 'Bhojpuri', 'Ori', 'Odia', 'Ass', 'Assamese', 'San', 'Sanskrit',
-    'Sin', 'Sinhala', 'Ara', 'Arabic', 'Fre', 'French', 'Spa', 'Spanish',
-    'Por', 'Portuguese', 'Ger', 'German', 'Rus', 'Russian', 'Jap', 'Japanese',
-    'Kor', 'Korean', 'Ita', 'Italian', 'Chi', 'Chinese', 'Man', 'Mandarin',
-    'Tha', 'Thai', 'Vie', 'Vietnamese', 'Fil', 'Filipino', 'Tur', 'Turkish',
-    'Swe', 'Swedish', 'Nor', 'Norwegian', 'Dan', 'Danish', 'Pol', 'Polish',
-    'Gre', 'Greek', 'Heb', 'Hebrew', 'Cze', 'Czech', 'Hun', 'Hungarian',
-    'Fin', 'Finnish', 'Ned', 'Dutch', 'Rom', 'Romanian', 'Bul', 'Bulgarian',
-    'Ukr', 'Ukrainian', 'Cro', 'Croatian', 'Slv', 'Slovenian', 'Ser', 'Serbian',
-    'Afr', 'Afrikaans', 'Lat', 'Latin'
-]
-
+# Language mappings to handle duplicates
+syyydtg_map = {
+    'Eng': 'English', 'English': 'English',
+    'Hin': 'Hindi', 'Hindi': 'Hindi',
+    'Tam': 'Tamil', 'Tamil': 'Tamil',
+    'Tel': 'Telugu', 'Telugu': 'Telugu',
+    'Kan': 'Kannada', 'Kannada': 'Kannada',
+    'Mal': 'Malayalam', 'Malayalam': 'Malayalam',
+    'Mar': 'Marathi', 'Marathi': 'Marathi',
+    'Ben': 'Bengali', 'Bengali': 'Bengali',
+    'Ind': 'Indonesian', 'Indonesian': 'Indonesian',
+    'Pun': 'Punjabi', 'Punjabi': 'Punjabi',
+    'Urd': 'Urdu', 'Urdu': 'Urdu',
+    'Guj': 'Gujarati', 'Gujarati': 'Gujarati',
+    'Bhoj': 'Bhojpuri', 'Bhojpuri': 'Bhojpuri',
+    'Ori': 'Odia', 'Odia': 'Odia',
+    'Ass': 'Assamese', 'Assamese': 'Assamese',
+    'San': 'Sanskrit', 'Sanskrit': 'Sanskrit',
+    'Sin': 'Sinhala', 'Sinhala': 'Sinhala',
+    'Ara': 'Arabic', 'Arabic': 'Arabic',
+    'Fre': 'French', 'French': 'French',
+    'Spa': 'Spanish', 'Spanish': 'Spanish',
+    'Por': 'Portuguese', 'Portuguese': 'Portuguese',
+    'Ger': 'German', 'German': 'German',
+    'Rus': 'Russian', 'Russian': 'Russian',
+    'Jap': 'Japanese', 'Japanese': 'Japanese',
+    'Kor': 'Korean', 'Korean': 'Korean',
+    'Ita': 'Italian', 'Italian': 'Italian',
+    'Chi': 'Chinese', 'Chinese': 'Chinese',
+    'Man': 'Mandarin', 'Mandarin': 'Mandarin',
+    'Tha': 'Thai', 'Thai': 'Thai',
+    'Vie': 'Vietnamese', 'Vietnamese': 'Vietnamese',
+    'Fil': 'Filipino', 'Filipino': 'Filipino',
+    'Tur': 'Turkish', 'Turkish': 'Turkish',
+    'Swe': 'Swedish', 'Swedish': 'Swedish',
+    'Nor': 'Norwegian', 'Norwegian': 'Norwegian',
+    'Dan': 'Danish', 'Danish': 'Danish',
+    'Pol': 'Polish', 'Polish': 'Polish',
+    'Gre': 'Greek', 'Greek': 'Greek',
+    'Heb': 'Hebrew', 'Hebrew': 'Hebrew',
+    'Cze': 'Czech', 'Czech': 'Czech',
+    'Hun': 'Hungarian', 'Hungarian': 'Hungarian',
+    'Fin': 'Finnish', 'Finnish': 'Finnish',
+    'Ned': 'Dutch', 'Dutch': 'Dutch',
+    'Rom': 'Romanian', 'Romanian': 'Romanian',
+    'Bul': 'Bulgarian', 'Bulgarian': 'Bulgarian',
+    'Ukr': 'Ukrainian', 'Ukrainian': 'Ukrainian',
+    'Cro': 'Croatian', 'Croatian': 'Croatian',
+    'Slv': 'Slovenian', 'Slovenian': 'Slovenian',
+    'Ser': 'Serbian', 'Serbian': 'Serbian',
+    'Afr': 'Afrikaans', 'Afrikaans': 'Afrikaans',
+    'Lat': 'Latin', 'Latin': 'Latin'
+}
 
 def rearrange_string(syd, nesyd):
     year_match = re.search(r'\b(19|20)\d{2}\b', syd)
     year = year_match.group() if year_match else ""
 
     words = syd.split()
-    nesyd_words = [word for word in nesyd.split() if word in syyydtg]  # Keep only languages
-
-    all_words = list(dict.fromkeys(words + nesyd_words))  # Remove duplicates while preserving order
+    nesyd_languages = [word for word in nesyd.split() if word in syyydtg_map]  # Keep only valid languages
 
     before_year = []
-    lang_prefixes = []
-    remaining_words = []
+    lang_set = set()  # To store unique languages
+    after_year = []
 
-    for word in all_words:
+    for word in words:
         if word == year:
-            break
-        elif word in syyydtg:
-            lang_prefixes.append(word)
+            after_year.append(word)  # Keep year in place
+        elif word in syyydtg_map:
+            lang_set.add(syyydtg_map[word])  # Convert to full form and store
         else:
-            before_year.append(word)
-    remaining_words = [word for word in all_words if word not in before_year + [year] + lang_prefixes]
+            before_year.append(word)  # Everything else goes before year
 
-    result = f"{' '.join(before_year)} {year} {' '.join(lang_prefixes)} {' '.join(remaining_words)}".strip()
+    # Add new languages from nesyd if they are not already present
+    for lang in nesyd_languages:
+        lang_set.add(syyydtg_map[lang])  # Convert to full form and store
+
+    result = f"{' '.join(before_year)} {' '.join(after_year)} {' '.join(sorted(lang_set))}".strip()
     return result
+
     
 def message_count(text, pattern, default_value):
     match = re.search(pattern, text)
