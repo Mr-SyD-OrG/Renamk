@@ -279,7 +279,7 @@ async def autosydd(client, file_details):
 
 
         remove_list = ["-Telly", "-GalaxyRG", "-TR", "-PSA", "-GalaxyRG265", "-GalaxyTV", "PIRO", "Eac3", "-BUAM", "St4LiLiN", "-HDHub4u.Tv", "HiQVE",
-                       "-VARYG", "-PrimeFix", "-Pahe", "-Saon", "-Archie", "-Spidey", "-KuTTaN", "RARBG", "[KC]", "-VXT", "-HDHub4u",
+                       "-VARYG", "-PrimeFix", "-Pahe", "-Saon", "-Archie", "-Spidey", "-KuTTaN", "RARBG", "[KC]", "-VXT", "-HDHub4u", "(SABUJ)",
                        "-Jo", "[YTS.MX]", "-POKE", "-LSSJBroly", "-BiGiL", "-XEBEC", "-L0C1P3R", "-JR", "PrivateMovieZ", "MM", "PMZ", "COSMOS", "YamRaaj"
                        "-CPTN5DW", "DEVENU", "-ViSTA", "-SH3LBY", "[]", "-.", "+ -", "- +", "- -", "[", "]", "--", "_"]
 
