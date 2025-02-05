@@ -196,12 +196,16 @@ async def autosydd(client, file_details):
             sydyy = sydyy.replace("_", " ")
         if '.' in sydyy:
             sydyy = sydyy.replace(".", " ")
+        if '_' in sydy:
+            sydy = sydy.replace("_", " ")
+        if '.' in sydy:
+            sydy = sydy.replace(".", " ")
             
         syd = rearrange_string(sydy, sydyy)
         media = file_details['media']
         message = file_details['message']
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'VisTa', 'PiRO', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', 'www.', '@',
-            '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE', '-WADU', 'MoviezVerse', 't3nzin', '[Tips', 'Eac3'
+            '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE', '-WADU', 'MoviezVerse', 't3nzin', '[Tips', 'Eac3', 'mkv', 'mp4'
         ]
         sydt_g = [
             '[Tam', '[Tamil', '[Tel', '[Telugu', '[Kan', '[Kannada', '[Mal', '[Malayalam',
