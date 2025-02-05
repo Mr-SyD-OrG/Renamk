@@ -110,7 +110,7 @@ def rearrange_string(syd, nesyd):
     for lang in nesyd_languages:
         lang_set.add(syyydtg_map[lang])  # Convert to full form and store
 
-    result = f"{' '.join(before_year)} {' '.join(after_year)} {' '.join(sorted(lang_set))}".strip()
+    result = f"{' '.join(before_year)} {' '.join(sorted(lang_set))} {' '.join(after_year)} ".strip()
     return result
 
     
