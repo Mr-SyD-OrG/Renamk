@@ -92,26 +92,25 @@ def rearrange_string(syd, nesyd):
     year = year_match.group() if year_match else ""
 
     words = syd.split()
-    nesyd_languages = [word for word in nesyd.split() if word in syyydtg_map]  # Keep only valid languages
+    nesyd_languages = {syyydtg_map[word] for word in nesyd.split() if word in syyydtg_map}  # Unique valid languages
 
-    before_year = []
-    lang_set = set()  # To store unique languages
-    after_year = []
+    new_words = []
+    lang_set = set()
 
     for word in words:
-        if word == year:
-            after_year.append(word)  # Keep year in place
-        elif word in syyydtg_map:
-            lang_set.add(syyydtg_map[word])  # Convert to full form and store
+        if word in syyydtg_map:
+            full_lang = syyydtg_map[word]  # Convert abbreviation to full name
+            if full_lang not in lang_set:
+                new_words.append(full_lang)  # Add only if not already included
+                lang_set.add(full_lang)
         else:
-            before_year.append(word)  # Everything else goes before year
+            new_words.append(word)  # Preserve non-language words
 
-    # Add new languages from nesyd if they are not already present
-    for lang in nesyd_languages:
-        lang_set.add(syyydtg_map[lang])  # Convert to full form and store
+    # Add missing languages from nesyd at the end
+    missing_languages = nesyd_languages - lang_set
+    new_words.extend(sorted(missing_languages))  # Sorted to maintain consistency
 
-    result = f"{' '.join(before_year)} {' '.join(sorted(lang_set))} {' '.join(after_year)} ".strip()
-    return result
+    return " ".join(new_words).strip()
 
     
 def message_count(text, pattern, default_value):
