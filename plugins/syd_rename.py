@@ -239,7 +239,8 @@ async def autosydd(client, file_details):
         if '.' in sydy:
             sydy = sydy.replace(".", " ")
             
-        syd = rearrange_string(sydy, sydyy)
+        #syd = rearrange_string(sydy, sydyy)
+        syd = sydy
         media = file_details['media']
         message = file_details['message']
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'VisTa', 'PiRO', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', 'www.', '@',
