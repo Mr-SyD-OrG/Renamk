@@ -27,7 +27,7 @@ async def forward_message(event):
             
             # Wait for 90 seconds before processing the next message
             #print("Waiting 90 seconds before next message...")
-            await asyncio.sleep(124)
+            await asyncio.sleep(300)
 
         except Exception as e:
             print(f"Error forwarding message: {e}")
