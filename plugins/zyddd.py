@@ -10,7 +10,7 @@ phone_number = NUMB  # Your phone number
 
 # Chat IDs
 SOURCE_CHAT_ID = -1001234567890  # Replace with chat X (source)
-DESTINATION_CHAT_ID = -1009876543210  # Replace with chat Y (destination)
+DESTINATION_CHAT_ID = -1002377676305  # Replace with chat Y (destination)
 
 # Create Telegram client session
 client = TelegramClient("userbot_session", api_id, api_hash)
