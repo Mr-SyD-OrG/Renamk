@@ -1,7 +1,7 @@
 import asyncio
 from telethon import TelegramClient, events
 from asyncio import Semaphore
-
+from info import *
 # Telegram API credentials
 api_id = SYD_CODEE  # Replace with your API ID
 api_hash = SYD_CODEEE  # Replace with your API Hash
@@ -16,7 +16,7 @@ DESTINATION_CHAT_ID = -1009876543210  # Replace with chat Y (destination)
 client = TelegramClient("userbot_session", api_id, api_hash)
 
 # Semaphore to limit concurrent forwards (1 at a time)
-semaphore = Semaphore(1)
+semaphore = Semaphore(2)
 
 async def forward_message(event):
     async with semaphore:  # Ensures only 1 message is forwarded at a time
