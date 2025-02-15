@@ -3,10 +3,10 @@ from telethon import TelegramClient, events
 from asyncio import Semaphore
 from info import *
 # Telegram API credentials
-api_id = SYD_CODEE  # Replace with your API ID
-api_hash = SYD_CODEEE  # Replace with your API Hash
-phone_number = SYD_CODEEEE  # Your phone number
-app_password = SYD_CODE  # Use App Password if 2FA is enabled
+api_id = API_URL  # Replace with your API ID
+api_hash = API_URI  # Replace with your API Hash
+phone_number = NUMB  # Your phone number
+#app_password = SYD_CODE  # Use App Password if 2FA is enabled
 
 # Chat IDs
 SOURCE_CHAT_ID = -1001234567890  # Replace with chat X (source)
@@ -37,7 +37,7 @@ async def handler(event):
     await forward_message(event)
 
 async def main():
-    await client.start(phone_number, password=app_password)  # Auto-login
+    await client.start(phone_number)  # Auto-login
     print("Userbot is running...")
     await client.run_until_disconnected()
 
