@@ -273,11 +273,6 @@ async def autosydd(client, file_details):
             
         mrsyd = filename.rsplit('-', 1)  # Split filename from the right at the last hyphen
         new_name = mrsyd[0].strip() if len(mrsyd) > 1 and any(term in mrsyd[1].strip().lower() for term in sydd) else filename
-            
-        if not (new_name.lower().endswith(".mkv") or new_name.lower().endswith(".mp4")):
-            new_name += ".mkv"
-
-
         remove_list = ["-Telly", "-GalaxyRG", "-TR", "-PSA", "-GalaxyRG265", "-GalaxyTV", "PIRO", "Eac3", "-BUAM", "St4LiLiN", "-HDHub4u.Tv", "HiQVE", "CG", "KMH", "Movie Bazar", "A2Movies",
                        "-VARYG", "-PrimeFix", "-Pahe", "-Saon", "-Archie", "-Spidey", "-KuTTaN", "RARBG", "[KC]", "-VXT", "-HDHub4u", "(SABUJ)", "MSM", "CC", "CF", "RWD", "Mux-Soft", "Mux-Hard",
                        "-Jo", "[YTS.MX]", "-POKE", "-LSSJBroly", "-BiGiL", "-XEBEC", "-L0C1P3R", "-JR", "PrivateMovieZ", "MM", "PMZ", "COSMOS", "YamRaaj", "NonDRM",
@@ -286,6 +281,8 @@ async def autosydd(client, file_details):
         for item in remove_list:
             new_name = new_name.replace(item, "")
 
+        if not (new_name.lower().endswith(".mkv") or new_name.lower().endswith(".mp4")):
+            new_name += ".mkv"
         syd_name = new_name
         pattern = r'(?P<filename>.*?)(\.\w+)?$'
         match = re.search(pattern, syd_name)
