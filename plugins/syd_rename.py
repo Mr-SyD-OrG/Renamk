@@ -364,8 +364,6 @@ async def autosydd(client, file_details):
             os.remove(ph_path)
         if file_path:
             os.remove(file_path)
-        if syd_irl:
-            os.remove(syd_irl)
         if syd_des:
             os.remove(syd_des)
         syd_id = -1002332730533
