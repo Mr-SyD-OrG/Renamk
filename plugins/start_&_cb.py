@@ -64,3 +64,7 @@ async def stop_button(bot, message):
     mrsydt_g.clear()
     await msg.edit("<b><i><u>ʙᴏᴛ ɪꜱ ʀᴇꜱᴛᴀʀᴛᴇᴅ</u> ✅</i></b>")
     os.execl(sys.executable, sys.executable, *sys.argv)
+    
+@Client.on_message(filters.command("start") & filters.chat(-1002687879857))
+async def sydstart(client, message):
+    await message.reply_text(".")
