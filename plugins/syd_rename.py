@@ -314,7 +314,7 @@ async def autosydd(client, file_details):
         PISS = 'https://envs.sh/U6.jpg'
         SYDD_PATH = 'downloads/syd.jpg'
         SYD_PATH = 'downloads/thumbnail.jpg'
-        user_bot = await db.get_user_bot(Config.ADMIN[0])
+        #user_bot = await db.get_user_bot(Config.ADMIN[0])
         if media.file_size > 2000 * 1024 * 1024:
             try:
                 syd_irl, syd_des = random.choice([(PIS, SYD_PATH), (PISS, SYDD_PATH)])
