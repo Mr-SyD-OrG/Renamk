@@ -311,7 +311,7 @@ async def autosydd(client, file_details):
         caption = f"**{new_filename}**" 
            
         PIS = 'https://envs.sh/UV.jpg'
-        PISS = 'https://envs.sh/U6.jpg'
+        PISS = 'https://envs.sh/on3.jpg'
         SYDD_PATH = 'downloads/syd.jpg'
         SYD_PATH = 'downloads/thumbnail.jpg'
         #user_bot = await db.get_user_bot(Config.ADMIN[0])
