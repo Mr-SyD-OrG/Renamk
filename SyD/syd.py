@@ -122,7 +122,7 @@ async def convert_media_to_sticker(client, cb):
         else:
             await cb.message.reply(f"❌ Failed to add sticker: {res}")
     else:
-        bitrates = ['300K', '200K', '150K', '100K']
+        bitrates = ['300K', '200K', '100K', '50K']
         tried = 0
         while tried < len(bitrates):
             bitrate = bitrates[tried]
@@ -157,7 +157,7 @@ async def convert_media_to_sticker(client, cb):
     if not ok:
         exists = await sticker_set_exists(token, sticker_set_name)
         if not exists:
-            title = f"{username}'s {'Video' if media_type=='video' else 'Static'} Stickers"
+            title = f"{username}'s Stickers By @Video_To_Stickers_Bot"
             res = await create_new_sticker_set(token, user_id, sticker_set_name, title, temp_file, "😎", media_type)
             if res.get("ok"):
                 await db.users.update_one({"user_id": user_id}, {"$set": {f"{media_type}_set": sticker_set_name}}, upsert=True)
