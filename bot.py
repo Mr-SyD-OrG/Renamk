@@ -64,7 +64,7 @@ class Bot(Client):
                 bot_token=Config.SYD_TOKEN
             )
             try:
-                await syd.start()
+                await syyd.start()
             except Exception as e:
                 logging.info(f"{e}")
         for id in Config.ADMIN:
