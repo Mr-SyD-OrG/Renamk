@@ -110,7 +110,8 @@ async def convert_media_to_sticker(client, cb):
     ok = False
 
     # Process file
-        await cb.message.reply("etihing")
+  
+    await cb.message.reply("etihing")
     ok = False  # <-- define before branching
 
     if media_type == "static":
