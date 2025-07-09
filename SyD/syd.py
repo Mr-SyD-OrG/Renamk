@@ -108,7 +108,7 @@ async def convert_video_to_sticker(client, callback_query):
         return
 
     # Try to create or add sticker
-    token = Config.BOT_TOKEN
+    token = Config.SYD_TOKEN
     ok = False
 
     # Check if set exists by calling getStickerSet
