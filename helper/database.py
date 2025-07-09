@@ -22,6 +22,7 @@ class Database:
         self._client = motor.motor_asyncio.AsyncIOMotorClient(uri)
         self.db = self._client[database_name]
         self.col = self.db.user
+        self.users = self.db.users
         self.bot = self.db.bots
         self.req = self.db.requests
 
