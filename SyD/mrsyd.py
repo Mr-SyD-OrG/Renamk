@@ -52,7 +52,7 @@ async def broadcast_handler(bot: Client, m: Message):
             success += 1
         else:
             failed += 1
-        if sts == 400:
+       # if sts == 400:
           #  await db.delete_user(user['_id'])
         done += 1
         if not done % 20:
