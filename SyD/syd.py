@@ -50,7 +50,7 @@ async def disclaimer(client, message):
 from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-@Client.on_message(filters.private & filters.video)
+@Client.on_message(filters.private & (filters.video | filters.animation | filters.photo))
 async def ask_convert_button(client, message):
     if message.video.duration > 30:
         await message.reply("❌ Video too long! Max 30 seconds allowed.")
