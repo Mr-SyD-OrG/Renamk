@@ -9,7 +9,7 @@ from config import Config, Txt
 
 import humanize
 from time import sleep
-users = db.users
+
 logger = logging.getLogger(__name__)
 
 @Client.on_message(filters.private & filters.command("start"))
@@ -79,13 +79,13 @@ async def convert_video_to_sticker(client, callback_query):
 
     # Check MongoDB if user already has sticker set name
     await callback_query.message.reply(".")
-    user_data = users.find_one({"user_id": user_id})
+    user_data = await db.users.find_one({"user_id": user_id})
     await callback_query.message.reply(f".{user_data}")
     if user_data:
         sticker_set_name = user_data["sticker_set"]
     else:
         await callback_query.message.reply(".")
-        users.insert_one({"user_id": user_id, "sticker_set": sticker_set_name})
+        await db.users.insert_one({"user_id": user_id, "sticker_set": sticker_set_name})
 
     await callback_query.message.reply(".")
     await callback_query.answer("⏳ Converting, please wait...", show_alert=True)
