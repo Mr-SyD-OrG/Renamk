@@ -9,7 +9,8 @@ class Config(object):
     # pyro client config
     API_ID = os.environ.get("API_ID", "")  # ⚠️ Required
     API_HASH = os.environ.get("API_HASH", "")  # ⚠️ Required
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "")  # ⚠️ Required
+    SYD_TOKEN = os.environ.get("SYD_TOKEN", "")
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "") # ⚠️ Required
 
     # database config
     DB_NAME = os.environ.get("DB_NAME", "Sigma_Rename")
@@ -30,6 +31,7 @@ class Config(object):
 
     # wes response configuration
     WEBHOOK = bool(os.environ.get("WEBHOOK", True))
+    WOOK = bool(os.environ.get("WOOK", False))
     PORT = int(os.environ.get("PORT", "8080"))
 
 
