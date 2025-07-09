@@ -68,45 +68,42 @@ import asyncio
 
 @Client.on_callback_query(filters.regex("^convert_"))
 async def convert_video_to_sticker(client, callback_query):
-    await callback_query.message.reply(".")
     user_id = callback_query.from_user.id
     username = callback_query.from_user.username or f"user{user_id}"
     message_id = int(callback_query.data.split("_")[1])
 
     bot_info = await client.get_me()
-    await callback_query.message.reply(".")
     sticker_set_name = f"{username}_by_{bot_info.username}"
 
     # Check MongoDB if user already has sticker set name
-    await callback_query.message.reply(".")
     user_data = await db.users.find_one({"user_id": user_id})
-    await callback_query.message.reply(f".{user_data}")
     if user_data:
         sticker_set_name = user_data["sticker_set"]
     else:
-        await callback_query.message.reply(".")
         await db.users.insert_one({"user_id": user_id, "sticker_set": sticker_set_name})
 
-    await callback_query.message.reply(".")
     await callback_query.answer("⏳ Converting, please wait...", show_alert=True)
 
     # Get original video message
     message = await client.get_messages(callback_query.message.chat.id, message_id)
 
-    # File paths
-    temp_video = f"{user_id}_{message.id}.mp4"
-    temp_webm = f"{user_id}_{message.id}.webm"
+    # Use /tmp so Docker can always write
+    temp_video = f"/tmp/{user_id}_{message.id}.mp4"
+    temp_webm  = f"/tmp/{user_id}_{message.id}.webm"
 
-    # Download
-    await message.download(temp_video)
+    # Download the video
+    downloaded_file = await message.download(file_name=temp_video)
+    if not downloaded_file or not os.path.exists(downloaded_file):
+        await callback_query.message.reply(f"❌ Download failed, file not found: {temp_video}")
+        return
 
     # Convert in background thread to avoid blocking
     loop = asyncio.get_event_loop()
     try:
-        await loop.run_in_executor(None, convert_to_webm_ffmpeg, temp_video, temp_webm)
+        await loop.run_in_executor(None, convert_to_webm_ffmpeg, downloaded_file, temp_webm)
     except Exception as e:
         await callback_query.message.reply(f"❌ Conversion failed: {e}")
-        os.remove(temp_video)
+        cleanup(downloaded_file)
         return
 
     # Create or add to sticker set
@@ -124,7 +121,7 @@ async def convert_video_to_sticker(client, callback_query):
             )
         except Exception as e:
             await callback_query.message.reply(f"❌ Failed to create sticker set: {e}")
-            cleanup(temp_video, temp_webm)
+            cleanup(downloaded_file, temp_webm)
             return
     else:
         # Add to existing sticker set
@@ -137,7 +134,7 @@ async def convert_video_to_sticker(client, callback_query):
             )
         except Exception as e:
             await callback_query.message.reply(f"❌ Failed to add sticker: {e}")
-            cleanup(temp_video, temp_webm)
+            cleanup(downloaded_file, temp_webm)
             return
 
     await callback_query.message.reply(
@@ -145,29 +142,38 @@ async def convert_video_to_sticker(client, callback_query):
         disable_web_page_preview=True
     )
 
-    cleanup(temp_video, temp_webm)
+    cleanup(downloaded_file, temp_webm)
 
 
 def convert_to_webm_ffmpeg(input_path, output_path):
-    (
-        ffmpeg
-        .input(input_path)
-        .filter('scale', 512, 512, force_original_aspect_ratio='decrease')
-        .filter('pad', 512, 512, -1, -1, color='0x00000000')
-        .output(output_path,
-                vcodec='libvpx-vp9',
-                **{'b:v': '500K'},
-                an=None,
-                r=30
+    try:
+        out, err = (
+            ffmpeg
+            .input(input_path)
+            .filter('scale', 512, 512, force_original_aspect_ratio='decrease')
+            .filter('pad', 512, 512, -1, -1, color='0x00000000')
+            .output(output_path,
+                    vcodec='libvpx-vp9',
+                    **{'b:v': '500K'},
+                    an=None,
+                    r=30
+            )
+            .run(overwrite_output=True, capture_stdout=True, capture_stderr=True)
         )
-        .run(overwrite_output=True)
-    )
+        print("FFmpeg stdout:", out.decode())
+        print("FFmpeg stderr:", err.decode())
+    except ffmpeg.Error as e:
+        print("❌ FFmpeg failed:", e.stderr.decode())
+        raise RuntimeError(f"FFmpeg error: {e.stderr.decode()}")
 
 
 def cleanup(*files):
     for f in files:
-        if os.path.exists(f):
+        if f and os.path.exists(f):
             os.remove(f)
+
+
+
 
 
     
