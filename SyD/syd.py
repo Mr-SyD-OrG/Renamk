@@ -74,15 +74,19 @@ async def convert_video_to_sticker(client, callback_query):
     message_id = int(callback_query.data.split("_")[1])
 
     bot_info = await client.get_me()
+    await callback_query.message.reply(".")
     sticker_set_name = f"{username}_by_{bot_info.username}"
 
     # Check MongoDB if user already has sticker set name
+    await callback_query.message.reply(".")
     user_data = users.find_one({"user_id": user_id})
     if user_data:
         sticker_set_name = user_data["sticker_set"]
     else:
+        await callback_query.message.reply(".")
         users.insert_one({"user_id": user_id, "sticker_set": sticker_set_name})
 
+    await callback_query.message.reply(".")
     await callback_query.answer("⏳ Converting, please wait...", show_alert=True)
 
     # Get original video message
