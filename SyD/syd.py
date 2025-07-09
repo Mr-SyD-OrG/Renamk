@@ -80,6 +80,7 @@ async def convert_video_to_sticker(client, callback_query):
     # Check MongoDB if user already has sticker set name
     await callback_query.message.reply(".")
     user_data = users.find_one({"user_id": user_id})
+    await callback_query.message.reply(f".{user_data}")
     if user_data:
         sticker_set_name = user_data["sticker_set"]
     else:
