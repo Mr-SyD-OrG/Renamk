@@ -57,9 +57,9 @@ async def ask_convert_button(client, message):
         return
 
     await message.reply(
-        "Do you want to convert this video into a sticker?",
+        "Dᴏ ʏᴏᴜ ᴡᴀɴᴛ ᴍᴇ ᴛᴏ ᴄᴏɴᴠᴇʀᴛ ᴛʜɪꜱ ᴍᴇᴅɪᴀ ɪɴᴛᴏ ᴀ ꜱᴛɪᴄᴋᴇʀ ?",
         reply_markup=InlineKeyboardMarkup(
-            [[InlineKeyboardButton("🎨 Convert", callback_data=f"convert_{message.id}")]]
+            [[InlineKeyboardButton("🎨 Cᴏɴᴠᴇʀᴛ", callback_data=f"convert_{message.id}")]]
         )
     )
 
@@ -98,7 +98,7 @@ async def convert_media_to_sticker(client, cb):
     user_data = await db.users.find_one({"user_id": user_id}) or {}
     sticker_set_name = user_data.get(f"{media_type}_set") or base_set_name
 
-    await cb.answer("⏳ Converting, please wait...", show_alert=True)
+    await cb.answer("⏳ Cᴏɴᴠᴇʀᴛɪɴɢ, ᴩʟᴇᴀꜱᴇ ᴡᴀɪᴛ...", show_alert=True)
 
     # Download to temp
     ext = ".png" if media_type == "static" else ".webm"
