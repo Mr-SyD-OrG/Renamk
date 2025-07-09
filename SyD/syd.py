@@ -68,6 +68,7 @@ import asyncio
 
 @Client.on_callback_query(filters.regex("^convert_"))
 async def convert_video_to_sticker(client, callback_query):
+    await callback_query.message.reply(".")
     user_id = callback_query.from_user.id
     username = callback_query.from_user.username or f"user{user_id}"
     message_id = int(callback_query.data.split("_")[1])
