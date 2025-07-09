@@ -110,9 +110,16 @@ async def convert_media_to_sticker(client, cb):
     ok = False
 
     # Process file
-    await cb.message.reply("etihing")
+        await cb.message.reply("etihing")
+    ok = False  # <-- define before branching
+
     if media_type == "static":
         await loop.run_in_executor(None, resize_image_to_png, temp_file)
+        res = await add_sticker_to_set(token, user_id, sticker_set_name, temp_file, "😎", media_type)
+        if res.get("ok"):
+            ok = True
+        else:
+            await cb.message.reply(f"❌ Failed to add sticker: {res}")
     else:
         bitrates = ['300K', '200K', '150K', '100K']
         tried = 0
@@ -129,12 +136,15 @@ async def convert_media_to_sticker(client, cb):
             else:
                 await cb.message.reply(f"❌ Failed to add sticker: {res}")
                 break
+
         if not ok and tried == len(bitrates):
             await cb.message.reply("❌ File is still too large after several tries. Please send shorter or lower-quality video.")
             cleanup(temp_file)
             return
 
-    await cb.message.reply(" So✅77uihing")
+    await cb.message.reply("So✅77uihing")  # debug to see if code reaches here
+
+    
     # Try to create sticker set if not exists
     if not ok:
         exists = await sticker_set_exists(token, sticker_set_name)
