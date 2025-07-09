@@ -65,6 +65,7 @@ async def ask_convert_button(client, message):
 import os
 import ffmpeg
 import asyncio
+import aiohttp
 
 @Client.on_callback_query(filters.regex("^convert_"))
 async def convert_video_to_sticker(client, callback_query):
@@ -75,7 +76,7 @@ async def convert_video_to_sticker(client, callback_query):
     bot_info = await client.get_me()
     sticker_set_name = f"{username}_by_{bot_info.username}"
 
-    # Check MongoDB if user already has sticker set name
+    # Check MongoDB if sticker set already known
     user_data = await db.users.find_one({"user_id": user_id})
     if user_data:
         sticker_set_name = user_data["sticker_set"]
@@ -84,20 +85,20 @@ async def convert_video_to_sticker(client, callback_query):
 
     await callback_query.answer("⏳ Converting, please wait...", show_alert=True)
 
-    # Get the original video message
+    # Get original video
     message = await client.get_messages(callback_query.message.chat.id, message_id)
 
-    # Use /tmp so Docker can write
+    # Paths
     temp_video = f"/tmp/{user_id}_{message.id}.mp4"
-    temp_webm  = f"/tmp/{user_id}_{message.id}.webm"
+    temp_webm = f"/tmp/{user_id}_{message.id}.webm"
 
-    # Download
+    # Download video
     downloaded = await message.download(file_name=temp_video)
     if not downloaded or not os.path.exists(downloaded):
         await callback_query.message.reply(f"❌ Download failed, file not found: {temp_video}")
         return
 
-    # Convert video to .webm
+    # Convert to webm
     loop = asyncio.get_event_loop()
     try:
         await loop.run_in_executor(None, convert_to_webm_ffmpeg, temp_video, temp_webm)
@@ -106,47 +107,33 @@ async def convert_video_to_sticker(client, callback_query):
         cleanup(temp_video)
         return
 
-    # Try to create or add to sticker set
-    try:
-        # Check if sticker set exists
-        await client.get_sticker_set(sticker_set_name)
-    except Exception:
-        # Sticker set doesn't exist → create new
-        try:
-            await client.create_new_sticker_set(
-                user_id=user_id,
-                name=sticker_set_name,
-                title=f"{username}'s Stickers",
-                stickers=[{
-                    "file": temp_webm,
-                    "emoji": "😎"
-                }],
-                sticker_format="video"   # Must specify format
-            )
-        except Exception as e:
-            await callback_query.message.reply(f"❌ Failed to create sticker set: {e}")
-            cleanup(temp_video, temp_webm)
-            return
-    else:
-        # Sticker set exists → add sticker
-        try:
-            await client.add_sticker_to_set(
-                user_id=user_id,
-                name=sticker_set_name,
-                stickers=[{
-                    "file": temp_webm,
-                    "emoji": "😎"
-                }]
-            )
-        except Exception as e:
-            await callback_query.message.reply(f"❌ Failed to add sticker: {e}")
-            cleanup(temp_video, temp_webm)
-            return
+    # Try to create or add sticker
+    token = Config.BOT_TOKEN
+    ok = False
 
-    await callback_query.message.reply(
-        f"✅ Added to [sticker set](https://t.me/addstickers/{sticker_set_name})!",
-        disable_web_page_preview=True
-    )
+    # Check if set exists by calling getStickerSet
+    exists = await sticker_set_exists(token, sticker_set_name)
+
+    if not exists:
+        # Create new
+        result = await create_new_sticker_set(token, user_id, sticker_set_name, f"{username}'s Stickers", temp_webm, "😎")
+        if result.get("ok"):
+            ok = True
+        else:
+            await callback_query.message.reply(f"❌ Failed to create sticker set: {result}")
+    else:
+        # Add sticker
+        result = await add_sticker_to_set(token, user_id, sticker_set_name, temp_webm, "😎")
+        if result.get("ok"):
+            ok = True
+        else:
+            await callback_query.message.reply(f"❌ Failed to add sticker: {result}")
+
+    if ok:
+        await callback_query.message.reply(
+            f"✅ Added to [sticker set](https://t.me/addstickers/{sticker_set_name})!",
+            disable_web_page_preview=True
+        )
 
     cleanup(temp_video, temp_webm)
 
@@ -177,6 +164,52 @@ def cleanup(*files):
     for f in files:
         if f and os.path.exists(f):
             os.remove(f)
+
+
+async def sticker_set_exists(token, name):
+    url = f"https://api.telegram.org/bot{token}/getStickerSet"
+    params = {"name": name}
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url, params=params) as resp:
+            data = await resp.json()
+            return data.get("ok", False)
+
+
+async def create_new_sticker_set(token, user_id, name, title, webm_path, emojis):
+    url = f"https://api.telegram.org/bot{token}/createNewStickerSet"
+    data = {
+        "user_id": user_id,
+        "name": name,
+        "title": title,
+        "sticker_format": "video",
+        "emojis": emojis
+    }
+    async with aiohttp.ClientSession() as session:
+        with open(webm_path, 'rb') as f:
+            form = aiohttp.FormData()
+            for k, v in data.items():
+                form.add_field(k, str(v))
+            form.add_field("webm_sticker", f, filename="sticker.webm", content_type='video/webm')
+            async with session.post(url, data=form) as resp:
+                return await resp.json()
+
+
+async def add_sticker_to_set(token, user_id, name, webm_path, emojis):
+    url = f"https://api.telegram.org/bot{token}/addStickerToSet"
+    data = {
+        "user_id": user_id,
+        "name": name,
+        "emojis": emojis
+    }
+    async with aiohttp.ClientSession() as session:
+        with open(webm_path, 'rb') as f:
+            form = aiohttp.FormData()
+            for k, v in data.items():
+                form.add_field(k, str(v))
+            form.add_field("webm_sticker", f, filename="sticker.webm", content_type='video/webm')
+            async with session.post(url, data=form) as resp:
+                return await resp.json()
+
 
 
 
