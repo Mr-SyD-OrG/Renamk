@@ -84,57 +84,63 @@ async def convert_video_to_sticker(client, callback_query):
 
     await callback_query.answer("⏳ Converting, please wait...", show_alert=True)
 
-    # Get original video message
+    # Get the original video message
     message = await client.get_messages(callback_query.message.chat.id, message_id)
 
-    # Use /tmp so Docker can always write
+    # Use /tmp so Docker can write
     temp_video = f"/tmp/{user_id}_{message.id}.mp4"
     temp_webm  = f"/tmp/{user_id}_{message.id}.webm"
 
-    # Download the video
-    downloaded_file = await message.download(file_name=temp_video)
-    if not downloaded_file or not os.path.exists(downloaded_file):
+    # Download
+    downloaded = await message.download(file_name=temp_video)
+    if not downloaded or not os.path.exists(downloaded):
         await callback_query.message.reply(f"❌ Download failed, file not found: {temp_video}")
         return
 
-    # Convert in background thread to avoid blocking
+    # Convert video to .webm
     loop = asyncio.get_event_loop()
     try:
-        await loop.run_in_executor(None, convert_to_webm_ffmpeg, downloaded_file, temp_webm)
+        await loop.run_in_executor(None, convert_to_webm_ffmpeg, temp_video, temp_webm)
     except Exception as e:
         await callback_query.message.reply(f"❌ Conversion failed: {e}")
-        cleanup(downloaded_file)
+        cleanup(temp_video)
         return
 
-    # Create or add to sticker set
+    # Try to create or add to sticker set
     try:
+        # Check if sticker set exists
         await client.get_sticker_set(sticker_set_name)
-    except:
-        # Create new sticker set
+    except Exception:
+        # Sticker set doesn't exist → create new
         try:
             await client.create_new_sticker_set(
                 user_id=user_id,
                 name=sticker_set_name,
                 title=f"{username}'s Stickers",
-                webm_stickers=[temp_webm],
-                emojis=["😎"]
+                stickers=[{
+                    "file": temp_webm,
+                    "emoji": "😎"
+                }],
+                sticker_format="video"   # Must specify format
             )
         except Exception as e:
             await callback_query.message.reply(f"❌ Failed to create sticker set: {e}")
-            cleanup(downloaded_file, temp_webm)
+            cleanup(temp_video, temp_webm)
             return
     else:
-        # Add to existing sticker set
+        # Sticker set exists → add sticker
         try:
             await client.add_sticker_to_set(
                 user_id=user_id,
                 name=sticker_set_name,
-                webm_sticker=temp_webm,
-                emojis="😎"
+                stickers=[{
+                    "file": temp_webm,
+                    "emoji": "😎"
+                }]
             )
         except Exception as e:
             await callback_query.message.reply(f"❌ Failed to add sticker: {e}")
-            cleanup(downloaded_file, temp_webm)
+            cleanup(temp_video, temp_webm)
             return
 
     await callback_query.message.reply(
@@ -142,7 +148,7 @@ async def convert_video_to_sticker(client, callback_query):
         disable_web_page_preview=True
     )
 
-    cleanup(downloaded_file, temp_webm)
+    cleanup(temp_video, temp_webm)
 
 
 def convert_to_webm_ffmpeg(input_path, output_path):
@@ -171,6 +177,8 @@ def cleanup(*files):
     for f in files:
         if f and os.path.exists(f):
             os.remove(f)
+
+
 
 
 
