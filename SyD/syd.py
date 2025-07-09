@@ -127,7 +127,13 @@ async def convert_media_to_sticker(client, cb):
         while tried < len(bitrates):
             bitrate = bitrates[tried]
             tried += 1
-            await loop.run_in_executor(None, convert_to_webm_ffmpeg, temp_file, temp_file, bitrate)
+            temp_out = f"{temp_file}_tmp.webm"
+            await loop.run_in_executor(None, convert_to_webm_ffmpeg, temp_file, temp_out, bitrate)
+
+            # Replace original file with re-encoded smaller one
+            if os.path.exists(temp_out):
+                os.replace(temp_out, temp_file)
+
             res = await add_sticker_to_set(token, user_id, sticker_set_name, temp_file, "😎", media_type)
             if res.get("ok"):
                 ok = True
@@ -142,6 +148,7 @@ async def convert_media_to_sticker(client, cb):
             await cb.message.reply("❌ File is still too large after several tries. Please send shorter or lower-quality video.")
             cleanup(temp_file)
             return
+
 
     await cb.message.reply("So✅77uihing")  # debug to see if code reaches here
 
