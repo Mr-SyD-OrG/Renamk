@@ -80,16 +80,18 @@ async def convert_media_to_sticker(client, cb):
 
     # Get original message
     message = await client.get_messages(cb.message.chat.id, message_id)
-
+    await cb.message.reply(" Sometihing")
     # Detect type
     if message.photo:
         media_type = "static"
     elif message.video or message.animation:
         media_type = "video"
+        await cb.message.reply(" Sometihing")
     else:
         await cb.message.reply("❌ Unsupported media type.")
         return
-
+    
+    await cb.message.reply(" Somennjthing")
     base_set_name = f"{username}_{media_type}_by_{bot_info.username}"
 
     # Get sticker set name from DB or init
@@ -102,12 +104,13 @@ async def convert_media_to_sticker(client, cb):
     ext = ".png" if media_type == "static" else ".webm"
     temp_file = f"/tmp/{user_id}_{message.id}{ext}"
     await message.download(temp_file)
-
+    await cb.message.reply(" Something")
     loop = asyncio.get_event_loop()
     token = Config.SYD_TOKEN
     ok = False
 
     # Process file
+    await cb.message.reply("etihing")
     if media_type == "static":
         await loop.run_in_executor(None, resize_image_to_png, temp_file)
     else:
@@ -131,6 +134,7 @@ async def convert_media_to_sticker(client, cb):
             cleanup(temp_file)
             return
 
+    await cb.message.reply(" So✅77uihing")
     # Try to create sticker set if not exists
     if not ok:
         exists = await sticker_set_exists(token, sticker_set_name)
