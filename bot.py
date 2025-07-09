@@ -52,6 +52,21 @@ class Bot(Client):
         await web.TCPSite(app, bind_address, Config.PORT).start()
         logging.info(f"{me.first_name} ✅✅ BOT started successfully ✅✅")
 
+        if Config.LOG_CHANNEL:
+            syyd = Client(
+                "SyDLnK",
+                api_hash=Config.API_HASH,
+                api_id=Config.API_ID,
+                plugins={
+                "root": "SyD"
+                },
+                workers=50,
+                bot_token=Config.SYD_TOKEN
+            )
+            try:
+                await syd.start()
+            except Exception as e:
+                logging.info(f"{e}")
         for id in Config.ADMIN:
             try:
                 await self.send_message(id, f"**__{me.first_name}  Iꜱ Sᴛᴀʀᴛᴇᴅ.....✨️__**")
