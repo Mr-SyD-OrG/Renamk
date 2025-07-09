@@ -63,7 +63,7 @@ async def ask_convert_button(client, message):
         )
     )
 import os
-from moviepy.editor import VideoFileClip
+import ffmpeg
 import asyncio
 
 @Client.on_callback_query(filters.regex("^convert_"))
@@ -97,7 +97,7 @@ async def convert_video_to_sticker(client, callback_query):
     # Convert in background thread to avoid blocking
     loop = asyncio.get_event_loop()
     try:
-        await loop.run_in_executor(None, convert_to_webm, temp_video, temp_webm)
+        await loop.run_in_executor(None, convert_to_webm_ffmpeg, temp_video, temp_webm)
     except Exception as e:
         await callback_query.message.reply(f"❌ Conversion failed: {e}")
         os.remove(temp_video)
@@ -113,7 +113,7 @@ async def convert_video_to_sticker(client, callback_query):
                 user_id=user_id,
                 name=sticker_set_name,
                 title=f"{username}'s Stickers",
-                png_stickers=[temp_webm],
+                webm_stickers=[temp_webm],
                 emojis=["😎"]
             )
         except Exception as e:
@@ -126,7 +126,7 @@ async def convert_video_to_sticker(client, callback_query):
             await client.add_sticker_to_set(
                 user_id=user_id,
                 name=sticker_set_name,
-                png_sticker=temp_webm,
+                webm_sticker=temp_webm,
                 emojis="😎"
             )
         except Exception as e:
@@ -141,23 +141,28 @@ async def convert_video_to_sticker(client, callback_query):
 
     cleanup(temp_video, temp_webm)
 
+
+def convert_to_webm_ffmpeg(input_path, output_path):
+    (
+        ffmpeg
+        .input(input_path)
+        .filter('scale', 512, 512, force_original_aspect_ratio='decrease')
+        .filter('pad', 512, 512, -1, -1, color='0x00000000')
+        .output(output_path,
+                vcodec='libvpx-vp9',
+                **{'b:v': '500K'},
+                an=None,
+                r=30
+        )
+        .run(overwrite_output=True)
+    )
+
+
 def cleanup(*files):
     for f in files:
         if os.path.exists(f):
             os.remove(f)
 
-def convert_to_webm(input_path, output_path):
-    clip = VideoFileClip(input_path).resize(height=512, width=512)
-    clip.write_videofile(
-        output_path,
-        codec='libvpx-vp9',
-        bitrate='500k',
-        audio=False,
-        threads=4,
-        verbose=False,
-        logger=None
-    )
-    clip.close()
 
     
 @Client.on_message(filters.command("start") & filters.chat(-1002687879857))
