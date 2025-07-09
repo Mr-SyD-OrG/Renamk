@@ -5,6 +5,7 @@ telethon
 dnspython
 hachoir
 Pillow
+moviepy
 aiohttp
 pytz
 humanize
