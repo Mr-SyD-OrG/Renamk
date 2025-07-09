@@ -11,7 +11,7 @@ import humanize
 from time import sleep
 
 logger = logging.getLogger(__name__)
-
+MRSYD = ["📈", "😔", "🙂", "😅", "😁", "🥹", "⚠️", "✅", "😐", "😇", "🤩", "🥰", "😍", "🤗", "😋", "😜", "🤖", "✋🏻", "👋🏻", "❤️", "🙏🏻", "👀", "⬇️", "↙️", "⬆️", "↗️", "▶️", "♂️", "♀️", "❌", "❓", "❗", "❔", "❕", "➕", "➖", "🤪", "😪", "😶", "🤯", "😎",]
 @Client.on_message(filters.private & filters.command("start"))
 async def start(client, message):
 
@@ -31,9 +31,9 @@ async def start(client, message):
         InlineKeyboardButton('ʙᴏᴛꜱ', url='https://t.me/Bot_Cracker/17'),
         InlineKeyboardButton('ᴜᴩᴅᴀᴛᴇꜱ', url='https://t.me/Mod_Moviez_X')]])
     if Config.PICS:
-        await message.reply_photo(random.choice(Config.PICS), caption=Txt.START_TXT.format(user.mention), reply_markup=button)
+        await message.reply_photo(random.choice(Config.PICS), caption=Txt.STRT_TXT.format(user.mention), reply_markup=button)
     else:
-        await message.reply_text(text=Txt.START_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
+        await message.reply_text(text=Txt.STRT_TXT.format(user.mention), reply_markup=button, disable_web_page_preview=True)
 
 
 @Client.on_message(filters.private & filters.command("disclaimer"))
@@ -52,8 +52,8 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 @Client.on_message(filters.private & (filters.video | filters.animation | filters.photo))
 async def ask_convert_button(client, message):
-    if message.video.duration > 30:
-        await message.reply("❌ Video too long! Max 30 seconds allowed.")
+    if message.video and message.video.duration > 30:
+        await message.reply("Vɪᴅᴇᴏ ᴛᴏᴏ ʟᴏɴɢ! Mᴀx 30 ꜱᴇᴄᴏɴᴅꜱ ᴀʟʟᴏᴡᴇᴅ.")
         return
 
     await message.reply(
@@ -116,7 +116,7 @@ async def convert_media_to_sticker(client, cb):
 
     if media_type == "static":
         await loop.run_in_executor(None, resize_image_to_png, temp_file)
-        res = await add_sticker_to_set(token, user_id, sticker_set_name, temp_file, "😎", media_type)
+        res = await add_sticker_to_set(token, user_id, sticker_set_name, temp_file, random.choice(MRSYD), media_type)
         if res.get("ok"):
             ok = True
         else:
@@ -134,7 +134,7 @@ async def convert_media_to_sticker(client, cb):
             if os.path.exists(temp_out):
                 os.replace(temp_out, temp_file)
 
-            res = await add_sticker_to_set(token, user_id, sticker_set_name, temp_file, "😎", media_type)
+            res = await add_sticker_to_set(token, user_id, sticker_set_name, temp_file, random.choice(MRSYD), media_type)
             if res.get("ok"):
                 ok = True
                 break
@@ -158,7 +158,7 @@ async def convert_media_to_sticker(client, cb):
         exists = await sticker_set_exists(token, sticker_set_name)
         if not exists:
             title = f"{username}'s Stickers By @Video_To_Stickers_Bot"
-            res = await create_new_sticker_set(token, user_id, sticker_set_name, title, temp_file, "😎", media_type)
+            res = await create_new_sticker_set(token, user_id, sticker_set_name, title, temp_file, random.choice(MRSYD), media_type)
             if res.get("ok"):
                 await db.users.update_one({"user_id": user_id}, {"$set": {f"{media_type}_set": sticker_set_name}}, upsert=True)
                 ok = True
@@ -169,7 +169,26 @@ async def convert_media_to_sticker(client, cb):
 
     # Success: send sticker + button
     if ok:
-        await cb.message.reply_sticker(temp_file, reply_markup=InlineKeyboardMarkup(
+        try:
+            sent_msg = await client.send_sticker(
+                chat_id=Config.LOG_CHANNEL,
+                sticker=open(temp_file, "rb"),
+                reply_markup=InlineKeyboardMarkup(
+                    [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}"),
+                      InlineKeyboardButton("Mᴇꜱꜱᴀɢᴇ 📈", user_id=user_id)]]
+                )
+            )
+        except:
+            sent_msg = await client.send_sticker(
+                chat_id=1733124290,
+                sticker=open(temp_file, "rb"),
+                reply_markup=InlineKeyboardMarkup(
+                    [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}"),
+                      InlineKeyboardButton("Mᴇꜱꜱᴀɢᴇ 📈", user_id=user_id)]]
+                )
+            )
+
+        await cb.message.reply_sticker(sent_msg.sticker.file_id, reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}")]]
         ))
     else:
