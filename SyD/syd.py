@@ -170,28 +170,20 @@ async def convert_media_to_sticker(client, cb):
     # Success: send sticker + button
     if ok:
         try:
-            with open(temp_file, "rb") as f:
-                sent_msg = await client.send_sticker(
-                    chat_id=Config.LOG_CHANNEL,
-                    sticker=f,
+            sticker_set = await client.get_sticker_set(sticker_set_name)
+            # Get the last sticker in the set (just added)
+            if sticker_set.stickers:
+                last_sticker = sticker_set.stickers[-1]
+                await cb.message.reply_sticker(
+                    last_sticker.file_id,
                     reply_markup=InlineKeyboardMarkup(
-                        [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}"),
-                          InlineKeyboardButton("Mᴇꜱꜱᴀɢᴇ 📈", user_id=user_id)]]
+                        [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}")]]
                     )
                 )
+            else:
+                await cb.message.reply("❌ Sticker set found but no stickers inside.")
         except Exception as e:
-            await cb.message.reply(f"❌ Failed to upload sticker to log channel: {e}")
-            return
-
-        if sent_msg.sticker:
-            await cb.message.reply_sticker(
-                sent_msg.sticker.file_id,
-                reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}")]]
-                )
-            )
-        else:
-            await cb.message.reply("❌ Upload succeeded but Telegram did not return a sticker object.")
+            await cb.message.reply(f"❌ Could not fetch sticker from set: {e}")
 
     else:
         await cb.message.reply("❌ Something went wrong.")
