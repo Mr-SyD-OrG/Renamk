@@ -169,22 +169,17 @@ async def convert_media_to_sticker(client, cb):
          
     # Success: send sticker + button
     if ok:
-        try:
-            sticker_set = await client.get_sticker_set(sticker_set_name)
-            # Get the last sticker in the set (just added)
-            if sticker_set.stickers:
-                last_sticker = sticker_set.stickers[-1]
-                await cb.message.reply_sticker(
-                    last_sticker.file_id,
-                    reply_markup=InlineKeyboardMarkup(
-                        [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}")]]
-                    )
+        res = await get_sticker_set(Config.SYD_TOKEN, sticker_set_name)
+        if res.get("ok") and res["result"]["stickers"]:
+            last_sticker = res["result"]["stickers"][-1]
+            await cb.message.reply_sticker(
+                last_sticker["file_id"],
+                reply_markup=InlineKeyboardMarkup(
+                    [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}")]]
                 )
-            else:
-                await cb.message.reply("❌ Sticker set found but no stickers inside.")
-        except Exception as e:
-            await cb.message.reply(f"❌ Could not fetch sticker from set: {e}")
-
+            )
+        else:
+            await cb.message.reply(f"❌ Could not get sticker set: {res}")
     else:
         await cb.message.reply("❌ Something went wrong.")
 
@@ -242,6 +237,14 @@ async def add_sticker_to_set(token, user_id, name, file_path, emojis, media_type
             form.add_field(field, f, filename=os.path.basename(file_path))
             r = await s.post(url, data=form)
             return await r.json()
+
+async def get_sticker_set(token, name):
+    url = f"https://api.telegram.org/bot{token}/getStickerSet"
+    params = {"name": name}
+    async with aiohttp.ClientSession() as s:
+        async with s.get(url, params=params) as r:
+            return await r.json()
+
 def resize_image_to_png(path):
     from PIL import Image
     im = Image.open(path).convert("RGBA")
