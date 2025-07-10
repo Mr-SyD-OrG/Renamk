@@ -18,7 +18,7 @@ class Config(object):
 
     # other configs
     BOT_UPTIME = time.time()
-    PICS = os.environ.get("PICS", 'https://graph.org/file/8c8372dfa0e0ddf8da91d.jpg https://graph.org/file/3b2b8110f6f57f7fc5c74.jpg  https://graph.org/file/1bd6fa19297caf4189c61.jpg  ').split()
+    PICS = os.environ.get("PICS", 'https://files.catbox.moe/iq4kp9.jpg https://files.catbox.moe/i6myg1.jpg https://files.catbox.moe/5f0ptk.jpg https://files.catbox.moe/6qvc08.jpg https://files.catbox.moe/iz1r0m.jpg https://files.catbox.moe/cg3wqk.jpg https://files.catbox.moe/ts053n.jpg https://graph.org/file/8c8372dfa0e0ddf8da91d.jpg https://graph.org/file/3b2b8110f6f57f7fc5c74.jpg  https://graph.org/file/1bd6fa19297caf4189c61.jpg  ').split()
     SYD = os.environ.get("SYD", 'https://graph.org/file/3b2b8110f6f57f7fc5c74.jpg')
     ADMIN = [int(admin) if id_pattern.search(
         admin) else admin for admin in os.environ.get('ADMIN', '').split()]  # ⚠️ Required
@@ -45,7 +45,8 @@ Yᴏᴜ Cᴀɴ Rᴇɴᴀᴍᴇ & Cʜᴀɴɢᴇ Tʜᴜᴍʙɴᴀɪʟ Oꜰ Δɴʏ 
 </b></blockquote>"""
     
     STRT_TXT = """<b>Hᴀɪ {} 👋,
-ɪ ᴀᴍ ᴀ ᴠɪᴅᴇᴏ ᴛᴏ ꜱᴛɪᴄᴋᴇʀ ʙᴏᴛ ᴡʜɪᴄʜ ᴄᴀɴ ᴄᴏɴᴠᴇʀᴛ ᴠɪᴅᴇᴏꜱ, ɪᴍᴀɢᴇꜱ ᴀɴᴅ ɢɪꜰ'ꜱ ɪɴᴛᴏ ꜱᴛɪᴄᴋᴇʀꜱ ᴀɴᴅ ꜱᴀᴠᴇ ɪᴛ ɪɴ ʏᴏᴜʀ ᴏᴡɴ ᴩᴀᴄᴋ 🪄
+ɪ ᴀᴍ ᴀ ᴠɪᴅᴇᴏ ᴛᴏ ꜱᴛɪᴄᴋᴇʀ ʙᴏᴛ ᴡʜɪᴄʜ ᴄᴀɴ ᴄᴏɴᴠᴇʀᴛ ᴠɪᴅᴇᴏꜱ, ɪᴍᴀɢᴇꜱ ᴀɴᴅ ɢɪꜰꜱ ɪɴᴛᴏ ꜱᴛɪᴄᴋᴇʀꜱ 
+ᴀɴᴅ ꜱᴀᴠᴇ ɪᴛ ɪɴ ʏᴏᴜʀ ᴏᴡɴ ᴩᴀᴄᴋ 🪄
 
 <blockquote>ꜱᴇɴᴅ ʏᴏᴜʀ ꜰɪʟᴇ ᴀɴᴅ ɪ ᴡɪʟʟ ᴄᴏɴᴠᴇʀᴛ ɪᴛ. 🧩
 </b></blockquote>"""
