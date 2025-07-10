@@ -89,7 +89,10 @@ async def convert_media_to_sticker(client, cb):
     else:
         await cb.message.reply("❌ Unsupported media type.")
         return
-    
+
+    SyD = await cb.message.reply("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▢▢▢▢▢▢▢▢] 10%")
+    await cb.message.delete()
+
     base_set_name = f"{username}_{media_type}_by_{bot_info.username}"
 
     # Get sticker set name from DB or init
@@ -101,15 +104,16 @@ async def convert_media_to_sticker(client, cb):
     # Download to temp
     ext = ".png" if media_type == "static" else ".webm"
     temp_file = f"/tmp/{user_id}_{message.id}{ext}"
+    await SyD.edit("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▣▢▢▢▢▢▢▢] 20%")
     await message.download(temp_file)
-    await cb.message.reply(" Something")
+    await SyD.edit("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▣▣▢▢▢▢▢▢] 30%")
     loop = asyncio.get_event_loop()
     token = Config.SYD_TOKEN
     ok = False
 
     # Process file
   
-    await cb.message.reply("etihing")
+    await SyD.edit("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▣▣▣▢▢▢▢▢] 40%")
     ok = False  # <-- define before branching
 
     if media_type == "static":
@@ -142,18 +146,21 @@ async def convert_media_to_sticker(client, cb):
                 await cb.message.reply(f"❌ Failed to add sticker: {res}")
                 break
 
+        await SyD.edit("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▣▣▣▣▢▢▢▢] 50%")
         if not ok and tried == len(bitrates):
             await cb.message.reply("❌ File is still too large after several tries. Please send shorter or lower-quality video.")
             cleanup(temp_file)
             return
 
-
-    await cb.message.edit("")  # debug to see if code reaches here
-
+    try:
+        await SyD.edit("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▣▣▣▣▢▢▢▢] 50%")  # debug to see if code reaches here
+    except:
+        pass
     
     # Try to create sticker set if not exists
     if not ok:
         exists = await sticker_set_exists(token, sticker_set_name)
+        await SyD.edit("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▣▣▣▣▣▢▢▢] 60%")
         if not exists:
             title = f"{username}'s Stickers By @Video_To_Stickers_Bot"
             res = await create_new_sticker_set(token, user_id, sticker_set_name, title, temp_file, random.choice(MRSYD), media_type)
@@ -164,9 +171,11 @@ async def convert_media_to_sticker(client, cb):
                 await cb.message.reply(f"❌ Failed to create sticker set: {res}")
                 cleanup(temp_file)
                 return
+        await SyD.edit("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▣▣▣▣▣▣▢▢] 80%")
          
     # Success: send sticker + button
     if ok:
+        await SyD.edit("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▣▣▣▣▣▣▣▢] 90%")
         res = await get_sticker_set(Config.SYD_TOKEN, sticker_set_name)
         if res.get("ok") and res["result"]["stickers"]:
             last_sticker = res["result"]["stickers"][-1]
@@ -180,7 +189,9 @@ async def convert_media_to_sticker(client, cb):
             await cb.message.reply(f"❌ Could not get sticker set: {res}")
     else:
         await cb.message.reply("❌ Something went wrong.")
-
+    await SyD.edit("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▣▣▣▣▣▣▣▣] 100%")
+    await asyncio.sleep(1)
+    await SyD.delete()
     cleanup(temp_file)
 
 
