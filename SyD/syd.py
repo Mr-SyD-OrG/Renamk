@@ -280,12 +280,11 @@ def convert_to_webm_ffmpeg(input_path, output_path, bitrate="300K"):
         .filter('pad', 512, 512, -1, -1, color='0x00000000')
         .output(
             output_path,
-            vcodec='libvpx',            # use VP8
-            pix_fmt='yuva420p',         # keep alpha
-            **{'b:v': bitrate},
+            vcodec='libvpx',        # VP8 supports alpha
+            pix_fmt='yuva420p',     # alpha channel
+            **{'b:v': bitrate, 'auto-alt-ref': 0},
             an=None,
             r=30
         )
         .run(overwrite_output=True)
     )
-
