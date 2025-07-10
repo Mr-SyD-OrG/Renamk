@@ -168,33 +168,33 @@ async def convert_media_to_sticker(client, cb):
                 return
          
     # Success: send sticker + button
-        if ok:
-            try:
-                with open(temp_file, "rb") as f:
-                    sent_msg = await client.send_sticker(
-                        chat_id=1733124290,
-                        sticker=f,
-                        reply_markup=InlineKeyboardMarkup(
-                            [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}"),
-                              InlineKeyboardButton("Mᴇꜱꜱᴀɢᴇ 📈", user_id=user_id)]]
-                        )
-                    )
-            except Exception as e:
-                await cb.message.reply(f"❌ Failed to upload sticker to log channel: {e}")
-                return
-
-            if sent_msg.sticker:
-                await cb.message.reply_sticker(
-                    sent_msg.sticker.file_id,
+    if ok:
+        try:
+            with open(temp_file, "rb") as f:
+                sent_msg = await client.send_sticker(
+                    chat_id=Config.LOG_CHANNEL,
+                    sticker=f,
                     reply_markup=InlineKeyboardMarkup(
-                        [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}")]]
+                        [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}"),
+                          InlineKeyboardButton("Mᴇꜱꜱᴀɢᴇ 📈", user_id=user_id)]]
                     )
                 )
-            else:
-                await cb.message.reply("❌ Upload succeeded but Telegram did not return a sticker object.")
+        except Exception as e:
+            await cb.message.reply(f"❌ Failed to upload sticker to log channel: {e}")
+            return
 
+        if sent_msg.sticker:
+            await cb.message.reply_sticker(
+                sent_msg.sticker.file_id,
+                reply_markup=InlineKeyboardMarkup(
+                    [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}")]]
+                )
+            )
         else:
-            await cb.message.reply("❌ Something went wrong.")
+            await cb.message.reply("❌ Upload succeeded but Telegram did not return a sticker object.")
+
+    else:
+        await cb.message.reply("❌ Something went wrong.")
 
     cleanup(temp_file)
 
