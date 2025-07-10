@@ -166,7 +166,7 @@ async def convert_media_to_sticker(client, cb):
                 await cb.message.reply(f"❌ Failed to create sticker set: {res}")
                 cleanup(temp_file)
                 return
-
+         
     # Success: send sticker + button
         if ok:
             try:
