@@ -11,6 +11,7 @@ import humanize
 from time import sleep
 
 logger = logging.getLogger(__name__)
+user_locks = {}
 MRSYD = ["📈", "😔", "🙂", "😅", "😁", "🥹", "⚠️", "✅", "😐", "😇", "🤩", "🥰", "😍", "🤗", "😋", "😜", "🤖", "✋🏻", "👋🏻", "❤️", "🙏🏻", "👀", "⬇️", "↙️", "⬆️", "↗️", "▶️", "♂️", "♀️", "❌", "❓", "❗", "❔", "❕", "➕", "➖", "🤪", "😪", "😶", "🤯", "😎"]
 @Client.on_message(filters.private & filters.command("start"))
 async def start(client, message):
@@ -74,6 +75,10 @@ from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 @Client.on_callback_query(filters.regex("^convert_"))
 async def convert_media_to_sticker(client, cb):
     user_id = cb.from_user.id
+    if user_locks.get(user_id):
+        await cb.answer("ᴏɴᴇ ᴩʀᴏᴄᴇꜱꜱ ɪꜱ ᴀʟʀᴇᴀᴅʏ ɪɴ ᴩʀᴏɢʀᴇꜱꜱ, ᴩʟᴇᴀꜱᴇ ᴡᴀɪᴛ ᴜɴᴛɪʟ ɪᴛ'ꜱ ᴏᴠᴇʀ. 🙂", show_alert=True)
+        return
+    user_locks[user_id] = True
     username = cb.from_user.username or f"user{user_id}"
     message_id = int(cb.data.split("_")[1])
     bot_info = await client.get_me()
@@ -87,7 +92,8 @@ async def convert_media_to_sticker(client, cb):
     elif message.video or message.animation:
         media_type = "video"
     else:
-        await cb.message.reply("❌ Unsupported media type.")
+        await cb.message.reply("Unsupported media type. \n⚠️ Rᴇᴩᴏʀᴛ ɪꜰ ɪᴛ'ꜱ ᴇʀʀᴏʀ @SyD_XyZ ")
+        user_locks.pop(user_id, None)
         return
 
     SyD = await cb.message.reply("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▢▢▢▢▢▢▢▢] 10%")
@@ -122,7 +128,7 @@ async def convert_media_to_sticker(client, cb):
         if res.get("ok"):
             ok = True
         else:
-            await cb.message.reply(f"❌ Failed to add sticker: {res}")
+            await cb.message.reply(f"Fᴀɪʟᴇᴅ ᴛᴏ ᴀᴅᴅ ꜱᴛɪᴄᴋᴇʀ: {res} \n⚠️ Rᴇᴩᴏʀᴛ ᴇʀʀᴏʀ ʙʏ ꜰᴏʀᴡᴀʀᴅɪɴɢ ᴛʜɪꜱ ᴍᴇꜱꜱᴀɢᴇ ᴛᴏ: @SyD_XyZ ")
     else:
         bitrates = ['300K', '200K', '100K', '50K']
         tried = 0
@@ -143,13 +149,15 @@ async def convert_media_to_sticker(client, cb):
             elif "file is too big" in str(res).lower():
                 continue
             else:
-                await cb.message.reply(f"❌ Failed to add sticker: {res}")
+                await cb.message.reply(f"Fᴀɪʟᴇᴅ ᴛᴏ ᴀᴅᴅ ꜱᴛɪᴄᴋᴇʀ: {res}\n⚠️ Rᴇᴩᴏʀᴛ ɪꜰ ɪᴛ'ꜱ ᴇʀʀᴏʀ @SyD_XyZ  ")
                 break
 
         await SyD.edit("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▣▣▣▣▢▢▢▢] 50%")
         if not ok and tried == len(bitrates):
-            await cb.message.reply("❌ File is still too large after several tries. Please send shorter or lower-quality video.")
+            await cb.message.reply("Fɪʟᴇ ɪꜱ ꜱᴛɪʟʟ ᴛᴏᴏ ʟᴀʀɢᴇ ᴀꜰᴛᴇʀ ꜱᴇᴠᴇʀᴀʟ ᴛʀɪᴇꜱ. Pʟᴇᴀꜱᴇ ꜱᴇɴᴅ ꜱʜᴏʀᴛᴇʀ ᴏʀ **ʟᴏᴡᴇʀ-qᴜᴀʟɪᴛʏ** ᴠɪᴅᴇᴏ.")
+            user_locks.pop(user_id, None)
             cleanup(temp_file)
+            await SyD.delete()
             return
 
     try:
@@ -168,8 +176,10 @@ async def convert_media_to_sticker(client, cb):
                 await db.users.update_one({"user_id": user_id}, {"$set": {f"{media_type}_set": sticker_set_name}}, upsert=True)
                 ok = True
             else:
-                await cb.message.reply(f"❌ Failed to create sticker set: {res}")
+                await cb.message.reply(f"Fᴀɪʟᴇᴅ ᴛᴏ ᴄʀᴇᴀᴛᴇ ꜱᴛɪᴄᴋᴇʀ ꜱᴇᴛ: {res}  \n⚠️ Rᴇᴩᴏʀᴛ ᴇʀʀᴏʀ ʙʏ ꜰᴏʀᴡᴀʀᴅɪɴɢ ᴛʜɪꜱ ᴍᴇꜱꜱᴀɢᴇ ᴛᴏ: @SyD_XyZ")
                 cleanup(temp_file)
+                user_locks.pop(user_id, None)
+                await SyD.delete()
                 return
         await SyD.edit("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▣▣▣▣▣▣▢▢] 80%")
          
@@ -182,16 +192,18 @@ async def convert_media_to_sticker(client, cb):
             await cb.message.reply_sticker(
                 last_sticker["file_id"],
                 reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton("🖼 Open Sticker Set", url=f"https://t.me/addstickers/{sticker_set_name}")]]
+                    [[InlineKeyboardButton("Oᴩᴇɴ Sᴛɪᴄᴋᴇʀ Sᴇᴛ ➚", url=f"https://t.me/addstickers/{sticker_set_name}")]]
                 )
             )
         else:
-            await cb.message.reply(f"❌ Could not get sticker set: {res}")
+            await cb.message.reply(f"Cᴏᴜʟᴅ ɴᴏᴛ ɢᴇᴛ ꜱᴛɪᴄᴋᴇʀ ꜱᴇᴛ: {res}  \n⚠️ Rᴇᴩᴏʀᴛ ᴇʀʀᴏʀ ʙʏ ꜰᴏʀᴡᴀʀᴅɪɴɢ ᴛʜɪꜱ ᴍᴇꜱꜱᴀɢᴇ ᴛᴏ: @SyD_XyZ")
     else:
-        await cb.message.reply("❌ Something went wrong.")
+        await cb.message.reply("Sᴏᴍᴇᴛʜɪɴɢ ᴡᴇɴᴛ ᴡʀᴏɴɢ, ꜰᴏʀ ʜᴇʟᴩ ᴍᴇꜱꜱᴀɢᴇ ᴏᴡɴᴇʀ.")
     await SyD.edit("Gᴇɴᴇʀᴀᴛɪɴɢ : [▣▣▣▣▣▣▣▣▣] 100%")
     await asyncio.sleep(1)
     await SyD.delete()
+    user_locks.pop(user_id, None)
+
     cleanup(temp_file)
 
 
