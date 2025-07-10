@@ -23,7 +23,7 @@ async def get_stats(bot, message):
     start_t = time.time()
     st = await message.reply('**Aᴄᴄᴇꜱꜱɪɴɢ Tʜᴇ Dᴇᴛᴀɪʟꜱ.....**')
     end_t = time.time()
-    sticker = db.users.count_documents({})
+    sticker = await db.users.count_documents({})
     time_taken_s = (end_t - start_t) * 1000
     await st.edit(text=f"**--Bᴏᴛ Sᴛᴀᴛᴜꜱ--** \n\n**⌚️ Bᴏᴛ Uᴩᴛɪᴍᴇ:** {uptime} \n**🐌 Cᴜʀʀᴇɴᴛ Pɪɴɢ:** `{time_taken_s:.3f} ᴍꜱ` \n**👭 Tᴏᴛᴀʟ Uꜱᴇʀꜱ:** `{total_users}`\n🧩 Sᴛɪᴄᴋᴇʀ ᴩᴀᴄᴋꜱ : {sticker}")
 
