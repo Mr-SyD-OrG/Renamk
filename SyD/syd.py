@@ -130,7 +130,7 @@ async def convert_media_to_sticker(client, cb):
         else:
             await cb.message.reply(f"Fᴀɪʟᴇᴅ ᴛᴏ ᴀᴅᴅ ꜱᴛɪᴄᴋᴇʀ: {res} \n⚠️ Rᴇᴩᴏʀᴛ ᴇʀʀᴏʀ ʙʏ ꜰᴏʀᴡᴀʀᴅɪɴɢ ᴛʜɪꜱ ᴍᴇꜱꜱᴀɢᴇ ᴛᴏ: @SyD_XyZ ")
     else:
-        bitrates = ['300K', '200K', '100K', '50K']
+        bitrates = ['300K', '200K', '100K', '50K', '10K']
         tried = 0
         while tried < len(bitrates):
             bitrate = bitrates[tried]
@@ -272,12 +272,20 @@ def resize_image_to_png(path):
     im.thumbnail((512,512))
     im.save(path, "PNG")
 
-def convert_to_webm_ffmpeg(input_path, output_path, bitrate='300K'):
+def convert_to_webm_ffmpeg(input_path, output_path, bitrate="300K"):
     (
         ffmpeg
         .input(input_path)
         .filter('scale', 512, 512, force_original_aspect_ratio='decrease')
         .filter('pad', 512, 512, -1, -1, color='0x00000000')
-        .output(output_path, vcodec='libvpx-vp9', **{'b:v': bitrate}, an=None, r=20)
+        .output(
+            output_path,
+            vcodec='libvpx',            # use VP8
+            pix_fmt='yuva420p',         # keep alpha
+            **{'b:v': bitrate},
+            an=None,
+            r=30
+        )
         .run(overwrite_output=True)
     )
+
