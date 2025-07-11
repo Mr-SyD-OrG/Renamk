@@ -276,7 +276,14 @@ def convert_to_webm_ffmpeg(input_path, output_path, bitrate="300K"):
     (
         ffmpeg
         .input(input_path)
-        .filter('scale', 'if(gt(a,1),512,-1)', 'if(gt(a,1),-1,512)', force_original_aspect_ratio='decrease')
+        # scale longest side to 512, keep aspect
+        .filter('scale', 'if(gt(a,1),512,trunc(ih*512/iw/2)*2)', 'if(gt(a,1),trunc(iw*512/ih/2)*2,512)')
+        # pad to ensure shorter side >=320 & both sides even
+        .filter('pad',
+            'if(gte(iw,ih),iw,512)',        # if landscape, width already 512
+            'if(gte(iw,ih),max(ih,320),512)',# if portrait, ensure height≥320
+            '(ow-iw)/2', '(oh-ih)/2', color='black'
+        )
         .output(
             output_path,
             vcodec='libvpx-vp9',
