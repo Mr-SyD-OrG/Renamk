@@ -276,13 +276,12 @@ def convert_to_webm_ffmpeg(input_path, output_path, bitrate="300K"):
     (
         ffmpeg
         .input(input_path)
-        .filter('scale', 512, 512, force_original_aspect_ratio='decrease')
-        .filter('pad', 512, 512, -1, -1, color='0x00000000')
+        .filter('scale', 'if(gt(a,1),512,-1)', 'if(gt(a,1),-1,512)', force_original_aspect_ratio='decrease')
         .output(
             output_path,
-            vcodec='libvpx',        # VP8 supports alpha
-            pix_fmt='yuva420p',     # alpha channel
-            **{'b:v': bitrate, 'auto-alt-ref': 0},
+            vcodec='libvpx-vp9',
+            pix_fmt='yuv420p',
+            **{'b:v': bitrate},
             an=None,
             r=30
         )
