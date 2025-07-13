@@ -52,7 +52,7 @@ class Bot(Client):
         await web.TCPSite(app, bind_address, Config.PORT).start()
         logging.info(f"{me.first_name} ✅✅ BOT started successfully ✅✅")
 
-        if Config.LOG_CHANNEL:
+        if Config.WOOK:
             syyd = Client(
                 "SyDLnK",
                 api_hash=Config.API_HASH,
