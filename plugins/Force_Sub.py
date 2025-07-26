@@ -80,7 +80,7 @@ async def add_bot_handler(client, message: Message):
     cri = q3.text
 
     # Step 4: Verified
-    q4 = await ask_user("Verified? (`ᴛʀᴜᴇ | ꜰᴀʟꜱᴇ`)")
+    q4 = await ask_user("Verified? (`ᴛʀᴜᴇ` | `ꜰᴀʟꜱᴇ`)")
     if not q4: return
     ver = q4.text
 
