@@ -70,7 +70,7 @@ async def add_bot_handler(client, message: Message):
     name_link = f"[{name}]({ref_link})"
 
     # Step 2: Category
-    q2 = await ask_user("Category? (`stars | premium | stars and premium`)")
+    q2 = await ask_user("Category? (`ꜱᴛᴀʀꜱ` | `ᴩʀᴇᴍɪᴜᴍ` | `ꜱᴛᴀʀꜱ ᴀɴᴅ ᴩʀᴇᴍɪᴜᴍ`)")
     if not q2: return
     cat = q2.text
 
@@ -109,7 +109,7 @@ async def add_bot_handler(client, message: Message):
 ᴄᴀᴛᴇɢᴏʀʏ      : {cat}
 ᴄʀɪᴛᴇʀɪᴀ       : {cri}
 ᴠᴇʀɪꜰɪᴇᴅ       : {ver}
-ᴠᴀʟɪᴅɪᴛʏ       : {val}
+ꜱᴛᴀᴛᴜꜱ       : {val}
 ᴩᴇʀ ʀᴇꜰᴇʀ     : {ref}
 ᴍɪɴ ʀᴇꜰᴇʀ : {min_amt}
 {more}
