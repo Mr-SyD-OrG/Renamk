@@ -75,22 +75,22 @@ async def add_bot_handler(client, message: Message):
     cat = q2.text
 
     # Step 3: Criteria
-    q3 = await ask_user("Criteria? (`game | refer`)")
+    q3 = await ask_user("Criteria? (`ɢᴀᴍᴇ` | `ʀᴇꜰᴇʀ` | `ᴏᴛʜᴇʀꜱ`)")
     if not q3: return
     cri = q3.text
 
     # Step 4: Verified
-    q4 = await ask_user("Verified? (`true | false`)")
+    q4 = await ask_user("Verified? (`ᴛʀᴜᴇ | ꜰᴀʟꜱᴇ`)")
     if not q4: return
     ver = q4.text
 
     # Step 5: Validity
-    q5 = await ask_user("Validity? (`unknown | few days | today | expired`)")
+    q5 = await ask_user("Validity? (`ᴜɴᴋɴᴏᴡɴ` | `ꜰᴇᴡ ᴅᴀʏꜱ` | `ᴛᴏᴅᴀʏ` | `ᴇxᴩɪʀᴇᴅ` | `ʟɪꜰᴇᴛɪᴍᴇ`)")
     if not q5: return
     val = q5.text
 
     # Step 6: Per Refer
-    q6 = await ask_user("Per refer? (`1 ꜱᴛᴀʀ` | `2 ꜱᴛᴀʀ` | `3 ꜱᴛᴀʀ`)")
+    q6 = await ask_user("Per refer? (`1 ꜱᴛᴀʀ` | `2 ꜱᴛᴀʀ` | `3 ꜱᴛᴀʀ` | `ᴩᴏɪɴᴛꜱ`)")
     if not q6: return
     ref = q6.text
 
@@ -109,11 +109,13 @@ async def add_bot_handler(client, message: Message):
 ᴄᴀᴛᴇɢᴏʀʏ      : {cat}
 ᴄʀɪᴛᴇʀɪᴀ       : {cri}
 ᴠᴇʀɪꜰɪᴇᴅ       : {ver}
-ꜱᴛᴀᴛᴜꜱ       : {val}
+ꜱᴛᴀᴛᴜꜱ        : {val}
 ᴩᴇʀ ʀᴇꜰᴇʀ     : {ref}
-ᴍɪɴ ʀᴇꜰᴇʀ : {min_amt}
+ᴍɪɴ ʀᴇꜰᴇʀ     : {min_amt}
 {more}
 
+_ᴛʜɪꜱ ᴍᴇꜱꜱᴀɢᴇ'ꜱ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ ᴍᴀʏ ɴᴏᴛ ʙᴇ ᴜᴩ ᴛᴏ ᴅᴀᴛᴇ ᴏʀ ᴍᴀʏ ʙᴇ ꜰᴀʟꜱᴇ, ᴩʟᴇᴀꜱᴇ ᴄʜᴇᴄᴋ ʏᴏᴜʀꜱᴇʟꜰ._
+_[*ᴛᴇʀᴍꜱ ᴀɴᴅ ᴄᴏɴᴅɪᴛɪᴏɴꜱ](https://t.me/Free_Stars_Premium_Bots/3) ᴀᴩᴩʟɪᴇᴅ_
 """
 
     # 🔻 Send first message to channel
