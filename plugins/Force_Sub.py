@@ -105,28 +105,17 @@ async def add_bot_handler(client, message: Message):
 
     # 🔷 Final formatted message
     bot_info = f"""\
-ɴᴇᴡ ʙᴏᴛ       : {name_link}
-ᴄᴀᴛᴇɢᴏʀʏ      : {cat}
-ᴄʀɪᴛᴇʀɪᴀ       : {cri}
-ᴠᴇʀɪꜰɪᴇᴅ       : {ver}
-ꜱᴛᴀᴛᴜꜱ        : {val}
-ᴩᴇʀ ʀᴇꜰᴇʀ     : {ref}
-ᴍɪɴ ʀᴇꜰᴇʀ     : {min_amt}
-{more}
+**ɴᴇᴡ ʙᴏᴛ**     : {name_link}
+**ᴄᴀᴛᴇɢᴏʀʏ**     : {cat}
+**ᴄʀɪᴛᴇʀɪᴀ**      : {cri}
+**ᴠᴇʀɪꜰɪᴇᴅ**      : {ver}
+**ꜱᴛᴀᴛᴜꜱ**       : {val}
+**ᴩᴇʀ ʀᴇꜰᴇʀ**    : {ref}
+**ᴍɪɴ ʀᴇꜰᴇʀ**    : {min_amt}
+**{more}**
 
-┌───────────────┬────────────────────
-│ NEW BOT       │ {name_link}
-│ CATEGORY      │ {cat}
-│ CRITERIA      │ {cri}
-│ VERIFIED      │ {ver}
-│ STATUS        │ {val}
-│ PER REFER     │ {ref}
-│ MIN REFER     │ {min_amt}
-└───────────────┴────────────────────
-
-
-__ᴛʜɪꜱ ᴍᴇꜱꜱᴀɢᴇ'ꜱ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ ᴍᴀʏ ɴᴏᴛ ʙᴇ ᴜᴩ ᴛᴏ ᴅᴀᴛᴇ ᴏʀ ᴍᴀʏ ʙᴇ ꜰᴀʟꜱᴇ, ᴩʟᴇᴀꜱᴇ ᴄʜᴇᴄᴋ ʏᴏᴜʀꜱᴇʟꜰ.__
-__[*ᴛᴇʀᴍꜱ ᴀɴᴅ ᴄᴏɴᴅɪᴛɪᴏɴꜱ](https://t.me/Free_Stars_Premium_Bots/3) ᴀᴩᴩʟɪᴇᴅ__
+__**ᴛʜɪꜱ ᴍᴇꜱꜱᴀɢᴇ'ꜱ ɪɴꜰᴏʀᴍᴀᴛɪᴏɴ ᴍᴀʏ ɴᴏᴛ ʙᴇ ᴜᴩ ᴛᴏ ᴅᴀᴛᴇ ᴏʀ ᴍᴀʏ ʙᴇ ꜰᴀʟꜱᴇ, ᴩʟᴇᴀꜱᴇ ᴄʜᴇᴄᴋ ʏᴏᴜʀꜱᴇʟꜰ.__
+__[*ᴛᴇʀᴍꜱ ᴀɴᴅ ᴄᴏɴᴅɪᴛɪᴏɴꜱ](https://t.me/Free_Stars_Premium_Bots/3) ᴀᴩᴩʟɪᴇᴅ**__
 """
 
     # 🔻 Send first message to channel
