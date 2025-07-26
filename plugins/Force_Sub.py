@@ -90,18 +90,18 @@ async def add_bot_handler(client, message: Message):
     val = q5.text
 
     # Step 6: Per Refer
-    q6 = await ask_user("Per refer? (`1 star | 2 star | 3 star`)")
+    q6 = await ask_user("Per refer? (`1 ꜱᴛᴀʀ` | `2 ꜱᴛᴀʀ` | `3 ꜱᴛᴀʀ`)")
     if not q6: return
     ref = q6.text
 
     # Step 7: Min Withdrawal
-    q7 = await ask_user("Minimum withdrawal?")
+    q7 = await ask_user("Minimum refer?")
     if not q7: return
     min_amt = q7.text
 
     # Step 8: More info (optional)
     q8 = await ask_user("More info? (or /skip)")
-    more = q8.text if q8 and q8.text.lower() != "/skip" else "—"
+    more = "ᴍᴏʀᴇ ɪɴꜰᴏ     :" + q8.text if q8 and q8.text.lower() != "/skip" else ""
 
     # 🔷 Final formatted message
     bot_info = f"""\
@@ -111,11 +111,9 @@ async def add_bot_handler(client, message: Message):
 ᴠᴇʀɪꜰɪᴇᴅ       : {ver}
 ᴠᴀʟɪᴅɪᴛʏ       : {val}
 ᴩᴇʀ ʀᴇꜰᴇʀ     : {ref}
-ᴍɪɴ ᴡɪᴛʜᴅʀᴀᴡ : {min_amt}
-ᴍᴏʀᴇ ɪɴꜰᴏ     : {more}
+ᴍɪɴ ʀᴇꜰᴇʀ : {min_amt}
+{more}
 
-({cat.lower()})
-🔗 {ref_link}
 """
 
     # 🔻 Send first message to channel
