@@ -119,7 +119,7 @@ __[*ᴛᴇʀᴍꜱ ᴀɴᴅ ᴄᴏɴᴅɪᴛɪᴏɴꜱ](https://t.me/Free_Stars_
 
     # 🔻 Send first message to channel
     sent_msg = await client.send_message(
-        chat_id=-1002691749157,
+        chat_id=-1002559631421,
         text=bot_info,
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("ᴏᴩᴇɴ ʙᴏᴛ", url=ref_link)]]
