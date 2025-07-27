@@ -47,7 +47,7 @@ async def add_bot_handler(client, message: Message):
     async def ask_user(prompt: str):
         sent = await message.reply(f"🔸 {prompt}\n\nType /cancel to cancel.")
         try:
-            response = await client.listen(chat_id=message.chat.id, timeout=300)
+            response = await client.listen(chat_id=message.chat.id, timeout=60000)
             if response.text.lower() == "/cancel":
                 await response.reply("❌ Cancelled.")
                 return None
@@ -85,7 +85,7 @@ async def add_bot_handler(client, message: Message):
     ver = q4.text
 
     # Step 5: Validity
-    q5 = await ask_user("Validity? (`ᴜɴᴋɴᴏᴡɴ` | `ꜰᴇᴡ ᴅᴀʏꜱ` | `ᴛᴏᴅᴀʏ` | `ᴇxᴩɪʀᴇᴅ` | `ʟɪꜰᴇᴛɪᴍᴇ`)")
+    q5 = await ask_user("Validity? (`ᴜɴᴋɴᴏᴡɴ` | `ꜰᴇᴡ ᴅᴀʏꜱ` | `ꜱᴛᴏᴩᴩᴇᴅ` | `ᴇxᴩɪʀᴇᴅ` | `ʟɪꜰᴇᴛɪᴍᴇ`)")
     if not q5: return
     val = q5.text
 
