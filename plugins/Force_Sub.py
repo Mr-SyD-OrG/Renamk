@@ -66,7 +66,7 @@ async def add_bot_handler(client, message: Message):
         return await message.reply("❌ Invalid referral link format.")
     username = match.group(1)
     name = username.replace("_", "")
-    ref_link = f"https://t.me/{username}?start=173290"
+    ref_link = q1.text
     name_link = f"[{name}]({ref_link})"
 
     # Step 2: Category
