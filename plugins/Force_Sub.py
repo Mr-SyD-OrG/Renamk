@@ -61,7 +61,7 @@ async def add_bot_handler(client, message: Message):
     # Step 1: Referral Link
     q1 = await ask_user("Send the referral link:\n`https://t.me/username?start=173290`")
     if not q1: return
-    match = re.search(r"https://t\.me/([\w\d_]+)\?start=\d+", q1.text)
+    match = re.search(r"https://t\.me/(\w+)\?start=\w+", q1.text)
     if not match:
         return await message.reply("❌ Invalid referral link format.")
     username = match.group(1)
