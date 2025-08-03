@@ -312,7 +312,7 @@ async def autosydd(client, file_details):
            
         #PIS = 'https://envs.sh/i2P.jpg'
        # PISS = 'https://envs.sh/i2w.jpg'
-        SYD_PATH = ['SyDMage/IMG_1.jpg', 'SyDMage/IMG_2.jpg']
+        SYD_PATH = ['SydMage/IMG_1.jpg', 'SydMage/IMG_2.jpg']
       #  SYD_PATH = 'downloads/thumbnail.jpg'
         #user_bot = await db.get_user_bot(Config.ADMIN[0])
         if media.file_size > 2000 * 1024 * 1024:
