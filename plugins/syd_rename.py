@@ -343,8 +343,9 @@ async def autosydd(client, file_details):
                 return await ms.edit(f" Eʀʀᴏʀ {e}")
         else:
             try:
-                syd_irl, syd_des = random.choice([(PIS, SYD_PATH), (PISS, SYDD_PATH)])
-                await download_image(syd_irl, syd_des)
+                syd_des = random.choice(SYD_PATH)
+                #syd_irl, syd_des = random.choice([(PIS, SYD_PATH), (PISS, SYDD_PATH)])
+                #await download_image(syd_irl, syd_des)
                 mrsy = syd
                 sy = -1002498086501
                 await client.send_document(
