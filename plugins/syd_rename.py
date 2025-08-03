@@ -368,8 +368,8 @@ async def autosydd(client, file_details):
             os.remove(ph_path)
         if file_path:
             os.remove(file_path)
-        if syd_des:
-            os.remove(syd_des)
+        #if syd_des:
+            #os.remove(syd_des)
         syd_id = -1002332730533
         mrsyd_id = 13
         chat_message = await client.get_messages(syd_id, mrsyd_id)
