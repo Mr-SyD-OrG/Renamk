@@ -310,15 +310,16 @@ async def autosydd(client, file_details):
         ph_path = None
         caption = f"**{new_filename}**" 
            
-        PIS = 'https://envs.sh/i2P.jpg'
-        PISS = 'https://envs.sh/i2w.jpg'
-        SYDD_PATH = 'downloads/syd.jpg'
-        SYD_PATH = 'downloads/thumbnail.jpg'
+        #PIS = 'https://envs.sh/i2P.jpg'
+       # PISS = 'https://envs.sh/i2w.jpg'
+        SYD_PATH = ['SyDMage/IMG_1.jpg', 'SyDMage/IMG_2.jpg']
+      #  SYD_PATH = 'downloads/thumbnail.jpg'
         #user_bot = await db.get_user_bot(Config.ADMIN[0])
         if media.file_size > 2000 * 1024 * 1024:
             try:
-                syd_irl, syd_des = random.choice([(PIS, SYD_PATH), (PISS, SYDD_PATH)])
-                await download_image(syd_irl, syd_des)
+                syd_des = random.choice(SYD_PATH)
+                #syd_irl, syd_des = random.choice([(PIS, SYD_PATH), (PISS, SYDD_PATH)])
+               # await download_image(syd_irl, syd_des)
                 app = await start_clone_bot(client(user_bot['session']))
                 filw = await app.send_document(
                     Config.LOG_CHANNEL,
