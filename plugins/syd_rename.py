@@ -6,7 +6,7 @@ from pyrogram.errors import ChatAdminRequired
 from pyrogram.enums import MessageMediaType
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply
 from helper.utils import progress_for_pyrogram, convert, humanbytes
-from helper.database import db, download_image
+from helper.database import download_image
 from PIL import Image
 import asyncio
 from aiolimiter import AsyncLimiter
