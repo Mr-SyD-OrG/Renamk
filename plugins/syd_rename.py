@@ -194,8 +194,7 @@ async def refnc(client, message):
                 await message.delete()
                 return
                 
-            sydd = file.file_caption
-            
+            sydd = message.caption
             syd = file.file_name
             sydfile = {
                 'file_name': syd,
@@ -213,7 +212,7 @@ async def refnc(client, message):
         
         except Exception as e:
             logger.error(f"An error occurred: {e}")
-            await message.reply_text("An error occurred while processing your request.")
+            await message.reply_text(f"An error occurred while processing your request {e}.")
          
 async def proces_queue(client):
     global processing
