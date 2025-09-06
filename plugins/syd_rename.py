@@ -29,7 +29,7 @@ MRSSYD = -1002429058090
 MRSSSSYD = -1002433450358
 MRSSSSSYD = -1002280144341
 processing = False
-mrsydt_g = []
+mrsydtg = []
 sydtg = -1002305372915
 Syd_T_G = -1002160523059
 
@@ -204,7 +204,7 @@ async def refnc(client, message):
                 'media': file,
                 'message': message 
             }
-            mrsydt_g.append(sydfile)
+            mrsydtg.append(sydfile)
             if not processing:
                 processing = True  # Set processing flag
                 await proces_queue(client)
@@ -219,7 +219,7 @@ async def proces_queue(client):
     try:
         # Process files one by one from the queue
         while mrsydtg:
-            file_details = mrsydt_g.pop(0)  # Get the first file in the queue
+            file_details = mrsydtg.pop(0)  # Get the first file in the queue
             await autosydd(client, file_details)  # Process it
     finally:
         processing = False
