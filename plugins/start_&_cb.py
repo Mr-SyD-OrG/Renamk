@@ -7,7 +7,6 @@ from pyrogram.errors import FloodWait, ChatAdminRequired
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, CallbackQuery
 from config import Config, Txt
 import humanize
-from .syd_rename import mrsydt_g
 from time import sleep
 
 logger = logging.getLogger(__name__)
