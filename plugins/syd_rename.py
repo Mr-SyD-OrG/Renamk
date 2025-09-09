@@ -267,8 +267,9 @@ async def autosydd(client, file_details):
             x for x in syd.split()
             if not any(x.startswith(mrsyd) for mrsyd in mrsyds) and x != '@GetTGLinks'
         ])
-
-
+        sy = -1002498086501
+        await client.get_chat(MSYD)
+        await client.get_chat(sy)
         filesize = humanize.naturalsize(media.file_size)
         sydd = ['psa', 'sh3lby', 'Archie', 'Jo', 'Spidey', 'mkvcinemas', 'Telly', 'SH3LBY.mkv', 'bigil', 'YTS.MX', 'WADU', 'budgetbits', 'HDA', 'TR', 'primefix', 'GalaxyRG265', 'bone', 'Incursi0', 'StreliziA', 'ikaRos', 'lssjbroly', 'soan', 'pahe', 'poke', 'galaxytv', 'galaxyrg', 'NazzY', 'VARYG', 'MICHAEL', 'FLUX', 'RAV1NE', '[YTS']
             
@@ -346,7 +347,6 @@ async def autosydd(client, file_details):
                 #syd_irl, syd_des = random.choice([(PIS, SYD_PATH), (PISS, SYDD_PATH)])
                 #await download_image(syd_irl, syd_des)
                 mrsy = syd
-                sy = -1002498086501
                 await client.send_document(
                     sy,
                     document=file_path,
