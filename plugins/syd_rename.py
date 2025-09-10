@@ -18,7 +18,7 @@ import time
 from helper.utils import add_prefix_suffix, client, start_clone_bot #, is_req_subscribed
 from config import Config
 #from .mrsyds import mrsydtg
-from info import AUTH_CHANNEL
+#from info import AUTH_CHANNEL
 
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
