@@ -22,9 +22,15 @@ async def clone_menu(client, message):
 
 from pyrogram import Client, filters
 from pyrogram.errors import PeerIdInvalid, UsernameNotOccupied
-import asyncio
+import re, asyncio
 
-@Client.on_message(filters.command("search", prefixes="/") & filters.group)
+# Regex to catch @usernames and links like t.me/username
+USERNAME_REGEX = re.compile(
+    r"(?:@|(?:https?://)?t\.me/|(?:https?://)?telegram\.me/)([a-zA-Z0-9_]{5,32})",
+    re.IGNORECASE
+)
+
+@Client.on_message(filters.command("search"))
 async def search_usernames(bot: Client, message):
     try:
         args = message.text.split()
@@ -35,13 +41,20 @@ async def search_usernames(bot: Client, message):
         last_msg_id = int(args[2])
         skip = int(args[3]) if len(args) > 3 else 0
 
-        chat_id = message.chat.id
+        # Ask user which chat to scan
+        if not message.reply_to_message or not message.reply_to_message.forward_from_chat:
+            return await message.reply(
+                "ℹ️ Forward **one message from the group/channel** you want to scan, "
+                "then send `/search ...` as a reply to it."
+            )
+
+        target_chat = message.reply_to_message.forward_from_chat.id
         found = []
 
-        await message.reply(f"🔎 Starting search for `{username}` in messages up to ID {last_msg_id} (skip {skip})...")
+        await message.reply(f"🔎 Scanning `{username}` in {target_chat} up to ID {last_msg_id} (skip {skip})...")
 
         count = 0
-        async for msg in bot.get_chat_history(chat_id, limit=last_msg_id):
+        async for msg in bot.get_chat_history(target_chat, limit=last_msg_id):
             if not msg.text:
                 continue
 
@@ -50,23 +63,20 @@ async def search_usernames(bot: Client, message):
                 count += 1
                 continue
 
-            words = msg.text.split()
-            for word in words:
-                if word.startswith("@") and len(word) > 1:
-                    uname = word[1:]
-
-                    # match search prefix
-                    if uname.lower().startswith(username):
-                        try:
-                            await bot.get_users(uname)  # valid user
-                        except (PeerIdInvalid, UsernameNotOccupied):
-                            found.append(uname)
-                            await message.reply(f"✅ Available: @{uname}")
-                        except Exception as e:
-                            print(f"[ERROR] checking {uname}: {e}")
+            # find usernames in text
+            for match in USERNAME_REGEX.finditer(msg.text):
+                uname = match.group(1)
+                if uname.lower().startswith(username):
+                    try:
+                        await bot.get_users(uname)  # valid user
+                    except (PeerIdInvalid, UsernameNotOccupied):
+                        found.append(uname)
+                        await message.reply(f"✅ Available: @{uname}")
+                    except Exception as e:
+                        print(f"[ERROR] checking {uname}: {e}")
 
             count += 1
-            await asyncio.sleep(2.4)  # slow down to avoid flood
+            await asyncio.sleep(0.5)  # avoid flood
 
         if not found:
             await message.reply("❌ No available usernames found.")
@@ -75,4 +85,3 @@ async def search_usernames(bot: Client, message):
 
     except Exception as e:
         await message.reply(f"⚠️ Error: {e}")
-
