@@ -35,13 +35,13 @@ async def search_usernames(bot: Client, message):
     try:
         args = message.text.split()
         if len(args) < 3:
-            return await message.reply("⚠️ Usage:\n`/search {username} {last_message} {skip (optional)}`")
+            return await message.reply("⚠️ Usage:\n`/search {username} {last_message_id} {skip (optional)}`\n\nReply this to a forwarded msg from the group/channel.")
 
         username = args[1].lower()
         last_msg_id = int(args[2])
         skip = int(args[3]) if len(args) > 3 else 0
 
-        # Ask user which chat to scan
+        # Get target chat
         if not message.reply_to_message or not message.reply_to_message.forward_from_chat:
             return await message.reply(
                 "ℹ️ Forward **one message from the group/channel** you want to scan, "
@@ -51,16 +51,20 @@ async def search_usernames(bot: Client, message):
         target_chat = message.reply_to_message.forward_from_chat.id
         found = []
 
-        await message.reply(f"🔎 Scanning `{username}` in {target_chat} up to ID {last_msg_id} (skip {skip})...")
+        await message.reply(f"🔎 Scanning `{username}` in {target_chat} from ID {last_msg_id} (skip {skip})...")
 
         count = 0
-        async for msg in bot.get_chat_history(target_chat, limit=last_msg_id):
-            if not msg.text:
-                continue
-
-            # skip first N messages
+        for msg_id in range(last_msg_id, 0, -1):  # go backwards
             if count < skip:
                 count += 1
+                continue
+
+            try:
+                msg = await bot.get_messages(target_chat, msg_id)
+            except Exception:
+                continue
+
+            if not msg or not msg.text:
                 continue
 
             # find usernames in text
@@ -68,10 +72,11 @@ async def search_usernames(bot: Client, message):
                 uname = match.group(1)
                 if uname.lower().startswith(username):
                     try:
-                        await bot.get_users(uname)  # valid user
+                        await bot.get_users(uname)  # exists
                     except (PeerIdInvalid, UsernameNotOccupied):
-                        found.append(uname)
-                        await message.reply(f"✅ Available: @{uname}")
+                        if uname not in found:
+                            found.append(uname)
+                            await message.reply(f"✅ Available: @{uname}")
                     except Exception as e:
                         print(f"[ERROR] checking {uname}: {e}")
 
