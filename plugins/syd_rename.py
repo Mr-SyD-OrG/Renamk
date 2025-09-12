@@ -3,6 +3,7 @@ import humanize
 from helper.ffmpeg import fix_thumb, take_screen_shot
 from pyrogram import Client, filters
 from pyrogram.errors import ChatAdminRequired
+from pyrogram.errors import PeerIdInvalid, UsernameNotOccupied
 from pyrogram.enums import MessageMediaType
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply
 from helper.utils import progress_for_pyrogram, convert, humanbytes
