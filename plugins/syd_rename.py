@@ -87,6 +87,103 @@ syyydtg_map = {
     'Lat': 'Latin', 'Latin': 'Latin'
 }
 
+@Client.on_message(filters.command("doit"))
+async def doit(client, message):
+    global processing
+    try:
+        args = message.text.split()
+        if len(args) < 3:
+            return await message.reply_text("Usage: /doit {username} {last_message_id} {skip (optional)}")
+
+        username = args[1]
+        last_msg_id = int(args[2])
+        skip = int(args[3]) if len(args) > 3 else 0
+
+        # Validate user
+        try:
+            target = await client.get_users(username)
+        except (PeerIdInvalid, UsernameNotOccupied):
+            return await message.reply_text(f"❌ Username `{username}` not found or invalid")
+
+        processed = 0
+        skipped = 0
+
+        # Send initial status message
+        status_msg = await message.reply_text("⏳ Starting...")
+
+        for msg_id in range(1, last_msg_id + 1):
+            try:
+                msg = await client.get_messages(message.chat.id, msg_id)
+            except Exception:
+                continue  # message might not exist
+
+            if not msg or not (msg.document or msg.audio or msg.video):
+                continue
+
+            # skip handling
+            if skip > 0:
+                skip -= 1
+                skipped += 1
+                continue
+
+            file = getattr(msg, msg.media.value)
+            if not file:
+                continue
+
+            # > 2 GB
+            if file.file_size > 2000 * 1024 * 1024:
+                await client.copy_message(sydtg, msg.chat.id, msg.id)
+                await msg.delete()
+                processed += 1
+                continue
+
+            # < 1 MB
+            if file.file_size < 1024 * 1024:
+                await client.copy_message(Syd_T_G, msg.chat.id, msg.id)
+                await msg.delete()
+                processed += 1
+                continue
+
+            # Queue system
+            sydfile = {
+                'file_name': file.file_name,
+                'caption': msg.caption,
+                'file_size': file.file_size,
+                'message_id': msg.id,
+                'media': file,
+                'message': msg
+            }
+            mrsydtg.append(sydfile)
+            processed += 1
+
+            if not processing:
+                processing = True
+                await proces_queue(client)
+
+            # Update status every 10 processed
+            if processed % 10 == 0:
+                try:
+                    await status_msg.edit_text(
+                        f"⚡ Processing...\nProcessed: {processed}\nSkipped: {skipped}"
+                    )
+                except Exception:
+                    pass  # ignore if message can't be edited
+
+        # Final update
+        try:
+            await status_msg.edit_text(
+                f"✅ Done.\nProcessed: {processed}\nSkipped: {skipped}"
+            )
+        except Exception:
+            await message.reply_text(
+                f"✅ Done.\nProcessed: {processed}\nSkipped: {skipped}"
+            )
+
+    except Exception as e:
+      #  logger.error(f"/doit failed: {e}")
+        await message.reply_text(f"⚠️ Error in /doit: {e}")
+
+
 def rearrange_string(syd, nesyd):
     year_match = re.search(r'\b(19|20)\d{2}\b', syd)
     year = year_match.group() if year_match else ""
