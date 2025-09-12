@@ -92,7 +92,7 @@ syyydtg_map = {
 async def doit(client, message):
     global processing
     try:
-        args = message.text.split()
+        args = message.text.strip().split()   # ✅ split on spaces only
         if len(args) < 3:
             return await message.reply_text("Usage: /doit {username} {last_message_id} {skip (optional)}")
 
