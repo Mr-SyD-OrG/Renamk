@@ -108,7 +108,7 @@ async def doit(client, message):
         )
         # Validate user
         try:
-            target = await client.get_users(username)
+            target = await client.get_chat(username)
         except (PeerIdInvalid, UsernameNotOccupied):
             return await message.reply_text(f"❌ Username `{username}` not found or invalid")
 
@@ -122,7 +122,7 @@ async def doit(client, message):
 
         for msg_id in range(1, last_msg_id + 1):
             try:
-                msg = await client.get_messages(message.chat.id, msg_id)
+                msg = await client.get_messages(target.id, msg_id)
             except Exception:
                 continue  # message might not exist
 
