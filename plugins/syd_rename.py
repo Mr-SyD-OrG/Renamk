@@ -100,15 +100,23 @@ async def doit(client, message):
         last_msg_id = int(args[2])
         skip = int(args[3]) if len(args) > 3 else 0
 
+        await message.reply_text(
+            f"🔎 Parsed command:\n"
+            f"• Username: `{username}`\n"
+            f"• Last Msg ID: `{last_msg_id}`\n"
+            f"• Skip: `{skip}`"
+        )
         # Validate user
         try:
             target = await client.get_users(username)
         except (PeerIdInvalid, UsernameNotOccupied):
             return await message.reply_text(f"❌ Username `{username}` not found or invalid")
 
+
         processed = 0
         skipped = 0
 
+        
         # Send initial status message
         status_msg = await message.reply_text("⏳ Starting...")
 
