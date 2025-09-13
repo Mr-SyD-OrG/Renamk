@@ -335,21 +335,6 @@ async def autosydd(client, file_details):
       #  remov_list = [ "", "", "", ""]
         sydy = file_details['file_name']
         sydyy = file_details['caption']
-        if '_' in sydyy:
-            sydyy = sydyy.replace("_", " ")
-        if '.' in sydyy:
-            sydyy = sydyy.replace(".", " ")
-        if '_' in sydy:
-            sydy = sydy.replace("_", " ")
-        if '.' in sydy:
-            sydy = sydy.replace(".", " ")
-        if '.' in sydy:
-            sydy = sydy.replace(" - ", " ")
-            
-        #syd = rearrange_string(sydy, sydyy)
-        syd = sydy
-        media = file_details['media']
-        message = file_details['message']
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'VisTa', 'PiRO', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', 'www.', '@',
             '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE', '-WADU', 'MoviezVerse', 't3nzin', '[Tips', 'Eac3', 'mkv', 'mp4'
         ]
@@ -359,7 +344,19 @@ async def autosydd(client, file_details):
                        "-CPTN5DW", "DEVENU", "-ViSTA", "-SH3LBY", "[]", "-.", "+ -", "- +", "- -", "[", "]", "--", "_"]
         sydd = ['psa', 'sh3lby', 'Archie', 'Jo', 'Spidey', 'mkvcinemas', 'Telly', 'SH3LBY.mkv', 'bigil', 'YTS.MX', 'WADU', 'budgetbits', 'HDA', 'TR', 'primefix', 'GalaxyRG265', 'bone', 'Incursi0', 'StreliziA', 'ikaRos', 'lssjbroly', 'soan', 'pahe', 'poke', 'galaxytv', 'galaxyrg', 'NazzY', 'VARYG', 'MICHAEL', 'FLUX', 'RAV1NE', '[YTS']
         for w in mrsyds + remove_list + sydd:
-            syd = syd.replace(w, " ")
+            sydyy = sydyy.replace(w, " ")
+            
+        sydyy = sydyy.replace("_", " ")
+        sydyy = sydyy.replace(".", " ")
+        sydy = sydy.replace("_", " ")
+        sydy = sydy.replace(".", " ")
+        sydy = sydy.replace(" - ", " ")
+            
+        #syd = rearrange_string(sydy, sydyy)
+        syd = sydy
+        media = file_details['media']
+        message = file_details['message']
+        
         sydt_g = [
             '[Tam', '[Tamil', '[Tel', '[Telugu', '[Kan', '[Kannada', '[Mal', '[Malayalam',
             '[Eng', '[English', '[Hin', '[Hindi', '[Mar', '[Marathi', '[Ben', '[Bengali',
@@ -378,14 +375,13 @@ async def autosydd(client, file_details):
 
         filename = ' '.join([
             x for x in syd.split()
-            if not any(x.startswith(mrsyd) for mrsyd in mrsyds) and x != '@GetTGLinks'
+            if not any(x.startswith(mrsyd) for mrsyd in mrsyds) and not x.startswith('@')
         ])
         sy = -1002498086501
         await client.get_chat(MSYD)
         await client.get_chat(sy)
         filesize = humanize.naturalsize(media.file_size)
-        sydd = ['psa', 'sh3lby', 'Archie', 'Jo', 'Spidey', 'mkvcinemas', 'Telly', 'SH3LBY.mkv', 'bigil', 'YTS.MX', 'WADU', 'budgetbits', 'HDA', 'TR', 'primefix', 'GalaxyRG265', 'bone', 'Incursi0', 'StreliziA', 'ikaRos', 'lssjbroly', 'soan', 'pahe', 'poke', 'galaxytv', 'galaxyrg', 'NazzY', 'VARYG', 'MICHAEL', 'FLUX', 'RAV1NE', '[YTS']
-            
+        
         mrsyd = filename.rsplit('-', 1)  # Split filename from the right at the last hyphen
         new_name = mrsyd[0].strip() if len(mrsyd) > 1 and any(term in mrsyd[1].strip().lower() for term in sydd) else filename
         for item in remove_list:
@@ -393,7 +389,7 @@ async def autosydd(client, file_details):
 
         if not (new_name.lower().endswith(".mkv") or new_name.lower().endswith(".mp4")):
             new_name += ".mkv"
-        syd_name = new_name.replace("  ", " ")
+        syd_name = re.sub(r"\s+", " ", new_name).strip()
         pattern = r'(?P<filename>.*?)(\.\w+)?$'
         match = re.search(pattern, syd_name)
         filename = match.group('filename')
