@@ -46,51 +46,49 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 @Client.on_message(filters.command("addbutton") & filters.private)
 async def addbutton(client, message):
     try:
-        # Step 1: Ask for the message to edit
-        await message.reply("📌 Send the message ID or forward the message you want to edit in the channel.")
+        # Step 1: Ask for a forwarded message
+        await message.reply("📌 Please forward me the message from the channel that you want to edit.")
 
-        msg_to_edit = await client.listen(message.chat.id)  # wait for user response
+        forwarded = await client.listen(message.chat.id)
 
-        # If user sends ID
-        if msg_to_edit.text and msg_to_edit.text.isdigit():
-            msg_id = int(msg_to_edit.text)
-            channel_id = message.chat.id  # ⚠️ Replace with your channel ID if fixed
-        # If user forwards message
-        elif msg_to_edit.forward_from_chat:
-            msg_id = msg_to_edit.forward_from_message_id
-            channel_id = msg_to_edit.forward_from_chat.id
-        else:
-            await message.reply("❌ Invalid input. Please forward the message or send its ID.")
+        if not forwarded.forward_from_chat:
+            await message.reply("❌ You must forward a message from a channel.")
             return
 
-        # Step 2: Loop for buttons
+        channel_id = forwarded.forward_from_chat.id
+        msg_id = forwarded.forward_from_message_id
+
+        # Step 2: Loop for button creation
         buttons = []
         await message.reply("➕ Send button info in format:\n`text|url|row`\nSend /end when finished.")
 
         while True:
             btn_msg = await client.listen(message.chat.id)
+
             if btn_msg.text and btn_msg.text.lower() == "/end":
                 break
 
             try:
                 text, url, row = map(str.strip, btn_msg.text.split("|"))
                 row = int(row) - 1  # convert to zero-based index
-                # Ensure enough rows exist
+
+                # Ensure rows exist
                 while len(buttons) <= row:
                     buttons.append([])
+
                 buttons[row].append(InlineKeyboardButton(text=text, url=url))
             except Exception as e:
                 await message.reply(f"⚠️ Invalid format. Use: `text|url|row`\nError: {e}")
                 continue
 
-        # Step 3: Edit the original message
+        # Step 3: Edit the forwarded message in the channel
         await client.edit_message_reply_markup(
             chat_id=channel_id,
             message_id=msg_id,
             reply_markup=InlineKeyboardMarkup(buttons)
         )
+
         await message.reply("✅ Buttons added successfully!")
 
     except Exception as e:
         await message.reply(f"🚨 Unexpected error: `{e}`")
-
