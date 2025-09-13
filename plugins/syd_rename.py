@@ -336,7 +336,7 @@ async def autosydd(client, file_details):
         sydy = file_details['file_name']
         sydyy = file_details['caption']
         mrsyds = ['YTS.MX', 'SH3LBY', 'Telly', 'Moviez', 'NazzY', 'VisTa', 'PiRO', 'PAHE', 'ink', 'mkvcinemas', 'CZ', 'WADU', 'PrimeFix', 'HDA', 'PSA', 'GalaxyRG', '-Bigil', 'TR', 'www.', '@',
-            '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE', '-WADU', 'MoviezVerse', 't3nzin', '[Tips', 'Eac3', 'mkv', 'mp4'
+            '-TR', '-SH3LBY', '-Telly', '-NazzY', '-PAHE', '-WADU', 'MoviezVerse', 't3nzin', '[Tips', 'Eac3', 'mkv', 'mp4', '@Smile'
         ]
         remove_list = ["-Telly", "-GalaxyRG", "-TR", "-PSA", "-GalaxyRG265", "-GalaxyTV", "PIRO", "Eac3", "-BUAM", "St4LiLiN", "-HDHub4u.Tv", "HiQVE", "CG", "KMH", "Movie Bazar", "A2Movies",
                        "-VARYG", "-PrimeFix", "-Pahe", "-Saon", "-Archie", "-Spidey", "-KuTTaN", "RARBG", "[KC]", "-VXT", "-HDHub4u", "(SABUJ)", "MSM", "CC", "CF", "RWD", "Mux-Soft", "Mux-Hard",
