@@ -351,6 +351,7 @@ async def autosydd(client, file_details):
         sydy = sydy.replace("_", " ")
         sydy = sydy.replace(".", " ")
         sydy = sydy.replace(" - ", " ")
+        sydy = sydy.replace("- ", " ")
             
         #syd = rearrange_string(sydy, sydyy)
         syd = sydy
