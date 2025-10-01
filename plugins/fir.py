@@ -90,3 +90,52 @@ async def search_usernames(bot: Client, message):
 
     except Exception as e:
         await message.reply(f"⚠️ Error: {e}")
+
+
+from pyrogram import Client, filters
+from pyrogram.types import Message
+import tempfile
+import os
+
+
+
+@Client.on_message(filters.command("fetch") & filters.private)
+async def fetch_members(client: Client, message: Message):
+    # Extract IDs from the command
+    cmd_parts = message.text.split()
+    if len(cmd_parts) < 2:
+        return await message.reply_text("⚠️ Usage: /fetch <id1> <id2> ...")
+
+    try:
+        target_ids = [int(x) for x in cmd_parts[1:]]
+    except ValueError:
+        return await message.reply_text("⚠️ IDs must be integers (like -1001234567890)")
+
+    all_users = set()
+
+    for chat_id in target_ids:
+        try:
+            async for member in client.get_chat_members(chat_id):
+                all_users.add(member.user.id)
+        except Exception as e:
+            await message.reply_text(f"⚠️ Failed for {chat_id}: {e}")
+
+    if not all_users:
+        return await message.reply_text("No members found.")
+
+    # Save IDs to a temporary file
+    with tempfile.NamedTemporaryFile(mode="w", delete=False, suffix=".txt") as f:
+        for uid in sorted(all_users):
+            f.write(f"{uid}\n")
+        temp_file_path = f.name
+
+    # Send the file
+    await client.send_document(
+        chat_id=message.chat.id,
+        document=temp_file_path,
+        caption=f"📝 Total Unique User IDs: {len(all_users)}"
+    )
+
+    # Clean up temp file
+    os.remove(temp_file_path)
+
