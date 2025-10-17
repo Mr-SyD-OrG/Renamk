@@ -55,7 +55,7 @@ class Database:
 
 
 
-db = Database(MONGO_URI)
+db = Database(Config.DB_URL, Config.DB_NAME)
 processing = False
 
 @Client.on_message(filters.document | filters.audio | filters.video)
