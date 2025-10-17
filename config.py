@@ -12,6 +12,8 @@ class Config(object):
     SYD_TOKEN = os.environ.get("SYD_TOKEN", "")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "") # ⚠️ Required
 
+    DB_URL = os.environ.get("DB_URL", "")
+    DB_NAME = os.environ.get("DB_NAME", "")
     # other configs
     BOT_UPTIME = time.time()
     PICS = os.environ.get("PICS", 'https://files.catbox.moe/iq4kp9.jpg https://files.catbox.moe/i6myg1.jpg https://files.catbox.moe/5f0ptk.jpg https://files.catbox.moe/6qvc08.jpg https://files.catbox.moe/iz1r0m.jpg https://files.catbox.moe/cg3wqk.jpg https://files.catbox.moe/ts053n.jpg https://graph.org/file/8c8372dfa0e0ddf8da91d.jpg https://graph.org/file/3b2b8110f6f57f7fc5c74.jpg  https://graph.org/file/1bd6fa19297caf4189c61.jpg  ').split()
