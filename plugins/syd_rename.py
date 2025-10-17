@@ -23,7 +23,7 @@ from config import Config
 from motor.motor_asyncio import AsyncIOMotorClient
 
 class Database:
-    def __init__(self, mongo_uri: str, db_name: str = "syd_queue"):
+    def __init__(self, mongo_uri: str, db_name):
         self.client = AsyncIOMotorClient(mongo_uri)
         self.db = self.client[db_name]
         self.queue = self.db["queue"]
