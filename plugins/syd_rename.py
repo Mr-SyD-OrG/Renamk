@@ -20,6 +20,101 @@ from helper.utils import add_prefix_suffix, client, start_clone_bot #, is_req_su
 from config import Config
 #from .mrsyds import mrsydtg
 #from info import AUTH_CHANNEL
+from motor.motor_asyncio import AsyncIOMotorClient
+
+class Database:
+    def __init__(self, mongo_uri: str, db_name: str = "syd_queue"):
+        self.client = AsyncIOMotorClient(mongo_uri)
+        self.db = self.client[db_name]
+        self.queue = self.db["queue"]
+
+    async def add_to_queue(self, item: dict):
+        """Add one file entry to queue"""
+        await self.queue.insert_one(item)
+
+    async def pop_from_queue(self):
+        """Pop the oldest file from queue"""
+        doc = await self.queue.find_one(sort=[("_id", 1)])
+        if doc:
+            await self.queue.delete_one({"_id": doc["_id"]})
+        return doc
+
+    async def get_all_queue(self):
+        """Return all pending queue items"""
+        return await self.queue.find().to_list(length=None)
+
+    async def clear_queue(self):
+        """Clear all queue items"""
+        await self.queue.delete_many({})
+
+    async def count(self):
+        """Return total queue count"""
+        return await self.queue.count_documents({})
+
+from pyrogram import Client, filters
+from config import MRSSSYD, MRSSYD, MRSSSSYD, MRSSSSSYD, sydtg, Syd_T_G, MONGO_URI
+from database import Database
+import logging
+
+logger = logging.getLogger(__name__)
+
+db = Database(MONGO_URI)
+processing = False
+
+@Client.on_message(filters.document | filters.audio | filters.video)
+async def refnc(client, message):
+    global processing
+
+    syd_ids = {MRSSSYD, MRSSYD, MRSSSSYD, MRSSSSSYD}
+    if message.chat.id in syd_ids:
+        try:
+            file = getattr(message, message.media.value)
+            if not file:
+                return
+
+            # Over 2GB → forward and delete
+            if file.file_size > 2000 * 1024 * 1024:
+                await client.copy_message(sydtg, message.chat.id, message.id)
+                await message.delete()
+                return
+
+            # Below 1MB → forward and delete
+            if file.file_size < 1024 * 1024:
+                await client.copy_message(Syd_T_G, message.chat.id, message.id)
+                await message.delete()
+                return
+
+            # Normal file → add to queue
+            file_data = {
+                "file_id": file.file_id,
+                "file_name": file.file_name,
+                "caption": message.caption,
+                "file_size": file.file_size,
+                "message_id": message.id,
+                "chat_id": message.chat.id,
+                "media_type": message.media.value,
+            }
+
+            await db.add_to_queue(file_data)
+
+            if not processing:
+                processing = True
+                await process_queue(client)
+
+        except Exception as e:
+            logger.error(f"Error while processing message: {e}")
+            await message.reply_text(f"❌ Error: {e}")
+
+async def process_queue(client):
+    global processing
+    try:
+        while True:
+            file_details = await db.pop_from_queue()
+            if not file_details:
+                break
+            await autosydd(client, file_details)
+    finally:
+        processing = False
 
 # Define a function to handle the 'rename' callback
 logger = logging.getLogger(__name__)
