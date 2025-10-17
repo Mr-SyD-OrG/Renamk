@@ -51,12 +51,9 @@ class Database:
         """Return total queue count"""
         return await self.queue.count_documents({})
 
-from pyrogram import Client, filters
-from config import MRSSSYD, MRSSYD, MRSSSSYD, MRSSSSSYD, sydtg, Syd_T_G, MONGO_URI
-from database import Database
-import logging
 
-logger = logging.getLogger(__name__)
+
+
 
 db = Database(MONGO_URI)
 processing = False
@@ -102,7 +99,6 @@ async def refnc(client, message):
                 await process_queue(client)
 
         except Exception as e:
-            logger.error(f"Error while processing message: {e}")
             await message.reply_text(f"❌ Error: {e}")
 
 async def process_queue(client):
@@ -117,17 +113,7 @@ async def process_queue(client):
         processing = False
 
 # Define a function to handle the 'rename' callback
-logger = logging.getLogger(__name__)
-SYD_CHATS = [-1002252619500]
-MSYD = -1002332730533
-MRSSSYD = -1002464733363
-MRSSYD = -1002429058090
-MRSSSSYD = -1002433450358
-MRSSSSSYD = -1002280144341
-processing = False
-mrsydtg = []
-sydtg = -1002305372915
-Syd_T_G = -1002160523059
+
 
 # Language mappings to handle duplicates
 syyydtg_map = {
@@ -373,7 +359,7 @@ def sydddmessage(text):
 
 
 # Define the main message handler for private messages with replies
-@Client.on_message(filters.document | filters.audio | filters.video)
+#@Client.on_message(filters.document | filters.audio | filters.video)
 async def refnc(client, message):
     global processing
     syd_id = {MRSSSYD, MRSSYD, MRSSSSYD, MRSSSSSYD}
@@ -415,7 +401,7 @@ async def refnc(client, message):
             logger.error(f"An error occurred: {e}")
             await message.reply_text(f"An error occurred while processing your request {e}.")
          
-async def proces_queue(client):
+async def proces_qeue(client):
     global processing
     try:
         # Process files one by one from the queue
