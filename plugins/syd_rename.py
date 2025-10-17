@@ -90,7 +90,7 @@ async def refnc(client, message):
                 "message_id": message.id,
                 "chat_id": message.chat.id,
                 "media": file,
-                "message": message
+                "message": message,
                 "media_type": message.media.value,
             }
 
