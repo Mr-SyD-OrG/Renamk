@@ -100,8 +100,6 @@ async def refnc(client, message):
                 "file_size": file.file_size,
                 "message_id": message.id,
                 "chat_id": message.chat.id,
-                "media": file,
-                "message": message,
                 "media_type": message.media.value,
             }
 
@@ -253,8 +251,6 @@ async def doit(client, message):
                 'caption': msg.caption,
                 'file_size': file.file_size,
                 'message_id': msg.id,
-                'media': file,
-                'message': msg
             }
             mrsydtg.append(sydfile)
             processed += 1
@@ -449,8 +445,8 @@ async def autosydd(client, file_details):
             
         #syd = rearrange_string(sydy, sydyy)
         syd = sydy
-        media = file_details['media']
-        message = file_details['message']
+        media = file_details['media_type']
+        message = await client.get_messages(file_details["chat_id"], file_details["message_id"])
         
         sydt_g = [
             '[Tam', '[Tamil', '[Tel', '[Telugu', '[Kan', '[Kannada', '[Mal', '[Malayalam',
