@@ -445,9 +445,8 @@ async def autosydd(client, file_details):
             
         #syd = rearrange_string(sydy, sydyy)
         syd = sydy
-        media = file_details['media_type']
         message = await client.get_messages(file_details["chat_id"], file_details["message_id"])
-        
+        media = getattr(message, message.media.value)
         sydt_g = [
             '[Tam', '[Tamil', '[Tel', '[Telugu', '[Kan', '[Kannada', '[Mal', '[Malayalam',
             '[Eng', '[English', '[Hin', '[Hindi', '[Mar', '[Marathi', '[Ben', '[Bengali',
