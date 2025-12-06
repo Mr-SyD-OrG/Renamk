@@ -227,6 +227,7 @@ syyydtg_map = {
     'Ger': 'German', 'German': 'German',
     'Rus': 'Russian', 'Russian': 'Russian',
     'Jap': 'Japanese', 'Japanese': 'Japanese',
+    'Jpn': 'Japanese',
     'Kor': 'Korean', 'Korean': 'Korean',
     'Ita': 'Italian', 'Italian': 'Italian',
     'Chi': 'Chinese', 'Chinese': 'Chinese',
