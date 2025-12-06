@@ -133,7 +133,7 @@ def map_lang(x: str):
     x = x.strip().title()
     return syyydtg_map.get(x, x)
 
-def extract_languages(path: str):
+async def extract_languages(path: str):
     """
     Returns:
         {
@@ -575,7 +575,7 @@ async def autosydd(client, file_details):
         duration = media.duration if hasattr(media, 'duration') else 0
         ph_path = None
         caption = f"**{new_filename}**" 
-        meta = extract_languages(path)
+        meta = await extract_languages(path)
         audio_langs = meta["audio_langs"]
         subtitle_langs = meta["subtitle_langs"]
         caption_from_metadata = meta["caption"]
