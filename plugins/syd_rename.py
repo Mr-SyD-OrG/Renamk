@@ -16,7 +16,7 @@ import logging
 import re
 import os
 import time
-import subprocess
+#import subprocess
 import json
 from helper.utils import add_prefix_suffix, client, start_clone_bot #, is_req_subscribed
 from config import Config
@@ -152,8 +152,14 @@ def extract_languages(path: str):
             "-show_format",
             path
         ]
-        out = subprocess.check_output(cmd).decode("utf-8")
-        data = json.loads(out)
+        proc = await asyncio.create_subprocess_exec(
+            *cmd,
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE
+        )
+        stdout, _ = await proc.communicate()
+        data = json.loads(stdout.decode())
+
 
         audio_langs = []
         subtitle_langs = []
@@ -574,9 +580,9 @@ async def autosydd(client, file_details):
         subtitle_langs = meta["subtitle_langs"]
         caption_from_metadata = meta["caption"]
         if audio_langs:
-            caption += f"🔊 Audio: {', '.join(audio_langs)}\n"
+            caption += f"**\n\n🔊 Audio: {', '.join(audio_langs)}**\n"
         if subtitle_langs:
-            caption += f"📜 Subtitles: {', '.join(subtitle_langs)}\n"
+            caption += f"**📜 Subtitles: {', '.join(subtitle_langs)}**\n"
        # if caption_from_metadata:
             #caption += f"📝 Title: {caption_from_metadata}"
             
