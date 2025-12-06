@@ -125,7 +125,73 @@ async def process_queue(client):
 
 # Define a function to handle the 'rename' callback
 
+def map_lang(x: str):
+    if not x:
+        return None
+    x = x.strip().title()
+    return syyydtg_map.get(x, x)
 
+def extract_languages(path: str):
+    """
+    Returns:
+        {
+            "audio_langs": [...],
+            "subtitle_langs": [...],
+            "caption": "..."
+        }
+    """
+
+    try:
+        cmd = [
+            "ffprobe",
+            "-v", "quiet",
+            "-print_format", "json",
+            "-show_streams",
+            "-show_format",
+            path
+        ]
+        out = subprocess.check_output(cmd).decode("utf-8")
+        data = json.loads(out)
+
+        audio_langs = []
+        subtitle_langs = []
+        caption = None
+
+        # STREAMS SECTION
+        for s in data.get("streams", []):
+            tags = s.get("tags", {})
+            lang = tags.get("language") or tags.get("LANGUAGE")
+            if lang:
+                lang = map_lang(lang)
+
+            if s.get("codec_type") == "audio" and lang:
+                audio_langs.append(lang)
+
+            if s.get("codec_type") == "subtitle" and lang:
+                subtitle_langs.append(lang)
+
+            # Caption/title metadata
+            if not caption:
+                caption = tags.get("title") or tags.get("TITLE")
+
+        # FORMAT SECTION (sometimes caption stored here)
+        fmt_tags = data.get("format", {}).get("tags", {})
+        if not caption:
+            caption = fmt_tags.get("title") or fmt_tags.get("TITLE")
+
+        return {
+            "audio_langs": list(set(audio_langs)),
+            "subtitle_langs": list(set(subtitle_langs)),
+            "caption": caption
+        }
+
+    except Exception as e:
+        return {
+            "audio_langs": [],
+            "subtitle_langs": [],
+            "caption": None
+        }
+        
 # Language mappings to handle duplicates
 syyydtg_map = {
     'Eng': 'English', 'English': 'English',
@@ -471,7 +537,6 @@ async def autosydd(client, file_details):
         await client.get_chat(MSYD)
         await client.get_chat(sy)
         filesize = humanize.naturalsize(media.file_size)
-        
         mrsyd = filename.rsplit('-', 1)  # Split filename from the right at the last hyphen
         new_name = mrsyd[0].strip() if len(mrsyd) > 1 and any(term in mrsyd[1].strip().lower() for term in sydd) else filename
         for item in remove_list:
@@ -503,7 +568,18 @@ async def autosydd(client, file_details):
         duration = media.duration if hasattr(media, 'duration') else 0
         ph_path = None
         caption = f"**{new_filename}**" 
-           
+        meta = extract_languages(path)
+        audio_langs = meta["audio_langs"]
+        subtitle_langs = meta["subtitle_langs"]
+        caption_from_metadata = meta["caption"]
+        if audio_langs:
+            caption += f"🔊 Audio: {', '.join(audio_langs)}\n"
+        if subtitle_langs:
+            caption += f"📜 Subtitles: {', '.join(subtitle_langs)}\n"
+       # if caption_from_metadata:
+            #caption += f"📝 Title: {caption_from_metadata}"
+            
+        
         #PIS = 'https://envs.sh/i2P.jpg'
        # PISS = 'https://envs.sh/i2w.jpg'
         SYD_PATH = ['SydMage/IMG_1.jpg', 'SydMage/IMG_2.jpg']
@@ -565,12 +641,14 @@ async def autosydd(client, file_details):
             #os.remove(syd_des)
         syd_id = -1002332730533
         mrsyd_id = 13
-        chat_message = await client.get_messages(syd_id, mrsyd_id)
-        syd_text = chat_message.text
-        new_text = syd_message(syd_text)
-        await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
-        
+        try:
+            chat_message = await client.get_messages(syd_id, mrsyd_id)
+            syd_text = chat_message.text
+            new_text = syd_message(syd_text)
+            await client.edit_message_text(chat_id=syd_id, message_id=mrsyd_id, text=new_text)
+        except:
+            pass
     except Exception as e:
         logger.error(f"An error occurred: {e}")
-        await message.reply_text(f"An error")
+        await message.reply_text(f"An error {e}")
 
