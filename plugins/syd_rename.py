@@ -188,7 +188,7 @@ def extract_languages(path: str):
         }
 
     except Exception as e:
-        await client.send_message(1733124290, e)
+        print(e)
         return {
             "audio_langs": [],
             "subtitle_langs": [],
