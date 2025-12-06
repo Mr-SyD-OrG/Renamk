@@ -124,3 +124,9 @@ Exᴀᴍᴩʟᴇ:- <code> /set_caption 📕 Fɪʟᴇ Nᴀᴍᴇ: {filename}
 ┣⪼ ⏰️ Eᴛᴀ: {4}
 ┣⪼ 🩷 Bꪗ: @Bot_Cracker 🎋
 ╰━━━━━━━━━━━━━━━➣ </b>"""
+
+
+from pyrogram import utils as pyroutils
+pyroutils.MIN_CHAT_ID = -999999999999
+pyroutils.MIN_CHANNEL_ID = -100999999999999
+
