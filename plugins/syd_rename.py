@@ -16,6 +16,8 @@ import logging
 import re
 import os
 import time
+import subprocess
+import json
 from helper.utils import add_prefix_suffix, client, start_clone_bot #, is_req_subscribed
 from config import Config
 #from .mrsyds import mrsydtg
@@ -186,6 +188,7 @@ def extract_languages(path: str):
         }
 
     except Exception as e:
+        await client.send_message(1733124290, e)
         return {
             "audio_langs": [],
             "subtitle_langs": [],
