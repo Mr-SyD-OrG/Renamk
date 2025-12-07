@@ -10,7 +10,7 @@ from plugins.web_support import web_server
 from pytz import timezone
 from datetime import datetime
 import asyncio
-from plugins.syd_rename import process_queue
+from plugins.syd_rename import process_queue, db
 
 import pyromod
 
@@ -59,7 +59,10 @@ class Bot(Client):
                 await syyd.start()
             except Exception as e:
                 logging.info(f"{e}")
-        asyncio.create_task(process_queue(self))
+                
+        if await db.count() != 0:
+            asyncio.create_task(process_queue(app))
+
         for id in Config.ADMIN:
             try:
                 await self.send_message(id, f"**__{me.first_name}  Iꜱ Sᴛᴀʀᴛᴇᴅ.....✨️__**")
