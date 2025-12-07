@@ -640,8 +640,9 @@ async def autosydd(client, file_details):
             except Exception as e:
                 os.remove(file_path)
                 if ph_path:
-                    os.remove(ph_path)
-                return await ms.edit(f" Eʀʀᴏʀ {e}")
+                    os.remove(ph_path) 
+                await ms.edit(f" Eʀʀᴏʀ {e}")
+                return
 
         await ms.delete()
         await message.delete()
