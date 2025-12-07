@@ -133,7 +133,7 @@ def map_lang(x: str):
     if not x:
         return None
     x = x.strip().title()
-    if x == "und":
+    if x.lower() == "und":
         return None
     return syyydtg_map.get(x, x)
 
