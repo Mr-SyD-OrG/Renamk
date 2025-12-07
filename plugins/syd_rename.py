@@ -29,10 +29,12 @@ MRSSSYD = -1002464733363
 MRSSYD = -1002429058090
 MRSSSSYD = -1002433450358
 MRSSSSSYD = -1002280144341
+MRSYD5 = -1002920265615
 processing = False
 mrsydtg = []
 sydtg = -1002305372915
 Syd_T_G = -1002160523059
+
 from motor.motor_asyncio import AsyncIOMotorClient
 
 class Database:
@@ -75,7 +77,7 @@ processing = False
 async def refnc(client, message):
     global processing
 
-    syd_ids = {MRSSSYD, MRSSYD, MRSSSSYD, MRSSSSSYD}
+    syd_ids = {MRSSSYD, MRSSYD, MRSSSSYD, MRSSSSSYD, MRSYD5}
     if message.chat.id in syd_ids:
         try:
             file = getattr(message, message.media.value)
