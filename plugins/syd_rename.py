@@ -83,20 +83,14 @@ async def refnc(client, message):
             file = getattr(message, message.media.value)
             if not file:
                 return
-
-            # Over 2GB → forward and delete
             if file.file_size > 2000 * 1024 * 1024:
                 await client.copy_message(sydtg, message.chat.id, message.id)
                 await message.delete()
                 return
-
-            # Below 1MB → forward and delete
             if file.file_size < 1024 * 1024:
                 await client.copy_message(Syd_T_G, message.chat.id, message.id)
                 await message.delete()
                 return
-
-            # Normal file → add to queue
             file_data = {
                 "file_id": file.file_id,
                 "file_name": file.file_name,
@@ -104,11 +98,9 @@ async def refnc(client, message):
                 "file_size": file.file_size,
                 "message_id": message.id,
                 "chat_id": message.chat.id,
-                "media_type": message.media.value,
             }
 
             await db.add_to_queue(file_data)
-
             if not processing:
                 processing = True
                 await process_queue(client)
