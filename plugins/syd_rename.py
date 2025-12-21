@@ -441,7 +441,7 @@ def sydddmessage(text):
 
 # Define the main message handler for private messages with replies
 #@Client.on_message(filters.document | filters.audio | filters.video)
-async def rfnc(client, message):
+async def sydddrfnc(client, message):
     global processing
     syd_id = {MRSSSYD, MRSSYD, MRSSSSYD, MRSSSSSYD}
     if message.chat.id in syd_id :
