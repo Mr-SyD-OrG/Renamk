@@ -58,3 +58,26 @@ async def forward_messages(client, message):
 
     except Exception as e:
         await message.reply(f"❌ Error: {e}")
+        
+from pyrogram import Client, filters
+from pyrogram.errors import FloodWait
+import asyncio
+
+SOURCE_CHANNEL = -1003583073724   # channel to listen
+TARGET_CHANNEL = -1003342276289   # channel to copy into
+
+
+@Client.on_message(filters.chat(SOURCE_CHANNEL))
+async def copy_incoming_message(client: Client, message):
+    while True:
+        try:
+            await message.copy(TARGET_CHANNEL)
+            break  # ✅ copied successfully
+
+        except FloodWait as e:
+            await asyncio.sleep(e.value + 1)  # ⏳ wait & retry SAME message
+
+        except Exception as e:
+            # ❌ real error → skip message
+            print(f"Copy failed for msg {message.id}: {e}")
+            break
