@@ -73,7 +73,7 @@ class Database:
 db = Database(Config.DB_URL, Config.DB_NAME)
 processing = False
 
-@Client.on_message(filters.document | filters.audio | filters.video)
+@Client.on_message((filters.document | filters.audio | filters.video) & filters.channel)
 async def refnc(client, message):
     global processing
 
